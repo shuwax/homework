@@ -7,7 +7,7 @@ use Psr\Log\LoggerInterface;
 class GetAliveService implements IGetAliveService
 {
 
-    private $logger;
+    private LoggerInterface $logger;
 
     public function __construct(LoggerInterface $logger)
     {
