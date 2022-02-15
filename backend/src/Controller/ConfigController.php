@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Service\Config\IGetAliveService;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -10,10 +11,8 @@ class ConfigController extends AbstractApiController
     /**
      * @Route("/config/alive", name="config", methods="GET")
      */
-    public function alive(): Response
+    public function alive(IGetAliveService $getAliveService): Response
     {
-        return $this->response([
-            'message' => 'alive'
-        ]);
+        return $this->response($getAliveService->getAlive());
     }
 }
