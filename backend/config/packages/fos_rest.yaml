@@ -5,11 +5,12 @@ fos_rest:
 #    routing_loader: true
 #    view:
 #        view_response_listener:  true
-#    exception:
-#        codes:
-#            App\Exception\MyException: 403
-#        messages:
-#            App\Exception\MyException: Forbidden area.
+    exception:
+        codes:
+            'Symfony\Component\HttpKernel\Exception\NotFoundHttpException': 404
+            'Doctrine\ORM\OptimisticLockException': HTTP_CONFLICT
+        messages:
+            'Symfony\Component\Routing\Exception\ResourceNotFoundException': true
     format_listener:
         rules:
             - { path: ^/api, prefer_extension: true, fallback_format: json, priorities: [ json ] }
