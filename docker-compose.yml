@@ -10,3 +10,12 @@ services:
       - MYSQL_PASSWORD=S3cret
       - MYSQL_USER=homework_user
       - MYSQL_DATABASE=homework
+  mysql_test:
+    image: mariadb:10.2.41
+    ports:
+      - 3307:3306
+    environment:
+      - MYSQL_ROOT_PASSWORD=S3cret
+      - MYSQL_PASSWORD=S3cret
+      - MYSQL_USER=homework_user
+      - MYSQL_DATABASE=homework_test

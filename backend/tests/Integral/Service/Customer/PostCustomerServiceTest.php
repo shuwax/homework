@@ -2,6 +2,8 @@
 
 namespace Service\Customer;
 
+use App\Entity\Customer;
+use App\Service\Customer\IPostCustomerService;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 class PostCustomerServiceTest extends KernelTestCase
@@ -11,13 +13,16 @@ class PostCustomerServiceTest extends KernelTestCase
         self::bootKernel();
         $container = static::getContainer();
 
-        $postService = $container->get(IPostService::class);
+        $postService = $container->get(IPostCustomerService::class);
 
         $customer = [
             'name' => 'Jan Kowalski'
         ];
 
-        $this->assertEquals(["message" => "alive"], $postService->create($customer));
+        $serviceResult = $postService->create($customer);
+
+        $this->assertEquals($serviceResult instanceof Customer, true);
+        $this->assertEquals($serviceResult->getName(), $customer['name']);
     }
 
 }

@@ -3,11 +3,13 @@
 namespace App\Service\Customer;
 
 
+use App\Entity\Customer;
+
 interface IPostCustomerService
 {
     /**
      * @param array $data
-     * @return array
+     * @return Customer
      */
-    public function create(array $data):array;
+    public function create(array $data): Customer;
 }

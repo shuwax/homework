@@ -3,7 +3,7 @@
 namespace App\Factory\Customer;
 
 use App\Entity\Customer;
-use App\Repository\Interface\ICustomerRepository;
+use App\Repository\Interfaces\ICustomerRepository;
 
 class CustomerFactory implements ICustomerFactory
 {

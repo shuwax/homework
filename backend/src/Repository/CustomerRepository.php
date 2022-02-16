@@ -3,7 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Customer;
-use App\Repository\Interface\ICustomerRepository;
+use App\Repository\Interfaces\ICustomerRepository;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -26,7 +26,9 @@ class CustomerRepository extends ServiceEntityRepository implements ICustomerRep
      */
     public function save(Customer $customer): Customer
     {
-        $this->save($customer);
+        $this->_em->persist($customer);
+        $this->_em->flush();
+
         return $customer;
     }
 }

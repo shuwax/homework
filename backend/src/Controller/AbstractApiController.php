@@ -9,11 +9,11 @@ use Symfony\Component\HttpFoundation\Response;
 class AbstractApiController extends AbstractController
 {
     /**
-     * @param array $data
+     * @param $data
      * @param int $statusCode
      * @return JsonResponse
      */
-    protected function response(array $data, int $statusCode = Response::HTTP_OK): JsonResponse
+    protected function response($data, int $statusCode = Response::HTTP_OK): JsonResponse
     {
         return $this->json($data, $statusCode);
     }
