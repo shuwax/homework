@@ -11,20 +11,20 @@ class MathTest extends TestCase
         $values = [2,2,2,2];
         $mathObj = new Math();
         $result = $mathObj->getAvg($values);
-        $this->assertEquals($result, 2.0);
+        $this->assertEquals(2.0, $result);
     }
 
     public function testGetAvgEmptyValues() {
         $values = [];
         $mathObj = new Math();
         $result = $mathObj->getAvg($values);
-        $this->assertEquals($result, 0);
+        $this->assertEquals(0, $result);
     }
 
     public function testGetAvgWrongValues() {
         $values = [[]];
         $mathObj = new Math();
         $result = $mathObj->getAvg($values);
-        $this->assertEquals($result, 0);
+        $this->assertEquals(0, $result);
     }
 }
