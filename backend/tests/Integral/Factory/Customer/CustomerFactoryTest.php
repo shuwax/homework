@@ -3,7 +3,7 @@
 namespace Factory\Customer;
 
 use App\Entity\Customer;
-use App\Service\Customer\IPostCustomerService;
+use App\Factory\Customer\ICustomerFactory;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 class CustomerFactoryTest extends KernelTestCase
@@ -13,12 +13,12 @@ class CustomerFactoryTest extends KernelTestCase
         self::bootKernel();
         $container = static::getContainer();
 
-        $customerFactory = $container->get(IPostCustomerService::class);
+        $customerFactory = $container->get(ICustomerFactory::class);
 
         $customerName = ["name" => 'Jan Kowalski'];
         /** @var Customer $customer */
-        $customer = $customerFactory->create($customerName);
-        $this->assertEquals($customer instanceof Customer, true);
+        $customer = $customerFactory->create($customerName['name']);
+        $this->assertEquals(true, $customer instanceof Customer);
         $this->assertEquals($customer->getName(), $customerName['name']);
     }
 
