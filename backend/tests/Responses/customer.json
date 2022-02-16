@@ -1,4 +1,4 @@
 {
-  "id": "@integer@",
-  "name": "Jan Kowalski"
+  "id": "@integer@.greaterThan(0)",
+  "name": "@string@"
 }

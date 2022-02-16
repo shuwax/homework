@@ -35,4 +35,9 @@ class CustomerRepository extends ServiceEntityRepository implements ICustomerRep
     public function findAllCustomers(): array {
         return $this->findAll();
     }
+
+    public function findOneByCustomers(array $criteria): ?Customer
+    {
+        return $this->findOneBy($criteria);
+    }
 }

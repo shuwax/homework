@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Service\Customer\IGetCustomerService;
 use App\Service\Customer\IGetListCustomerService;
 use App\Service\Customer\IPostCustomerService;
 use Symfony\Component\HttpFoundation\Request;
@@ -21,10 +22,18 @@ class CustomerController extends AbstractApiController
     }
 
     /**
-     * @Route("/customers", name="customer_get", methods="GET" )
+     * @Route("/customers", name="customers_get", methods="GET" )
      */
     public function getList(IGetListCustomerService $getListCustomerService): Response
     {
-        return $this->response($getListCustomerService->getList(), Response::HTTP_OK);
+        return $this->response($getListCustomerService->getList());
+    }
+
+    /**
+     * @Route("/customers/{customerId}", name="customer_get", methods="GET" )
+     */
+    public function getOne(IGetCustomerService $getCustomerService, $customerId): Response
+    {
+        return $this->response($getCustomerService->get($customerId));
     }
 }

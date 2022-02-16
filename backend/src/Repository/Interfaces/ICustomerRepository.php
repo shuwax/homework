@@ -10,4 +10,6 @@ interface ICustomerRepository
 
     public function findAllCustomers(): array;
 
+    public function findOneByCustomers(array $criteria): ?Customer;
+
 }
