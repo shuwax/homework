@@ -9,7 +9,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class ConfigController extends AbstractApiController
 {
     /**
-     * @Route("/config/alive", name="config", methods="GET")
+     * @Route("/configs/alive", name="config_alive", methods="GET")
      */
     public function alive(IGetAliveService $getAliveService): Response
     {

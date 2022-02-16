@@ -1,0 +1,4 @@
+{
+  "id": "@integer@.greaterThan(0)",
+  "name": "@string@"
+}
