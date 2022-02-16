@@ -80,4 +80,17 @@ class CustomerControllerTest extends JsonApiTestCase
         $this->assertNotEquals($customerAfterUpdateContent['name'], $contentNewCustomerContent['name']);
 
     }
+
+    public function testDELETEResponse()
+    {
+        //Create customer
+        $this->testPOSTResponse();
+        $responseNewCustomer = $this->client->getResponse();
+        $contentNewCustomerContent = json_decode($responseNewCustomer->getContent(), true);
+
+        $this->client->jsonRequest('DELETE', '/api/customers/' . $contentNewCustomerContent['id']);
+
+        $this->assertResponseStatusCodeSame(Response::HTTP_NO_CONTENT);
+
+    }
 }

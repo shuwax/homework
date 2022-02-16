@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Service\Customer\IDeleteCustomerService;
 use App\Service\Customer\IGetCustomerService;
 use App\Service\Customer\IGetListCustomerService;
 use App\Service\Customer\IPostCustomerService;
@@ -46,5 +47,15 @@ class CustomerController extends AbstractApiController
         $content = $request->getContent();
         $contentArray = json_decode($content, true);
         return $this->response($putCustomerService->put($customerId, $contentArray));
+    }
+
+    /**
+     * @Route("/customers/{customerId}", name="customer_delete", methods="DELETE" )
+     */
+    public function delete(IDeleteCustomerService $deleteCustomerService, int $customerId): Response
+    {
+        $deleteCustomerService->delete($customerId);
+
+        return $this->response([], Response::HTTP_NO_CONTENT);
     }
 }

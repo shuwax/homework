@@ -40,4 +40,10 @@ class CustomerRepository extends ServiceEntityRepository implements ICustomerRep
     {
         return $this->findOneBy($criteria);
     }
+
+    public function delete(Customer $customer): void
+    {
+       $this->_em->remove($customer);
+       $this->_em->flush();
+    }
 }
