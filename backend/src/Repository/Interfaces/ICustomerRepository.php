@@ -8,4 +8,6 @@ interface ICustomerRepository
 {
     public function save(Customer $customer): Customer;
 
+    public function findAllCustomers(): array;
+
 }

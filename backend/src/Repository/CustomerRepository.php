@@ -31,4 +31,8 @@ class CustomerRepository extends ServiceEntityRepository implements ICustomerRep
 
         return $customer;
     }
+
+    public function findAllCustomers(): array {
+        return $this->findAll();
+    }
 }

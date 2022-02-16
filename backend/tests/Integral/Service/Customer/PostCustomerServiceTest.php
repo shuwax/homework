@@ -8,7 +8,7 @@ use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 class PostCustomerServiceTest extends KernelTestCase
 {
-    public function testGetAliveService()
+    public function testPostCustomerService()
     {
         self::bootKernel();
         $container = static::getContainer();
