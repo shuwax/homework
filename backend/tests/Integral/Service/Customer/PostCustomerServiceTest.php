@@ -21,7 +21,7 @@ class PostCustomerServiceTest extends KernelTestCase
 
         $serviceResult = $postService->create($customer);
 
-        $this->assertEquals($serviceResult instanceof Customer, true);
+        $this->assertEquals(true, $serviceResult instanceof Customer);
         $this->assertEquals($serviceResult->getName(), $customer['name']);
     }
 

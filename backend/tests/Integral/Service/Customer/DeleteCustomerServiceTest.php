@@ -23,7 +23,7 @@ class DeleteCustomerServiceTest extends KernelTestCase
         $servicePostResult = $postService->create($customer);
 
         $deleteService->delete($servicePostResult->getId());
-        $this->assertEquals($servicePostResult->getId(), null);
+        $this->assertEquals(null, $servicePostResult->getId());
     }
 
 }

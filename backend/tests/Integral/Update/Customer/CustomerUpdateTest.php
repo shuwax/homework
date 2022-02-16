@@ -4,8 +4,6 @@ namespace Update\Customer;
 
 use App\Entity\Customer;
 use App\Factory\Customer\ICustomerFactory;
-use App\Service\Customer\IPostCustomerService;
-use App\Service\Customer\IPutCustomerService;
 use App\Update\Customer\ICustomerUpdate;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
@@ -23,14 +21,14 @@ class CustomerUpdateTest extends KernelTestCase
         $customerName = ["name" => 'Jan Kowalski'];
         /** @var Customer $customer */
         $customer = $customerFactoryService->create($customerName['name']);
-        $this->assertEquals($customer instanceof Customer, true);
+        $this->assertEquals(true, $customer instanceof Customer);
         $this->assertEquals($customer->getName(), $customerName['name']);
 
 
         $customerUpdate = ["name" => 'Monika Kowalski'];
         /** @var Customer $customer */
         $customer = $customerUpdateService->update($customer, $customerUpdate['name']);
-        $this->assertEquals($customer instanceof Customer, true);
+        $this->assertEquals(true, $customer instanceof Customer);
         $this->assertEquals($customer->getName(), $customerUpdate['name']);
         $this->assertNotEquals($customer->getName(), $customerName['name']);
     }

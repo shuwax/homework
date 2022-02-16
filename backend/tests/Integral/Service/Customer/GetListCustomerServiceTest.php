@@ -17,8 +17,8 @@ class GetListCustomerServiceTest extends KernelTestCase
 
         $serviceResult = $getListService->getList();
 
-        $this->assertEquals(is_array($serviceResult), true);
-        $this->assertEquals(count($serviceResult), 0);
+        $this->assertEquals(true, is_array($serviceResult));
+        $this->assertCount(0, $serviceResult);
     }
 
     public function testGetListCustomerService()
@@ -37,8 +37,8 @@ class GetListCustomerServiceTest extends KernelTestCase
         $getListService = $container->get(IGetListCustomerService::class);
         $serviceResult = $getListService->getList();
 
-        $this->assertEquals(is_array($serviceResult), true);
-        $this->assertEquals(count($serviceResult), 1);
+        $this->assertEquals(true, is_array($serviceResult));
+        $this->assertCount(1, $serviceResult);
     }
 
 }

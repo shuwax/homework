@@ -15,7 +15,7 @@ class CustomerControllerTest extends JsonApiTestCase
 
 
         $this->assertResponse($response, 'customer', Response::HTTP_CREATED);
-        $this->assertEquals($contentNewCustomerContent['id'] > 0, true);
+        $this->assertEquals(true, $contentNewCustomerContent['id'] > 0);
         $this->assertEquals($contentNewCustomerContent['name'], $requestBody['name']);
     }
 
@@ -36,7 +36,7 @@ class CustomerControllerTest extends JsonApiTestCase
 
 
         $this->assertResponse($response, 'customers', Response::HTTP_OK);
-        $this->assertEquals(count($contentArray) === 1, true);
+        $this->assertCount(1, $contentArray);
     }
 
     public function testGETOneNotFoundResponse()
