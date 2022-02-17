@@ -31,4 +31,23 @@ class TransactionControllerTest extends JsonApiTestCase
 
     }
 
+    public function testGETEmptyListResponse()
+    {
+        $this->client->jsonRequest('GET', '/api/transactions');
+        $response = $this->client->getResponse();
+        $this->assertResponse($response, 'empty_array', Response::HTTP_OK);
+    }
+
+    public function testGETListResponse()
+    {
+        $this->testPOSTResponse();
+
+        $this->client->jsonRequest('GET', '/api/transactions');
+        $response = $this->client->getResponse();
+        $contentArray = json_decode($response->getContent(), true);
+
+        $this->assertResponse($response, 'transactions', Response::HTTP_OK);
+        $this->assertCount(1, $contentArray);
+    }
+
 }

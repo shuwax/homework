@@ -1,0 +1,10 @@
+[
+  {
+    "id": "@integer@.greaterThan(0)",
+    "value": "@integer@",
+    "createdAt": "@string@",
+    "customer": {
+      "id": "@integer@.greaterThan(0)"
+    }
+  }
+]
