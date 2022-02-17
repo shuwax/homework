@@ -2,7 +2,7 @@
 
 namespace App\EventSubscriber\ControllerHandler\CustomerAction;
 
-use App\Event\ControllerHandler\UpdateCustomerEvent;
+use App\Event\ControllerHandler\Customer\UpdateCustomerEvent;
 use App\Service\Customer\IPutCustomerService;
 use App\Service\Logger\ILoggerService;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;

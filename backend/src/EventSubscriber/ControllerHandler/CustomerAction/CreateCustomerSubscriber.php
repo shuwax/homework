@@ -2,7 +2,7 @@
 
 namespace App\EventSubscriber\ControllerHandler\CustomerAction;
 
-use App\Event\ControllerHandler\CreateCustomerEvent;
+use App\Event\ControllerHandler\Customer\CreateCustomerEvent;
 use App\Service\Customer\IPostCustomerService;
 use App\Service\Logger\ILoggerService;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;

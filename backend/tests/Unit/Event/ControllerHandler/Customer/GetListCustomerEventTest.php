@@ -1,6 +1,6 @@
 <?php
 
-use App\Event\ControllerHandler\GetListCustomerEvent;
+use App\Event\ControllerHandler\Customer\GetListCustomerEvent;
 use App\Factory\Customer\CustomerFactory;
 use PHPUnit\Framework\TestCase;
 

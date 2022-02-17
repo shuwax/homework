@@ -2,8 +2,7 @@
 
 namespace App\EventSubscriber\ControllerHandler\CustomerAction;
 
-use App\Event\ControllerHandler\DeleteCustomerEvent;
-use App\Event\ControllerHandler\UpdateCustomerEvent;
+use App\Event\ControllerHandler\Customer\DeleteCustomerEvent;
 use App\Service\Customer\IDeleteCustomerService;
 use App\Service\Logger\ILoggerService;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;

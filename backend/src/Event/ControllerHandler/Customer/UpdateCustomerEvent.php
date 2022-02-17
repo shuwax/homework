@@ -1,26 +1,36 @@
 <?php
 
-namespace App\Event\ControllerHandler;
+namespace App\Event\ControllerHandler\Customer;
 
 
 use App\Entity\Customer;
 use Symfony\Contracts\EventDispatcher\Event;
 
 
-class CreateCustomerEvent extends Event
+class UpdateCustomerEvent extends Event
 {
 
-    public const NAME = 'controller.action.customer.createCustomer';
+    public const NAME = 'controller.action.customer.updateCustomer';
 
 
-    private array $customerData = [];
+    private array $customerData;
 
+    private int $customerId;
 
     private ?Customer $customer = null;
 
-    public function __construct(array $customerData)
+    public function __construct(array $customerData, int $customerId)
     {
         $this->customerData = $customerData;
+        $this->customerId = $customerId;
+    }
+
+    /**
+     * @return array|int
+     */
+    public function getCustomerId(): int
+    {
+        return $this->customerId;
     }
 
     /**

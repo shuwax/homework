@@ -6,43 +6,66 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Serializer\SerializerInterface;
 
 class AbstractApiController extends AbstractController
 {
     /**
      * @param $data
      * @param int $statusCode
+     * @return Response
+     */
+    private function response($data, int $statusCode): Response
+    {
+        return new Response($data, $statusCode);
+    }
+
+    /**
+     * @param $data
+     * @param int $statusCode
      * @return JsonResponse
      */
-    private function response($data, int $statusCode): JsonResponse
+    private function jsonResponse($data, int $statusCode): JsonResponse
     {
         return $this->json($data, $statusCode);
     }
 
     /**
+     * @param SerializerInterface $serializer
      * @param $data
-     * @return JsonResponse
+     * @param array $serializeGroup
+     * @param string $type
+     * @return string
      */
-    protected function responseOk($data): JsonResponse
+    protected function serializer(SerializerInterface $serializer, $data, array $serializeGroup = [], string $type = 'json'): string
     {
-        return $this->json($data, Response::HTTP_OK);
+        return $serializer->serialize($data, $type, ["groups" => $serializeGroup]);
     }
 
     /**
      * @param $data
-     * @return JsonResponse
+     * @return Response
      */
-    protected function responseCreated($data): JsonResponse
+    protected function responseOk($data): Response
     {
-        return $this->json($data, Response::HTTP_CREATED);
+        return $this->response($data, Response::HTTP_OK);
     }
 
     /**
-     * @return JsonResponse
+     * @param $data
+     * @return Response
      */
-    protected function responseNoContent(): JsonResponse
+    protected function responseCreated($data): Response
     {
-        return $this->json([], Response::HTTP_NO_CONTENT);
+        return $this->response($data, Response::HTTP_CREATED);
+    }
+
+    /**
+     * @return Response
+     */
+    protected function responseNoContent(): Response
+    {
+        return $this->jsonResponse([], Response::HTTP_NO_CONTENT);
     }
 
     /**

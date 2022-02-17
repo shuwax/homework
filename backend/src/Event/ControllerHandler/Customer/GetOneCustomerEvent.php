@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Event\ControllerHandler;
+namespace App\Event\ControllerHandler\Customer;
 
 
 use App\Entity\Customer;

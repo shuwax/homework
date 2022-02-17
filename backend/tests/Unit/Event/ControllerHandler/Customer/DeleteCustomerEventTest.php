@@ -1,6 +1,6 @@
 <?php
 
-use App\Event\ControllerHandler\DeleteCustomerEvent;
+use App\Event\ControllerHandler\Customer\DeleteCustomerEvent;
 use PHPUnit\Framework\TestCase;
 
 class DeleteCustomerEventTest extends TestCase
