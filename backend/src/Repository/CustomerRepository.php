@@ -32,7 +32,8 @@ class CustomerRepository extends ServiceEntityRepository implements ICustomerRep
         return $customer;
     }
 
-    public function findAllCustomers(): array {
+    public function findAllCustomers(): array
+    {
         return $this->findAll();
     }
 
@@ -43,7 +44,7 @@ class CustomerRepository extends ServiceEntityRepository implements ICustomerRep
 
     public function delete(Customer $customer): void
     {
-       $this->_em->remove($customer);
-       $this->_em->flush();
+        $this->_em->remove($customer);
+        $this->_em->flush();
     }
 }

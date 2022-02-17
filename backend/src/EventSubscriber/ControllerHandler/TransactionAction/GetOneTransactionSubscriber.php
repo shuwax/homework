@@ -15,7 +15,7 @@ class GetOneTransactionSubscriber implements EventSubscriberInterface
 
     public function __construct(
         IGetOneTransactionService $getOneTransactionService,
-        ILoggerService $loggerService
+        ILoggerService            $loggerService
     )
     {
         $this->getOneTransactionService = $getOneTransactionService;
@@ -24,19 +24,21 @@ class GetOneTransactionSubscriber implements EventSubscriberInterface
 
     public static function getSubscribedEvents()
     {
-       return [
-           GetOneTransactionEvent::NAME => [
-               ['onCallGetOneTransactions', 10],
-               ['onCallGetOneTransactionsLogger', -10]
-           ]
-       ];
+        return [
+            GetOneTransactionEvent::NAME => [
+                ['onCallGetOneTransactions', 10],
+                ['onCallGetOneTransactionsLogger', -10]
+            ]
+        ];
     }
 
-    public function onCallGetOneTransactionsLogger(GetOneTransactionEvent $getOneTransactionEvent) {
-        $this->loggerService->logMessage('Call transaction id: '.$getOneTransactionEvent->getTransaction()->getId());
+    public function onCallGetOneTransactionsLogger(GetOneTransactionEvent $getOneTransactionEvent)
+    {
+        $this->loggerService->logMessage('Call transaction id: ' . $getOneTransactionEvent->getTransaction()->getId());
     }
 
-    public function onCallGetOneTransactions (GetOneTransactionEvent $getOneTransactionEvent): void {
+    public function onCallGetOneTransactions(GetOneTransactionEvent $getOneTransactionEvent): void
+    {
         $transaction = $this->getOneTransactionService->getOne($getOneTransactionEvent->getTransactionId());
         $getOneTransactionEvent->setTransaction($transaction);
     }

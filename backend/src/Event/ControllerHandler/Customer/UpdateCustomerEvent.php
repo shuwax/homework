@@ -59,5 +59,4 @@ class UpdateCustomerEvent extends Event
     }
 
 
-
 }

@@ -46,5 +46,4 @@ class GetOneTransactionEvent extends Event
     }
 
 
-
 }

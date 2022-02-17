@@ -14,7 +14,7 @@ class PostCustomerService implements IPostCustomerService
     private ICustomerRepository $customerRepository;
 
     public function __construct(
-        ICustomerFactory $customerFactory,
+        ICustomerFactory    $customerFactory,
         ICustomerRepository $customerRepository
     )
     {

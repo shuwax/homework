@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-use App\Event\ControllerHandler\Customer\DeleteCustomerEvent;
 use App\Event\ControllerHandler\Transaction\CreateTransactionEvent;
 use App\Event\ControllerHandler\Transaction\DeleteTransactionEvent;
 use App\Event\ControllerHandler\Transaction\GetListTransactionEvent;

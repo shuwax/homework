@@ -15,7 +15,7 @@ class CreateCustomerSubscriber implements EventSubscriberInterface
 
     public function __construct(
         IPostCustomerService $postCustomerService,
-        ILoggerService $loggerService
+        ILoggerService       $loggerService
     )
     {
         $this->postCustomerService = $postCustomerService;
@@ -24,19 +24,21 @@ class CreateCustomerSubscriber implements EventSubscriberInterface
 
     public static function getSubscribedEvents()
     {
-       return [
-           CreateCustomerEvent::NAME => [
-               ['onCallCreateCustomer', 10],
-               ['onCallCreateCustomerLogger', -10]
-           ]
-       ];
+        return [
+            CreateCustomerEvent::NAME => [
+                ['onCallCreateCustomer', 10],
+                ['onCallCreateCustomerLogger', -10]
+            ]
+        ];
     }
 
-    public function onCallCreateCustomerLogger(CreateCustomerEvent $createCustomerEvent) {
-        $this->loggerService->logMessage('Call create user: '.$createCustomerEvent->getCustomer()->getId());
+    public function onCallCreateCustomerLogger(CreateCustomerEvent $createCustomerEvent)
+    {
+        $this->loggerService->logMessage('Call create user: ' . $createCustomerEvent->getCustomer()->getId());
     }
 
-    public function onCallCreateCustomer (CreateCustomerEvent $createCustomerEvent): void {
+    public function onCallCreateCustomer(CreateCustomerEvent $createCustomerEvent): void
+    {
         $customer = $this->postCustomerService->create($createCustomerEvent->getCustomerData());
         $createCustomerEvent->setCustomer($customer);
     }

@@ -17,7 +17,8 @@ class GetAliveService implements IGetAliveService
     /**
      * @return string[]
      */
-    public function getAlive():array  {
+    public function getAlive(): array
+    {
         $this->logger->info('Application alive');
         return [
             'message' => 'alive'

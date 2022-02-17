@@ -15,7 +15,7 @@ class GetListTransactionSubscriber implements EventSubscriberInterface
 
     public function __construct(
         IGetListTransactionService $getListTransactionService,
-        ILoggerService $loggerService
+        ILoggerService             $loggerService
     )
     {
         $this->getListTransactionService = $getListTransactionService;
@@ -24,19 +24,21 @@ class GetListTransactionSubscriber implements EventSubscriberInterface
 
     public static function getSubscribedEvents()
     {
-       return [
-           GetListTransactionEvent::NAME => [
-               ['onCallGetListTransactions', 10],
-               ['onCallGetListTransactionsLogger', -10]
-           ]
-       ];
+        return [
+            GetListTransactionEvent::NAME => [
+                ['onCallGetListTransactions', 10],
+                ['onCallGetListTransactionsLogger', -10]
+            ]
+        ];
     }
 
-    public function onCallGetListTransactionsLogger(GetListTransactionEvent $getListTransactionEvent) {
+    public function onCallGetListTransactionsLogger(GetListTransactionEvent $getListTransactionEvent)
+    {
         $this->loggerService->logMessage('Call  transaction list ');
     }
 
-    public function onCallGetListTransactions (GetListTransactionEvent $getListTransactionEvent): void {
+    public function onCallGetListTransactions(GetListTransactionEvent $getListTransactionEvent): void
+    {
         $transactions = $this->getListTransactionService->getList();
         $getListTransactionEvent->setTransactions($transactions);
     }

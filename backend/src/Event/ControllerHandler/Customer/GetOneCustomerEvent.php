@@ -48,5 +48,4 @@ class GetOneCustomerEvent extends Event
     }
 
 
-
 }

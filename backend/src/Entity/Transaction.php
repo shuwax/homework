@@ -60,6 +60,7 @@ class Transaction
             $this->setCreatedAt(new \DateTime('now'));
         }
     }
+
     public function getId(): ?int
     {
         return $this->id;

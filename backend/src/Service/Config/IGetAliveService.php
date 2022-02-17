@@ -8,5 +8,5 @@ interface IGetAliveService
     /**
      * @return array
      */
-    public function getAlive():array;
+    public function getAlive(): array;
 }

@@ -49,5 +49,4 @@ class CreateCustomerEvent extends Event
     }
 
 
-
 }

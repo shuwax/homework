@@ -47,5 +47,4 @@ class CreateTransactionEvent extends Event
     }
 
 
-
 }

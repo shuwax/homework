@@ -17,8 +17,8 @@ class PostTransactionService implements IPostTransactionService
     private ITransactionRepository $transactionRepository;
 
     public function __construct(
-        ITransactionFactory $transactionFactory,
-        ICustomerRepository $customerRepository,
+        ITransactionFactory    $transactionFactory,
+        ICustomerRepository    $customerRepository,
         ITransactionRepository $transactionRepository
     )
     {

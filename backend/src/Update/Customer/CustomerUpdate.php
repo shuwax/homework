@@ -11,7 +11,8 @@ class CustomerUpdate implements ICustomerUpdate
      * @param array $data
      * @return Customer
      */
-    public function update(Customer $customer, array $data): Customer {
+    public function update(Customer $customer, array $data): Customer
+    {
         $customer->setName($data['name']);
         return $customer;
     }

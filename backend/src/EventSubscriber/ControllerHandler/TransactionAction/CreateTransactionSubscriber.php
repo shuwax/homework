@@ -15,7 +15,7 @@ class CreateTransactionSubscriber implements EventSubscriberInterface
 
     public function __construct(
         IPostTransactionService $postTransactionService,
-        ILoggerService $loggerService
+        ILoggerService          $loggerService
     )
     {
         $this->postTransactionService = $postTransactionService;
@@ -24,19 +24,21 @@ class CreateTransactionSubscriber implements EventSubscriberInterface
 
     public static function getSubscribedEvents()
     {
-       return [
-           CreateTransactionEvent::NAME => [
-               ['onCallCreateTransaction', 10],
-               ['onCallCreateTransactionLogger', -10]
-           ]
-       ];
+        return [
+            CreateTransactionEvent::NAME => [
+                ['onCallCreateTransaction', 10],
+                ['onCallCreateTransactionLogger', -10]
+            ]
+        ];
     }
 
-    public function onCallCreateTransactionLogger(CreateTransactionEvent $createTransactionEvent) {
-        $this->loggerService->logMessage('Call create transaction: '.$createTransactionEvent->getTransaction()->getId());
+    public function onCallCreateTransactionLogger(CreateTransactionEvent $createTransactionEvent)
+    {
+        $this->loggerService->logMessage('Call create transaction: ' . $createTransactionEvent->getTransaction()->getId());
     }
 
-    public function onCallCreateTransaction (CreateTransactionEvent $createTransactionEvent): void {
+    public function onCallCreateTransaction(CreateTransactionEvent $createTransactionEvent): void
+    {
         $transaction = $this->postTransactionService->create($createTransactionEvent->getTransactionData());
         $createTransactionEvent->setTransaction($transaction);
     }
