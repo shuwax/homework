@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Event\ControllerHandler\GetListCustomerEvent;
 use App\Event\ControllerHandler\GetOneCustomerEvent;
 use App\Service\Customer\IDeleteCustomerService;
 use App\Service\Customer\IGetListCustomerService;
@@ -27,9 +28,11 @@ class CustomerController extends AbstractApiController
     /**
      * @Route("/customers", name="customers_get", methods="GET" )
      */
-    public function getList(IGetListCustomerService $getListCustomerService): Response
+    public function getList(EventDispatcherInterface $dispatcher): Response
     {
-        return $this->responseOK($getListCustomerService->getList());
+        $getListCustomerEvent = new GetListCustomerEvent();
+        $dispatcher->dispatch($getListCustomerEvent, GetListCustomerEvent::NAME);
+        return $this->responseOK($getListCustomerEvent->getCustomers());
     }
 
     /**
