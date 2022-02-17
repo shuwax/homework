@@ -8,9 +8,9 @@ interface ICustomerUpdate
 {
     /**
      * @param Customer $customer
-     * @param string $name
+     * @param  array $data
      * @return Customer
      */
-    public function update(Customer $customer, string $name): Customer;
+    public function update(Customer $customer, array $data): Customer;
 
 }

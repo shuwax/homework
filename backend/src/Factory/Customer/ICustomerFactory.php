@@ -8,9 +8,9 @@ interface ICustomerFactory
 {
 
     /**
-     * @param string $name
+     * @param array $data
      * @return Customer
      */
-    public function create(string $name): Customer;
+    public function create(array $data): Customer;
 
 }

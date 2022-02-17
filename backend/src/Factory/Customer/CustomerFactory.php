@@ -3,32 +3,16 @@
 namespace App\Factory\Customer;
 
 use App\Entity\Customer;
-use App\Repository\Interfaces\ICustomerRepository;
 
 class CustomerFactory implements ICustomerFactory
 {
-
     /**
-     * @var ICustomerRepository
-     */
-    private ICustomerRepository $customerRepository;
-
-    /**
-     * @param ICustomerRepository $customerRepository
-     */
-    public function __construct(ICustomerRepository $customerRepository)
-    {
-        $this->customerRepository = $customerRepository;
-    }
-
-    /**
-     * @param string $name
+     * @param array $data
      * @return Customer
      */
-    public function create(string $name): Customer {
+    public function create(array $data): Customer {
         $customer = new Customer();
-        $customer->setName($name);
-        $this->customerRepository->save($customer);
+        $customer->setName($data['name']);
         return $customer;
     }
 

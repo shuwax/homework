@@ -4,20 +4,28 @@ namespace App\Service\Customer;
 
 
 use App\Entity\Customer;
-use App\Factory\Customer\CustomerFactory;
+use App\Factory\Customer\ICustomerFactory;
+use App\Repository\Interfaces\ICustomerRepository;
 
 class PostCustomerService implements IPostCustomerService
 {
 
-    private CustomerFactory $customerFactory;
+    private ICustomerFactory $customerFactory;
+    private ICustomerRepository $customerRepository;
 
-    public function __construct(CustomerFactory $customerFactory)
+    public function __construct(
+        ICustomerFactory $customerFactory,
+        ICustomerRepository $customerRepository
+    )
     {
         $this->customerFactory = $customerFactory;
+        $this->customerRepository = $customerRepository;
     }
 
     public function create(array $data): Customer
     {
-        return $this->customerFactory->create($data['name']);
+        $customer = $this->customerFactory->create($data);
+        $this->customerRepository->save($customer);
+        return $customer;
     }
 }
