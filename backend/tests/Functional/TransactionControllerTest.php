@@ -76,5 +76,23 @@ class TransactionControllerTest extends JsonApiTestCase
         $this->assertResponseStatusCodeSame(Response::HTTP_NO_CONTENT);
     }
 
+    public function testPUTResponse()
+    {
+        //Create customer
+        $this->testPOSTResponse();
+        $response = $this->client->getResponse();
+        $responseContent = json_decode($response->getContent(), true);
+
+        $requestBody = ["value" => 13000];
+        $this->client->jsonRequest('PUT', '/api/transactions/' . $responseContent['id'], $requestBody);
+
+        $response = $this->client->getResponse();
+        $updatedContent = json_decode($response->getContent(), true);
+
+        $this->assertResponse($response, 'transaction', Response::HTTP_OK);
+        $this->assertEquals($updatedContent['value'], $requestBody['value']);
+        $this->assertNotEquals($updatedContent['value'], $responseContent['value']);
+    }
+
 
 }

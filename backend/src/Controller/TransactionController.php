@@ -7,6 +7,7 @@ use App\Event\ControllerHandler\Transaction\CreateTransactionEvent;
 use App\Event\ControllerHandler\Transaction\DeleteTransactionEvent;
 use App\Event\ControllerHandler\Transaction\GetListTransactionEvent;
 use App\Event\ControllerHandler\Transaction\GetOneTransactionEvent;
+use App\Event\ControllerHandler\Transaction\UpdateTransactionEvent;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -46,6 +47,17 @@ class TransactionController extends AbstractApiController
         $dispatcher->dispatch($getOneTransactionEvent, GetOneTransactionEvent::NAME);
 
         return $this->responseOk($this->serializer($serializer, $getOneTransactionEvent->getTransaction(), ['transaction:show']));
+    }
+
+    /**
+     * @Route("/transactions/{transactionId}", name="transaction_put", methods="PUT" )
+     */
+    public function put(SerializerInterface $serializer, EventDispatcherInterface $dispatcher, int $transactionId, Request $request): Response
+    {
+        $updateTransactionEvent = new UpdateTransactionEvent($this->getRequestContent($request), $transactionId);
+        $dispatcher->dispatch($updateTransactionEvent, UpdateTransactionEvent::NAME);
+
+        return $this->responseOk($this->serializer($serializer, $updateTransactionEvent->getTransaction(), ['transaction:put']));
     }
 
     /**

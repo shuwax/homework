@@ -15,20 +15,20 @@ class Transaction
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"transaction:post", "transaction:list", "transaction:show"})
+     * @Groups({"transaction:post", "transaction:list", "transaction:show", "transaction:put"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="integer")
-     * @Groups({"transaction:post", "transaction:list", "transaction:show"})
+     * @Groups({"transaction:post", "transaction:list", "transaction:show", "transaction:put"})
      *
      */
     private $value;
 
     /**
      * @ORM\Column(type="datetime")
-     * @Groups({"transaction:post", "transaction:list", "transaction:show"})
+     * @Groups({"transaction:post", "transaction:list", "transaction:show", "transaction:put"})
      *
      */
     private $createdAt;
@@ -42,7 +42,7 @@ class Transaction
     /**
      * @ORM\ManyToOne(targetEntity=Customer::class, inversedBy="transactions")
      * @ORM\JoinColumn(nullable=false)
-     * @Groups({"transaction:post", "transaction:list", "transaction:show"})
+     * @Groups({"transaction:post", "transaction:list", "transaction:show", "transaction:put"})
      *
      */
     private $customer;
