@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Event\ControllerHandler\Transaction\CreateTransactionEvent;
 use App\Event\ControllerHandler\Transaction\GetListTransactionEvent;
+use App\Event\ControllerHandler\Transaction\GetOneTransactionEvent;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -24,7 +25,7 @@ class TransactionController extends AbstractApiController
     }
 
     /**
-     * @Route("/transactions", name="transactions_get_list", methods="GET" )
+     * @Route("/transactions", name="transactions_get", methods="GET" )
      */
     public function getList(SerializerInterface $serializer, EventDispatcherInterface $dispatcher): Response
     {
@@ -32,6 +33,17 @@ class TransactionController extends AbstractApiController
         $dispatcher->dispatch($getListTransactionEvent, GetListTransactionEvent::NAME);
 
         return $this->responseOk($this->serializer($serializer, $getListTransactionEvent->getTransactions(), ['transaction:list']));
+    }
+
+    /**
+     * @Route("/transactions/{transactionId}", name="transaction_get", methods="GET" )
+     */
+    public function getOne(SerializerInterface $serializer, EventDispatcherInterface $dispatcher, int $transactionId): Response
+    {
+        $getOneTransactionEvent = new GetOneTransactionEvent($transactionId);
+        $dispatcher->dispatch($getOneTransactionEvent, GetOneTransactionEvent::NAME);
+
+        return $this->responseOk($this->serializer($serializer, $getOneTransactionEvent->getTransaction(), ['transaction:show']));
     }
 
 }

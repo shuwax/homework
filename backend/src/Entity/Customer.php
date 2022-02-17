@@ -17,7 +17,7 @@ class Customer
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"customer:post", "customer:list", "customer:show", "customer:put", "transaction:post", "transaction:list"})
+     * @Groups({"customer:post", "customer:list", "customer:show", "customer:put", "transaction:post", "transaction:list", "transaction:show"})
      */
     private $id;
 

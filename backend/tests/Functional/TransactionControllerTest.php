@@ -50,4 +50,20 @@ class TransactionControllerTest extends JsonApiTestCase
         $this->assertCount(1, $contentArray);
     }
 
+    public function testGETOneResponse()
+    {
+        $this->testPOSTResponse();
+        $responseTransaction = $this->client->getResponse();
+        $transactionContent = json_decode($responseTransaction->getContent(), true);
+
+
+        $this->client->jsonRequest('GET', '/api/transactions/' . $transactionContent['id']);
+        $responseTransaction = $this->client->getResponse();
+        $transactionFromListContent = json_decode($responseTransaction->getContent(), true);
+
+        $this->assertResponse($responseTransaction, 'transaction', Response::HTTP_OK);
+        $this->assertEquals($transactionFromListContent['value'], $transactionContent['value']);
+    }
+
+
 }
