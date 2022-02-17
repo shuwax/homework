@@ -2,11 +2,10 @@
 
 namespace App\Controller;
 
+use App\Event\ControllerHandler\CreateCustomerEvent;
 use App\Event\ControllerHandler\GetListCustomerEvent;
 use App\Event\ControllerHandler\GetOneCustomerEvent;
 use App\Service\Customer\IDeleteCustomerService;
-use App\Service\Customer\IGetListCustomerService;
-use App\Service\Customer\IPostCustomerService;
 use App\Service\Customer\IPutCustomerService;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -18,11 +17,11 @@ class CustomerController extends AbstractApiController
     /**
      * @Route("/customers", name="customer_post", methods="POST" )
      */
-    public function post(IPostCustomerService $postCustomerService, Request $request): Response
+    public function post(EventDispatcherInterface $dispatcher, Request $request): Response
     {
-        $content = $request->getContent();
-        $contentArray = json_decode($content, true);
-        return $this->responseCREATED($postCustomerService->create($contentArray));
+        $createCustomerEvent = new CreateCustomerEvent($this->getRequestContent($request));
+        $dispatcher->dispatch($createCustomerEvent, CreateCustomerEvent::NAME);
+        return $this->responseCREATED($createCustomerEvent->getCustomer());
     }
 
     /**

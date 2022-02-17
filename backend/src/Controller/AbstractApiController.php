@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class AbstractApiController extends AbstractController
@@ -42,5 +43,14 @@ class AbstractApiController extends AbstractController
     protected function responseNoContent(): JsonResponse
     {
         return $this->json([], Response::HTTP_NO_CONTENT);
+    }
+
+    /**
+     * @param Request $request
+     * @return array
+     */
+    protected function getRequestContent(Request $request): array {
+        $content = $request->getContent();
+        return json_decode($content, true);
     }
 }
