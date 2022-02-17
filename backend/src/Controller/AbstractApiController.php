@@ -13,8 +13,34 @@ class AbstractApiController extends AbstractController
      * @param int $statusCode
      * @return JsonResponse
      */
-    protected function response($data, int $statusCode = Response::HTTP_OK): JsonResponse
+    private function response($data, int $statusCode): JsonResponse
     {
         return $this->json($data, $statusCode);
+    }
+
+    /**
+     * @param $data
+     * @return JsonResponse
+     */
+    protected function responseOk($data): JsonResponse
+    {
+        return $this->json($data, Response::HTTP_OK);
+    }
+
+    /**
+     * @param $data
+     * @return JsonResponse
+     */
+    protected function responseCreated($data): JsonResponse
+    {
+        return $this->json($data, Response::HTTP_CREATED);
+    }
+
+    /**
+     * @return JsonResponse
+     */
+    protected function responseNoContent(): JsonResponse
+    {
+        return $this->json([], Response::HTTP_NO_CONTENT);
     }
 }

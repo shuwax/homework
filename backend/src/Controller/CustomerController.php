@@ -2,11 +2,12 @@
 
 namespace App\Controller;
 
+use App\Event\ControllerHandler\GetOneCustomerEvent;
 use App\Service\Customer\IDeleteCustomerService;
-use App\Service\Customer\IGetCustomerService;
 use App\Service\Customer\IGetListCustomerService;
 use App\Service\Customer\IPostCustomerService;
 use App\Service\Customer\IPutCustomerService;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -20,7 +21,7 @@ class CustomerController extends AbstractApiController
     {
         $content = $request->getContent();
         $contentArray = json_decode($content, true);
-        return $this->response($postCustomerService->create($contentArray), Response::HTTP_CREATED);
+        return $this->responseCREATED($postCustomerService->create($contentArray));
     }
 
     /**
@@ -28,15 +29,17 @@ class CustomerController extends AbstractApiController
      */
     public function getList(IGetListCustomerService $getListCustomerService): Response
     {
-        return $this->response($getListCustomerService->getList());
+        return $this->responseOK($getListCustomerService->getList());
     }
 
     /**
      * @Route("/customers/{customerId}", name="customer_get", methods="GET" )
      */
-    public function getOne(IGetCustomerService $getCustomerService, $customerId): Response
+    public function getOne(EventDispatcherInterface $dispatcher, $customerId): Response
     {
-        return $this->response($getCustomerService->get($customerId));
+        $getOneCustomerEvent = new GetOneCustomerEvent($customerId);
+        $dispatcher->dispatch($getOneCustomerEvent, GetOneCustomerEvent::NAME);
+        return $this->responseOK($getOneCustomerEvent->getCustomer());
     }
 
     /**
@@ -46,7 +49,7 @@ class CustomerController extends AbstractApiController
     {
         $content = $request->getContent();
         $contentArray = json_decode($content, true);
-        return $this->response($putCustomerService->put($customerId, $contentArray));
+        return $this->responseOK($putCustomerService->put($customerId, $contentArray));
     }
 
     /**
@@ -56,6 +59,6 @@ class CustomerController extends AbstractApiController
     {
         $deleteCustomerService->delete($customerId);
 
-        return $this->response([], Response::HTTP_NO_CONTENT);
+        return $this->responseNoContent();
     }
 }
