@@ -13,7 +13,7 @@ class CreateCustomerEvent extends Event
     public const NAME = 'controller.action.customer.createCustomer';
 
 
-    private array $customerData;
+    private array $customerData = [];
 
 
     private ?Customer $customer = null;
