@@ -49,7 +49,8 @@ class AbstractApiController extends AbstractController
      * @param Request $request
      * @return array
      */
-    protected function getRequestContent(Request $request): array {
+    protected function getRequestContent(Request $request): array
+    {
         $content = $request->getContent();
         return json_decode($content, true);
     }

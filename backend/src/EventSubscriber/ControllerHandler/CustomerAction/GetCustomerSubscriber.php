@@ -15,7 +15,7 @@ class GetCustomerSubscriber implements EventSubscriberInterface
 
     public function __construct(
         IGetCustomerService $getCustomerService,
-        ILoggerService $loggerService
+        ILoggerService      $loggerService
     )
     {
         $this->getCustomerService = $getCustomerService;
@@ -24,19 +24,21 @@ class GetCustomerSubscriber implements EventSubscriberInterface
 
     public static function getSubscribedEvents()
     {
-       return [
-           GetOneCustomerEvent::NAME => [
-               ['onCallOneCustomer', 10],
-               ['onCallOneCustomerLogger', -10]
-           ]
-       ];
+        return [
+            GetOneCustomerEvent::NAME => [
+                ['onCallOneCustomer', 10],
+                ['onCallOneCustomerLogger', -10]
+            ]
+        ];
     }
 
-    public function onCallOneCustomerLogger(GetOneCustomerEvent $getOneCustomer) {
-        $this->loggerService->logMessage('Call for user: '.$getOneCustomer->getCustomerId());
+    public function onCallOneCustomerLogger(GetOneCustomerEvent $getOneCustomer)
+    {
+        $this->loggerService->logMessage('Call for user: ' . $getOneCustomer->getCustomerId());
     }
 
-    public function onCallOneCustomer (GetOneCustomerEvent $getOneCustomer): void {
+    public function onCallOneCustomer(GetOneCustomerEvent $getOneCustomer): void
+    {
         $customer = $this->getCustomerService->get($getOneCustomer->getCustomerId());
         $getOneCustomer->setCustomer($customer);
     }
