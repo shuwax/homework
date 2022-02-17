@@ -32,6 +32,8 @@ class PutCustomerService implements IPutCustomerService
             throw new NotFoundHttpException();
         }
 
-        return $this->customerUpdate->update($customer, $data['name']);
+        $customer = $this->customerUpdate->update($customer, $data);
+        $this->customerRepository->save($customer);
+        return $customer;
     }
 }

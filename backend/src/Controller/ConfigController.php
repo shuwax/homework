@@ -13,6 +13,6 @@ class ConfigController extends AbstractApiController
      */
     public function alive(IGetAliveService $getAliveService): Response
     {
-        return $this->response($getAliveService->getAlive());
+        return $this->responseOk($getAliveService->getAlive());
     }
 }
