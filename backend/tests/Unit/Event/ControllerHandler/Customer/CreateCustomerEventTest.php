@@ -18,7 +18,7 @@ class CreateCustomerEventTest extends TestCase
         $this->assertEquals(null, $createCustomerEvent->getCustomer());
         $this->assertEquals($customerData, $createCustomerEvent->getCustomerData());
 
-        $this->assertEquals('controller.action.customer.createCustomer', $createCustomerEvent::NAME);
+        $this->assertEquals('controller.action.customer.createCustomer', CreateCustomerEvent::NAME);
 
 
         $createCustomerEvent->setCustomer($customer);

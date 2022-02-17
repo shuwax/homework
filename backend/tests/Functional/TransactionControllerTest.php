@@ -65,5 +65,16 @@ class TransactionControllerTest extends JsonApiTestCase
         $this->assertEquals($transactionFromListContent['value'], $transactionContent['value']);
     }
 
+    public function testDeleteResponse()
+    {
+        $this->testPOSTResponse();
+        $response = $this->client->getResponse();
+        $transactionContent = json_decode($response->getContent(), true);
+
+        $this->client->jsonRequest('DELETE', '/api/transactions/' . $transactionContent['id']);
+
+        $this->assertResponseStatusCodeSame(Response::HTTP_NO_CONTENT);
+    }
+
 
 }

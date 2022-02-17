@@ -13,7 +13,7 @@ class DeleteCustomerEventTest extends TestCase
 
         $this->assertEquals($customerId, $deleteCustomerEvent->getCustomerId());
 
-        $this->assertEquals('controller.action.customer.deleteCustomer', $deleteCustomerEvent::NAME);
+        $this->assertEquals('controller.action.customer.deleteCustomer', DeleteCustomerEvent::NAME);
 
     }
 }

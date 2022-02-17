@@ -16,7 +16,7 @@ class GetOneCustomerEventTest extends TestCase
 
         $this->assertEquals(null, $getOneCustomerEvent->getCustomer());
         $this->assertEquals($customerId, $getOneCustomerEvent->getCustomerId());
-        $this->assertEquals('controller.action.customer.getOneCustomer', $getOneCustomerEvent::NAME);
+        $this->assertEquals('controller.action.customer.getOneCustomer', GetOneCustomerEvent::NAME);
         $getOneCustomerEvent->setCustomer($customer);
         $this->assertEquals($customer->getName(), $getOneCustomerEvent->getCustomer()->getName());
 

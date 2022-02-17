@@ -20,14 +20,15 @@ class GetOneTransactionEventTest extends TestCase
         $transactionData['customer'] = $customer;
         $transaction = $transactionFactory->create($transactionData);
 
-        $getOneTransactionEvent = new GetOneTransactionEvent($transactionData['customerId']);
+        $transactionId = 1;
+        $getOneTransactionEvent = new GetOneTransactionEvent($transactionId);
         $this->assertEquals(null, $getOneTransactionEvent->getTransaction());
 
-        $this->assertEquals('controller.action.transaction.getOneTransaction', $getOneTransactionEvent::NAME);
+        $this->assertEquals('controller.action.transaction.getOneTransaction', GetOneTransactionEvent::NAME);
 
         $getOneTransactionEvent->setTransaction($transaction);
         $this->assertEquals($transaction->getValue(), $getOneTransactionEvent->getTransaction()->getValue());
-        $this->assertEquals($transactionData['customerId'], $getOneTransactionEvent->getTransactionId());
+        $this->assertEquals($transactionId, $getOneTransactionEvent->getTransactionId());
 
     }
 }

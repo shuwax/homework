@@ -20,7 +20,7 @@ class PutCustomerEventTest extends TestCase
         $this->assertEquals(null, $updateCustomerEvent->getCustomer());
         $this->assertEquals($customerUpdateData, $updateCustomerEvent->getCustomerData());
 
-        $this->assertEquals('controller.action.customer.updateCustomer', $updateCustomerEvent::NAME);
+        $this->assertEquals('controller.action.customer.updateCustomer', UpdateCustomerEvent::NAME);
 
         $updateCustomerEvent->setCustomer($customer);
         $this->assertEquals($customer->getName(), $updateCustomerEvent->getCustomer()->getName());

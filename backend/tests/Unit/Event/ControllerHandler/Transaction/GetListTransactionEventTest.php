@@ -24,7 +24,7 @@ class GetListTransactionEventTest extends TestCase
         $getListTransactionEvent = new GetListTransactionEvent();
         $this->assertCount(0, $getListTransactionEvent->getTransactions());
 
-        $this->assertEquals('controller.action.transaction.getListTransactions', $getListTransactionEvent::NAME);
+        $this->assertEquals('controller.action.transaction.getListTransactions', GetListTransactionEvent::NAME);
 
         $getListTransactionEvent->setTransactions([$transaction]);
         $this->assertCount(1, $getListTransactionEvent->getTransactions());

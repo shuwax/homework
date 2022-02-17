@@ -2,7 +2,9 @@
 
 namespace App\Controller;
 
+use App\Event\ControllerHandler\Customer\DeleteCustomerEvent;
 use App\Event\ControllerHandler\Transaction\CreateTransactionEvent;
+use App\Event\ControllerHandler\Transaction\DeleteTransactionEvent;
 use App\Event\ControllerHandler\Transaction\GetListTransactionEvent;
 use App\Event\ControllerHandler\Transaction\GetOneTransactionEvent;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -44,6 +46,17 @@ class TransactionController extends AbstractApiController
         $dispatcher->dispatch($getOneTransactionEvent, GetOneTransactionEvent::NAME);
 
         return $this->responseOk($this->serializer($serializer, $getOneTransactionEvent->getTransaction(), ['transaction:show']));
+    }
+
+    /**
+     * @Route("/transactions/{transactionId}", name="transaction_delete", methods="DELETE" )
+     */
+    public function delete(EventDispatcherInterface $dispatcher, int $transactionId): Response
+    {
+        $deleteTransactionEvent = new DeleteTransactionEvent($transactionId);
+        $dispatcher->dispatch($deleteTransactionEvent, DeleteTransactionEvent::NAME);
+
+        return $this->responseNoContent();
     }
 
 }

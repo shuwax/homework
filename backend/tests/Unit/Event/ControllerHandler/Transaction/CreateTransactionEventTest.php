@@ -24,7 +24,7 @@ class CreateTransactionEventTest extends TestCase
         $createTransactionEvent = new CreateTransactionEvent($transactionData);
         $this->assertEquals(null, $createTransactionEvent->getTransaction());
 
-        $this->assertEquals('controller.action.transaction.createTransactions', $createTransactionEvent::NAME);
+        $this->assertEquals('controller.action.transaction.createTransactions', CreateTransactionEvent::NAME);
 
         $createTransactionEvent->setTransaction($transaction);
         $this->assertEquals($transactionData['value'], $createTransactionEvent->getTransaction()->getValue());
