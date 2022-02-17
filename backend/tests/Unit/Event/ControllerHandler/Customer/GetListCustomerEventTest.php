@@ -13,7 +13,6 @@ class GetListCustomerEventTest extends TestCase
         $customer = $customerFactory->create($customerData);
 
         $getListCustomerEvent = new GetListCustomerEvent();
-        $customer->setName('Jan Kowalski');
         $this->assertCount(0, $getListCustomerEvent->getCustomers());
 
         $this->assertEquals('controller.action.customer.getListCustomers', $getListCustomerEvent::NAME);
