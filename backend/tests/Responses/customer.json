@@ -1,4 +1,5 @@
 {
   "id": "@integer@.greaterThan(0)",
-  "name": "@string@"
+  "name": "@string@",
+  "rewardPointsOverall": "@integer@"
 }

@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\TransactionRepository;
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 
@@ -24,7 +25,7 @@ class Transaction
      * @Groups({"transaction:post", "transaction:list", "transaction:show", "transaction:put"})
      *
      */
-    private $value;
+    private int $value;
 
     /**
      * @ORM\Column(type="datetime")
@@ -45,7 +46,7 @@ class Transaction
      * @Groups({"transaction:post", "transaction:list", "transaction:show", "transaction:put"})
      *
      */
-    private $customer;
+    private Customer $customer;
 
     public function __construct()
     {

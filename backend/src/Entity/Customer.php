@@ -25,12 +25,17 @@ class Customer
      * @ORM\Column(type="string", length=255)
      * @Groups({"customer:post", "customer:list", "customer:show", "customer:put"})
      */
-    private $name;
+    private string $name;
 
     /**
      * @ORM\OneToMany(targetEntity=Transaction::class, mappedBy="customer", orphanRemoval=true)
      */
     private $transactions;
+
+    /**
+     * @Groups({"customer:post", "customer:list", "customer:show", "customer:put"})
+     */
+    private int $rewardPointsOverall = 0;
 
     public function __construct()
     {
@@ -83,4 +88,22 @@ class Customer
 
         return $this;
     }
+
+    /**
+     * @return int
+     */
+    public function getRewardPointsOverall(): int
+    {
+        return $this->rewardPointsOverall;
+    }
+
+    /**
+     * @param int $rewardPointsOverall
+     */
+    public function setRewardPointsOverall(int $rewardPointsOverall): void
+    {
+        $this->rewardPointsOverall = $rewardPointsOverall;
+    }
+
+
 }
