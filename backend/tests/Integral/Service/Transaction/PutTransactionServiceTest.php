@@ -27,14 +27,14 @@ class PutTransactionServiceTest extends KernelTestCase
         $customer = $customerPostService->create($customerData);
 
         $transactionData = [
-            'value' => 12000,
+            'value' => 120,
             'customerId' => $customer->getId()
         ];
         /** @var Transaction $transaction */
         $transaction = $transactionPostService->create($transactionData);
 
         $transactionUpdateData = [
-            'value' => 13000
+            'value' => 130
         ];
 
 
@@ -43,6 +43,7 @@ class PutTransactionServiceTest extends KernelTestCase
 
         $this->assertEquals(true, $transactionUpdate instanceof Transaction);
         $this->assertEquals($transactionUpdate->getValue(), $transactionUpdateData['value']);
+        $this->assertEquals($transactionUpdate->getRawValue(), $transactionUpdateData['value'] * 100);
         $this->assertEquals($transactionUpdate->getCustomer()->getName(), $customerData['name']);
 
         $this->assertGreaterThanOrEqual($transactionUpdate->getCreatedAt(), new \DateTime('now'));

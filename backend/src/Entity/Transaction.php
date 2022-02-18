@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\TransactionRepository;
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
+use PhpParser\Node\Expr\Cast\Double;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
@@ -21,11 +22,17 @@ class Transaction
     private $id;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="float")
      * @Groups({"transaction:post", "transaction:list", "transaction:show", "transaction:put"})
      *
      */
-    private int $value;
+    private float $value;
+
+    /**
+     * @ORM\Column(type="integer")
+     * @Groups({"transaction:post", "transaction:list", "transaction:show", "transaction:put"})
+     */
+    private int $rawValue;
 
     /**
      * @ORM\Column(type="datetime")
@@ -48,6 +55,8 @@ class Transaction
      */
     private Customer $customer;
 
+
+
     public function __construct()
     {
         $this->updateTimestamps();
@@ -67,14 +76,21 @@ class Transaction
         return $this->id;
     }
 
-    public function getValue(): ?int
+    public function getRawValue(): ?int
+    {
+        return $this->rawValue;
+    }
+
+
+    public function getValue(): ?float
     {
         return $this->value;
     }
 
-    public function setValue(int $value): self
+    public function setValue(float $value): self
     {
         $this->value = $value;
+        $this->rawValue = intval($value * 100);
 
         return $this;
     }
@@ -114,4 +130,6 @@ class Transaction
 
         return $this;
     }
+
+
 }

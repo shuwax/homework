@@ -11,7 +11,7 @@ class PutTransactionEventTest extends TestCase
     public function testEventSetup()
     {
         $customerData = ['name' => 'Jan Kowalski'];
-        $transactionData = ["value" => 12000, "customerId" => 1];
+        $transactionData = ["value" => 120, "customerId" => 1];
 
         $customerFactory = new CustomerFactory();
         $transactionFactory = new TransactionFactory();
@@ -23,7 +23,7 @@ class PutTransactionEventTest extends TestCase
 
         $transactionId = 1;
 
-        $transactionUpdateData = ["value" => 13000];
+        $transactionUpdateData = ["value" => 130];
         $updateTransactionEvent = new UpdateTransactionEvent($transactionUpdateData, $transactionId);
         $this->assertEquals(null, $updateTransactionEvent->getTransaction());
 
@@ -31,6 +31,7 @@ class PutTransactionEventTest extends TestCase
 
         $updateTransactionEvent->setTransaction($transaction);
         $this->assertEquals($transaction->getValue(), $updateTransactionEvent->getTransaction()->getValue());
+        $this->assertEquals($transaction->getRawValue(), $updateTransactionEvent->getTransaction()->getRawValue());
         $this->assertEquals($transactionId, $updateTransactionEvent->getTransactionId());
 
     }

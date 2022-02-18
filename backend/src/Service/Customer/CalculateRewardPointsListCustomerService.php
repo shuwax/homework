@@ -13,17 +13,24 @@ class CalculateRewardPointsListCustomerService implements ICalculateRewardPoints
     {
         /** @var Customer $customer */
         foreach ($customers as $customer) {
-            $transactions = $customer->getTransactions();
-            $customerRewardPointsOverall = $customer->getRewardPointsOverall();
-            /** @var Transaction $transaction */
-            foreach ($transactions as $transaction) {
-                $calculatorRewardPoints = new TransactionToRewardPoint($transaction->getValue());
-                $calculatorRewardPoints->calculateRewardPoint();
-                $customerRewardPointsOverall += $calculatorRewardPoints->getRewardPoints();
-            }
-            $customer->setRewardPointsOverall($customerRewardPointsOverall);
+            $this->calculateRewardPointsCustomer($customer);
         }
 
         return $customers;
+    }
+
+    public function calculateRewardPointsCustomer(Customer $customer): Customer
+    {
+        $transactions = $customer->getTransactions();
+        $customerRewardPointsOverall = $customer->getRewardPointsOverall();
+        /** @var Transaction $transaction */
+        foreach ($transactions as $transaction) {
+            $calculatorRewardPoints = new TransactionToRewardPoint($transaction->getRawValue());
+            $calculatorRewardPoints->calculateRewardPoint();
+            $customerRewardPointsOverall += $calculatorRewardPoints->getRewardPoints();
+        }
+        $customer->setRewardPointsOverall($customerRewardPointsOverall);
+
+        return $customer;
     }
 }

@@ -16,7 +16,7 @@ class TransactionControllerTest extends JsonApiTestCase
 
         //Create transaction
         $transactionRequestBody = [
-            "value" => 12000,
+            "value" => 120,
             "customerId" => $contentNewCustomerContent['id']
         ];
 
@@ -27,6 +27,7 @@ class TransactionControllerTest extends JsonApiTestCase
 
         $this->assertResponse($responseTransaction, 'transaction', Response::HTTP_CREATED);
         $this->assertEquals($transactionContent['value'], $transactionRequestBody['value']);
+        $this->assertEquals($transactionContent['rawValue'], $transactionRequestBody['value'] * 100);
         $this->assertEquals($transactionContent['customer']['id'], $contentNewCustomerContent['id']);
 
     }
@@ -83,7 +84,7 @@ class TransactionControllerTest extends JsonApiTestCase
         $response = $this->client->getResponse();
         $responseContent = json_decode($response->getContent(), true);
 
-        $requestBody = ["value" => 13000];
+        $requestBody = ["value" => 130];
         $this->client->jsonRequest('PUT', '/api/transactions/' . $responseContent['id'], $requestBody);
 
         $response = $this->client->getResponse();

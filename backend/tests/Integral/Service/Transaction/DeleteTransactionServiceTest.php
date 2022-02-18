@@ -27,7 +27,7 @@ class DeleteTransactionServiceTest extends KernelTestCase
         $customer = $customerPostService->create($customerData);
 
         $transactionData = [
-            'value' => 12000,
+            'value' => 120,
             'customerId' => $customer->getId()
         ];
         /** @var Transaction $transaction */

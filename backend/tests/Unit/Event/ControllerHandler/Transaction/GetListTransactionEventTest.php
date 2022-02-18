@@ -10,7 +10,7 @@ class GetListTransactionEventTest extends TestCase
     public function testEventSetup()
     {
         $customerData = ['name' => 'Jan Kowalski'];
-        $transactionData = ["value" => 12000, "customerId" => 1];
+        $transactionData = ["value" => 120, "customerId" => 1];
 
         $customerFactory = new CustomerFactory();
         $transactionFactory = new TransactionFactory();

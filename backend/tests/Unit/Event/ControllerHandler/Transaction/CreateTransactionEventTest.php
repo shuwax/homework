@@ -10,7 +10,7 @@ class CreateTransactionEventTest extends TestCase
     public function testEventSetup()
     {
         $customerData = ['name' => 'Jan Kowalski'];
-        $transactionData = ["value" => 12000, "customerId" => 1];
+        $transactionData = ["value" => 120, "customerId" => 1];
 
         $customerFactory = new CustomerFactory();
         $transactionFactory = new TransactionFactory();
@@ -28,6 +28,7 @@ class CreateTransactionEventTest extends TestCase
 
         $createTransactionEvent->setTransaction($transaction);
         $this->assertEquals($transactionData['value'], $createTransactionEvent->getTransaction()->getValue());
+        $this->assertEquals($transactionData['value'] * 100, $createTransactionEvent->getTransaction()->getRawValue());
 
     }
 }

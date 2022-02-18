@@ -11,7 +11,7 @@ class TransactionFactoryTest extends TestCase
     public function testTransactionFactory()
     {
         $customerData = ["name" => 'Jan Kowalski'];
-        $transactionData = ["value" => 12000, "customerId" => 1];
+        $transactionData = ["value" => 120, "customerId" => 1];
 
         $transactionFactory = new TransactionFactory();
         $customerFactory = new CustomerFactory();
@@ -22,7 +22,8 @@ class TransactionFactoryTest extends TestCase
         $transaction = $transactionFactory->create($transactionData);
 
         $this->assertEquals($transaction->getCustomer()->getName(), $customerData['name']);
-        $this->assertEquals(12000, $transaction->getValue());
+        $this->assertEquals(120, $transaction->getValue());
+        $this->assertEquals(120 * 100, $transaction->getRawValue());
 
         $this->assertGreaterThanOrEqual($transaction->getCreatedAt(), new \DateTime('now'));
         $this->assertGreaterThanOrEqual($transaction->getUpdatedAt(), new \DateTime('now'));

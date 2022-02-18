@@ -22,4 +22,8 @@ abstract class RewardPointChain implements IRewardPointHandler
 
         return null;
     }
+
+    public function calculateRawValueToPoints(int $transactionValue, int $factoryStart): int {
+        return floor(($transactionValue - $factoryStart) / 100);
+    }
 }

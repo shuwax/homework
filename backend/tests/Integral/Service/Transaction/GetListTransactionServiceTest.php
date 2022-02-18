@@ -38,7 +38,7 @@ class GetListTransactionServiceTest extends KernelTestCase
 //        Create Transaction
         $transactionPostService = $container->get(IPostTransactionService::class);
         $transactionData = [
-            'value' => 12000,
+            'value' => 120,
             'customerId' => $customer->getId()
         ];
         $transactionPostService->create($transactionData);
