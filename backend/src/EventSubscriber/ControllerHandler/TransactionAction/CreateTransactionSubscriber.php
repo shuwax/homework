@@ -39,7 +39,7 @@ class CreateTransactionSubscriber implements EventSubscriberInterface
 
     public function onCallCreateTransaction(CreateTransactionEvent $createTransactionEvent): void
     {
-        $transaction = $this->postTransactionService->create($createTransactionEvent->getTransactionData());
+        $transaction = $this->postTransactionService->create($createTransactionEvent->getTransactionDTO());
         $createTransactionEvent->setTransaction($transaction);
     }
 }

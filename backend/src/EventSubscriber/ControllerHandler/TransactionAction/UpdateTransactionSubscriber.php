@@ -39,7 +39,7 @@ class UpdateTransactionSubscriber implements EventSubscriberInterface
 
     public function onCallUpdateTransactions(UpdateTransactionEvent $updateTransactionEvent): void
     {
-        $transaction = $this->putTransactionService->put($updateTransactionEvent->getTransactionId(), $updateTransactionEvent->getTransactionData());
+        $transaction = $this->putTransactionService->put($updateTransactionEvent->getTransactionId(), $updateTransactionEvent->getTransactionUpdateDTO());
         $updateTransactionEvent->setTransaction($transaction);
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Service\Transaction;
 
 
+use App\DTO\TransactionDTO;
 use App\Entity\Transaction;
 use App\Factory\Transaction\ITransactionFactory;
 use App\Repository\Interfaces\ICustomerRepository;
@@ -27,16 +28,16 @@ class PostTransactionService implements IPostTransactionService
         $this->transactionRepository = $transactionRepository;
     }
 
-    public function create(array $data): Transaction
+    public function create(TransactionDTO $transactionDTO): Transaction
     {
-        $customer = $this->customerRepository->findOneByCustomers(['id' => $data['customerId']]);
+        $customer = $this->customerRepository->findOneByCustomers(['id' => $transactionDTO->getCustomerId()]);
 
         if (!$customer) {
             throw new NotFoundHttpException();
         }
-        $data['customer'] = $customer;
+        $transactionDTO->setCustomer($customer);
 
-        $transaction = $this->transactionFactory->create($data);
+        $transaction = $this->transactionFactory->create($transactionDTO);
         $this->transactionRepository->save($transaction);
         return $transaction;
     }

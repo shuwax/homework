@@ -2,19 +2,20 @@
 
 namespace App\Factory\Transaction;
 
+use App\DTO\TransactionDTO;
 use App\Entity\Transaction;
 
 class TransactionFactory implements ITransactionFactory
 {
     /**
-     * @param array $data
+     * @param TransactionDTO $transactionDTO
      * @return Transaction
      */
-    public function create(array $data): Transaction
+    public function create(TransactionDTO $transactionDTO): Transaction
     {
         $transaction = new Transaction();
-        $transaction->setValue($data['value']);
-        $transaction->setCustomer($data['customer']);
+        $transaction->setValue($transactionDTO->getValue());
+        $transaction->setCustomer($transactionDTO->getCustomer());
 
         return $transaction;
     }

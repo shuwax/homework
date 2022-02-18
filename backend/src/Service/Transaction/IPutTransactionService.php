@@ -2,14 +2,15 @@
 
 namespace App\Service\Transaction;
 
+use App\DTO\TransactionUpdateDTO;
 use App\Entity\Transaction;
 
 interface IPutTransactionService
 {
     /**
      * @param int $transactionId
-     * @param array $data
+     * @param TransactionUpdateDTO $transactionUpdateDTO
      * @return Transaction
      */
-    public function put(int $transactionId, array $data): Transaction;
+    public function put(int $transactionId, TransactionUpdateDTO $transactionUpdateDTO): Transaction;
 }

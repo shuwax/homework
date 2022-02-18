@@ -1,6 +1,7 @@
 <?php
 
 use App\DTO\CustomerDTO;
+use App\DTO\TransactionDTO;
 use App\Event\ControllerHandler\Transaction\GetListTransactionEvent;
 use App\Factory\Customer\CustomerFactory;
 use App\Factory\Transaction\TransactionFactory;
@@ -19,8 +20,10 @@ class GetListTransactionEventTest extends TestCase
         $customerDTO = new CustomerDTO($customerData['name']);
         $customer = $customerFactory->create($customerDTO);
 
-        $transactionData['customer'] = $customer;
-        $transaction = $transactionFactory->create($transactionData);
+        $transactionDTO = new TransactionDTO($transactionData['value'], $transactionData['customerId']);
+        $transactionDTO->setCustomer($customer);
+
+        $transaction = $transactionFactory->create($transactionDTO);
 
 
         $getListTransactionEvent = new GetListTransactionEvent();

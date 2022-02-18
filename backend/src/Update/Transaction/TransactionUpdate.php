@@ -2,18 +2,19 @@
 
 namespace App\Update\Transaction;
 
+use App\DTO\TransactionUpdateDTO;
 use App\Entity\Transaction;
 
 class TransactionUpdate implements ITransactionUpdate
 {
     /**
      * @param Transaction $transaction
-     * @param array $data
+     * @param TransactionUpdateDTO $transactionUpdateDTO
      * @return Transaction
      */
-    public function update(Transaction $transaction, array $data): Transaction
+    public function update(Transaction $transaction, TransactionUpdateDTO $transactionUpdateDTO): Transaction
     {
-        $transaction->setValue($data['value']);
+        $transaction->setValue($transactionUpdateDTO->getValue());
         return $transaction;
     }
 

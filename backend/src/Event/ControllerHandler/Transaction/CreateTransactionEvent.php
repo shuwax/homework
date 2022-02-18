@@ -3,6 +3,7 @@
 namespace App\Event\ControllerHandler\Transaction;
 
 
+use App\DTO\TransactionDTO;
 use App\Entity\Transaction;
 use Symfony\Contracts\EventDispatcher\Event;
 
@@ -12,23 +13,24 @@ class CreateTransactionEvent extends Event
 
     public const NAME = 'controller.action.transaction.createTransactions';
 
-    private array $transactionData = [];
+    private TransactionDTO $transactionDTO;
 
 
     private ?Transaction $transaction = null;
 
-    public function __construct(array $transactionData)
+    public function __construct(TransactionDTO $transactionDTO)
     {
-        $this->transactionData = $transactionData;
+        $this->transactionDTO = $transactionDTO;
     }
 
     /**
-     * @return array
+     * @return TransactionDTO
      */
-    public function getTransactionData(): array
+    public function getTransactionDTO(): TransactionDTO
     {
-        return $this->transactionData;
+        return $this->transactionDTO;
     }
+
 
     /**
      * @return Transaction|null

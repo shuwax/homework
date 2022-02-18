@@ -9,7 +9,6 @@ use App\Event\ControllerHandler\Customer\GetListCustomerEvent;
 use App\Event\ControllerHandler\Customer\GetOneCustomerEvent;
 use App\Event\ControllerHandler\Customer\UpdateCustomerEvent;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Validator\ConstraintViolationListInterface;
@@ -23,9 +22,9 @@ class CustomerController extends AbstractApiController
      * @Route("/customers", name="customer_post", methods="POST" )
      */
     public function post(
-        SerializerInterface $serializer,
-        EventDispatcherInterface $dispatcher,
-        CustomerDTO $customerDTO,
+        SerializerInterface              $serializer,
+        EventDispatcherInterface         $dispatcher,
+        CustomerDTO                      $customerDTO,
         ConstraintViolationListInterface $validationErrors
     ): Response
     {
@@ -63,10 +62,10 @@ class CustomerController extends AbstractApiController
      * @Route("/customers/{customerId}", name="customer_put", methods="PUT" )
      */
     public function put(
-        SerializerInterface $serializer,
-        EventDispatcherInterface $dispatcher,
-        int $customerId,
-        CustomerDTO $customerDTO,
+        SerializerInterface              $serializer,
+        EventDispatcherInterface         $dispatcher,
+        int                              $customerId,
+        CustomerDTO                      $customerDTO,
         ConstraintViolationListInterface $validationErrors
     ): Response
     {

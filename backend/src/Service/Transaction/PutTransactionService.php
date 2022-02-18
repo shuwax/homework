@@ -2,6 +2,7 @@
 
 namespace App\Service\Transaction;
 
+use App\DTO\TransactionUpdateDTO;
 use App\Entity\Transaction;
 use App\Repository\Interfaces\ITransactionRepository;
 use App\Update\Transaction\ITransactionUpdate;
@@ -22,14 +23,14 @@ class PutTransactionService implements IPutTransactionService
         $this->transactionUpdate = $transactionUpdate;
     }
 
-    public function put(int $transactionId, array $data): Transaction
+    public function put(int $transactionId, TransactionUpdateDTO $transactionUpdateDTO): Transaction
     {
         $transaction = $this->transactionRepository->findOneByTransaction(['id' => $transactionId]);
 
         if (!$transaction) {
             throw new NotFoundHttpException();
         }
-        $transaction = $this->transactionUpdate->update($transaction, $data);
+        $transaction = $this->transactionUpdate->update($transaction, $transactionUpdateDTO);
         $this->transactionRepository->save($transaction);
 
         return $transaction;

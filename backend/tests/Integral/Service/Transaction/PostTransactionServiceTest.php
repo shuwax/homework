@@ -3,6 +3,7 @@
 namespace Service\Customer;
 
 use App\DTO\CustomerDTO;
+use App\DTO\TransactionDTO;
 use App\Entity\Customer;
 use App\Entity\Transaction;
 use App\Service\Customer\IPostCustomerService;
@@ -32,8 +33,12 @@ class PostTransactionServiceTest extends KernelTestCase
             'value' => 120,
             'customerId' => $customer->getId()
         ];
+
+        $transactionDTO = new TransactionDTO($transactionData['value'], $transactionData['customerId']);
+        $transactionDTO->setCustomer($customer);
+
         /** @var Transaction $transaction */
-        $transaction = $transactionPostService->create($transactionData);
+        $transaction = $transactionPostService->create($transactionDTO);
 
         /** @var Transaction $transactionFromGetOne */
         $transactionFromGetOne = $transactionGetOneService->getOne($transaction->getId());
