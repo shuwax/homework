@@ -2,25 +2,38 @@
 
 namespace App\Controller;
 
+use App\DTO\TransactionDTO;
+use App\DTO\TransactionUpdateDTO;
 use App\Event\ControllerHandler\Transaction\CreateTransactionEvent;
 use App\Event\ControllerHandler\Transaction\DeleteTransactionEvent;
 use App\Event\ControllerHandler\Transaction\GetListTransactionEvent;
 use App\Event\ControllerHandler\Transaction\GetOneTransactionEvent;
 use App\Event\ControllerHandler\Transaction\UpdateTransactionEvent;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\SerializerInterface;
+use Symfony\Component\Validator\ConstraintViolationListInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Symfony\Component\Routing\Annotation\Route;
 
 class TransactionController extends AbstractApiController
 {
     /**
+     * @ParamConverter("transactionDTO", converter="fos_rest.request_body")
      * @Route("/transactions", name="transaction_post", methods="POST" )
      */
-    public function post(SerializerInterface $serializer, EventDispatcherInterface $dispatcher, Request $request): Response
+    public function post(
+        SerializerInterface              $serializer,
+        EventDispatcherInterface         $dispatcher,
+        TransactionDTO                   $transactionDTO,
+        ConstraintViolationListInterface $validationErrors
+    ): Response
     {
-        $createTransactionEvent = new CreateTransactionEvent($this->getRequestContent($request));
+        if ($validationErrors->count() > 0) {
+            return $this->responseBadRequest($validationErrors);
+        }
+
+        $createTransactionEvent = new CreateTransactionEvent($transactionDTO);
         $dispatcher->dispatch($createTransactionEvent, CreateTransactionEvent::NAME);
 
         return $this->responseCREATED($this->serializer($serializer, $createTransactionEvent->getTransaction(), ['transaction:post']));
@@ -49,11 +62,21 @@ class TransactionController extends AbstractApiController
     }
 
     /**
+     * @ParamConverter("transactionUpdateDTO", converter="fos_rest.request_body")
      * @Route("/transactions/{transactionId}", name="transaction_put", methods="PUT" )
      */
-    public function put(SerializerInterface $serializer, EventDispatcherInterface $dispatcher, int $transactionId, Request $request): Response
+    public function put(
+        SerializerInterface              $serializer,
+        EventDispatcherInterface         $dispatcher,
+        int                              $transactionId,
+        TransactionUpdateDTO             $transactionUpdateDTO,
+        ConstraintViolationListInterface $validationErrors
+    ): Response
     {
-        $updateTransactionEvent = new UpdateTransactionEvent($this->getRequestContent($request), $transactionId);
+        if ($validationErrors->count() > 0) {
+            return $this->responseBadRequest($validationErrors);
+        }
+        $updateTransactionEvent = new UpdateTransactionEvent($transactionUpdateDTO, $transactionId);
         $dispatcher->dispatch($updateTransactionEvent, UpdateTransactionEvent::NAME);
 
         return $this->responseOk($this->serializer($serializer, $updateTransactionEvent->getTransaction(), ['transaction:put']));

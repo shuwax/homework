@@ -2,6 +2,8 @@
 
 namespace Service\Customer;
 
+use App\DTO\CustomerDTO;
+use App\DTO\TransactionDTO;
 use App\Service\Customer\IPostCustomerService;
 use App\Service\Transaction\IGetListTransactionService;
 use App\Service\Transaction\IPostTransactionService;
@@ -32,8 +34,8 @@ class GetListTransactionServiceTest extends KernelTestCase
         $customerData = [
             'name' => 'Jan Kowalski'
         ];
-
-        $customer = $customerPostService->create($customerData);
+        $customerDTO = new CustomerDTO($customerData['name']);
+        $customer = $customerPostService->create($customerDTO);
 
 //        Create Transaction
         $transactionPostService = $container->get(IPostTransactionService::class);
@@ -41,7 +43,11 @@ class GetListTransactionServiceTest extends KernelTestCase
             'value' => 120,
             'customerId' => $customer->getId()
         ];
-        $transactionPostService->create($transactionData);
+
+        $transactionDTO = new TransactionDTO($transactionData['value'], $transactionData['customerId']);
+        $transactionDTO->setCustomer($customer);
+
+        $transactionPostService->create($transactionDTO);
 
 //        Check List
         $getListService = $container->get(IGetListTransactionService::class);

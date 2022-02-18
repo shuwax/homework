@@ -1,5 +1,6 @@
 <?php
 
+use App\DTO\CustomerDTO;
 use App\Event\ControllerHandler\Customer\UpdateCustomerEvent;
 use App\Factory\Customer\CustomerFactory;
 use PHPUnit\Framework\TestCase;
@@ -10,15 +11,19 @@ class PutCustomerEventTest extends TestCase
     {
         $customerData = ['name' => 'Jan Kowalski'];
         $customerUpdateData = ['name' => 'Monika Kowalski'];
+
         $customerFactory = new CustomerFactory();
-        $customer = $customerFactory->create($customerData);
+        $customerDTO = new CustomerDTO($customerData['name']);
+        $customerUpdateDTO = new CustomerDTO($customerUpdateData['name']);
+
+        $customer = $customerFactory->create($customerDTO);
         $customerId = 1;
 
-        $updateCustomerEvent = new UpdateCustomerEvent($customerUpdateData, $customerId);
+        $updateCustomerEvent = new UpdateCustomerEvent($customerUpdateDTO, $customerId);
 
 
         $this->assertEquals(null, $updateCustomerEvent->getCustomer());
-        $this->assertEquals($customerUpdateData, $updateCustomerEvent->getCustomerData());
+        $this->assertEquals($customerUpdateData['name'], $updateCustomerEvent->getCustomerDTO()->getName());
 
         $this->assertEquals('controller.action.customer.updateCustomer', UpdateCustomerEvent::NAME);
 

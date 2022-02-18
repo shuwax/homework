@@ -2,6 +2,7 @@
 
 namespace Service\Customer;
 
+use App\DTO\CustomerDTO;
 use App\Service\Customer\IGetListCustomerService;
 use App\Service\Customer\IPostCustomerService;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
@@ -31,7 +32,10 @@ class GetListCustomerServiceTest extends KernelTestCase
         $customer = [
             'name' => 'Jan Kowalski'
         ];
-        $postService->create($customer);
+
+        $customerDTO = new CustomerDTO($customer['name']);
+
+        $postService->create($customerDTO);
 
 //        Check List
         $getListService = $container->get(IGetListCustomerService::class);

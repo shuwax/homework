@@ -1,5 +1,6 @@
 <?php
 
+use App\DTO\CustomerDTO;
 use App\Event\ControllerHandler\Customer\GetListCustomerEvent;
 use App\Factory\Customer\CustomerFactory;
 use PHPUnit\Framework\TestCase;
@@ -10,7 +11,8 @@ class GetListCustomerEventTest extends TestCase
     {
         $customerData = ['name' => 'Jan Kowalski'];
         $customerFactory = new CustomerFactory();
-        $customer = $customerFactory->create($customerData);
+        $customerDTO = new CustomerDTO($customerData['name']);
+        $customer = $customerFactory->create($customerDTO);
 
         $getListCustomerEvent = new GetListCustomerEvent();
         $this->assertCount(0, $getListCustomerEvent->getCustomers());

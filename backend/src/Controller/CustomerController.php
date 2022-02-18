@@ -2,25 +2,36 @@
 
 namespace App\Controller;
 
+use App\DTO\CustomerDTO;
 use App\Event\ControllerHandler\Customer\CreateCustomerEvent;
 use App\Event\ControllerHandler\Customer\DeleteCustomerEvent;
 use App\Event\ControllerHandler\Customer\GetListCustomerEvent;
 use App\Event\ControllerHandler\Customer\GetOneCustomerEvent;
 use App\Event\ControllerHandler\Customer\UpdateCustomerEvent;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\SerializerInterface;
+use Symfony\Component\Validator\ConstraintViolationListInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Symfony\Component\Routing\Annotation\Route;
 
 class CustomerController extends AbstractApiController
 {
     /**
+     * @ParamConverter("customerDTO", converter="fos_rest.request_body")
      * @Route("/customers", name="customer_post", methods="POST" )
      */
-    public function post(SerializerInterface $serializer, EventDispatcherInterface $dispatcher, Request $request): Response
+    public function post(
+        SerializerInterface              $serializer,
+        EventDispatcherInterface         $dispatcher,
+        CustomerDTO                      $customerDTO,
+        ConstraintViolationListInterface $validationErrors
+    ): Response
     {
-        $createCustomerEvent = new CreateCustomerEvent($this->getRequestContent($request));
+        if ($validationErrors->count() > 0) {
+            return $this->responseBadRequest($validationErrors);
+        }
+        $createCustomerEvent = new CreateCustomerEvent($customerDTO);
         $dispatcher->dispatch($createCustomerEvent, CreateCustomerEvent::NAME);
 
         return $this->responseCREATED($this->serializer($serializer, $createCustomerEvent->getCustomer(), ['customer:post']));
@@ -47,11 +58,21 @@ class CustomerController extends AbstractApiController
     }
 
     /**
+     * @ParamConverter("customerDTO", converter="fos_rest.request_body")
      * @Route("/customers/{customerId}", name="customer_put", methods="PUT" )
      */
-    public function put(SerializerInterface $serializer, EventDispatcherInterface $dispatcher, int $customerId, Request $request): Response
+    public function put(
+        SerializerInterface              $serializer,
+        EventDispatcherInterface         $dispatcher,
+        int                              $customerId,
+        CustomerDTO                      $customerDTO,
+        ConstraintViolationListInterface $validationErrors
+    ): Response
     {
-        $updateCustomerEvent = new UpdateCustomerEvent($this->getRequestContent($request), $customerId);
+        if ($validationErrors->count() > 0) {
+            return $this->responseBadRequest($validationErrors);
+        }
+        $updateCustomerEvent = new UpdateCustomerEvent($customerDTO, $customerId);
         $dispatcher->dispatch($updateCustomerEvent, UpdateCustomerEvent::NAME);
         return $this->responseOK($this->serializer($serializer, $updateCustomerEvent->getCustomer(), ['customer:put']));
     }

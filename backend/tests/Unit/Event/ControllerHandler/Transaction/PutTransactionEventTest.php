@@ -1,5 +1,8 @@
 <?php
 
+use App\DTO\CustomerDTO;
+use App\DTO\TransactionDTO;
+use App\DTO\TransactionUpdateDTO;
 use App\Event\ControllerHandler\Transaction\GetOneTransactionEvent;
 use App\Event\ControllerHandler\Transaction\UpdateTransactionEvent;
 use App\Factory\Customer\CustomerFactory;
@@ -16,15 +19,19 @@ class PutTransactionEventTest extends TestCase
         $customerFactory = new CustomerFactory();
         $transactionFactory = new TransactionFactory();
 
-        $customer = $customerFactory->create($customerData);
+        $customerDTO = new CustomerDTO($customerData['name']);
+        $customer = $customerFactory->create($customerDTO);
 
-        $transactionData['customer'] = $customer;
-        $transaction = $transactionFactory->create($transactionData);
+        $transactionDTO = new TransactionDTO($transactionData['value'], $transactionData['customerId']);
+        $transactionDTO->setCustomer($customer);
+        $transaction = $transactionFactory->create($transactionDTO);
 
         $transactionId = 1;
 
         $transactionUpdateData = ["value" => 130];
-        $updateTransactionEvent = new UpdateTransactionEvent($transactionUpdateData, $transactionId);
+        $transactionUpdateDTO = new TransactionUpdateDTO($transactionUpdateData['value']);
+
+        $updateTransactionEvent = new UpdateTransactionEvent($transactionUpdateDTO, $transactionId);
         $this->assertEquals(null, $updateTransactionEvent->getTransaction());
 
         $this->assertEquals('controller.action.transaction.updateTransaction', UpdateTransactionEvent::NAME);

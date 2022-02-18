@@ -2,18 +2,16 @@
 
 namespace App\Factory\Customer;
 
+use App\DTO\CustomerDTO;
 use App\Entity\Customer;
 
 class CustomerFactory implements ICustomerFactory
 {
-    /**
-     * @param array $data
-     * @return Customer
-     */
-    public function create(array $data): Customer
+
+    public function create(CustomerDTO $customerDTO): Customer
     {
         $customer = new Customer();
-        $customer->setName($data['name']);
+        $customer->setName($customerDTO->getName());
         return $customer;
     }
 

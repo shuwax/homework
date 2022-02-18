@@ -2,6 +2,7 @@
 
 namespace Service\Customer;
 
+use App\DTO\CustomerDTO;
 use App\Entity\Customer;
 use App\Service\Customer\IGetCustomerService;
 use App\Service\Customer\IPostCustomerService;
@@ -29,8 +30,10 @@ class GetCustomerServiceTest extends KernelTestCase
         $customer = [
             'name' => 'Jan Kowalski'
         ];
+        $customerDTO = new CustomerDTO($customer['name']);
+
         /** @var Customer $customer */
-        $customer = $postService->create($customer);
+        $customer = $postService->create($customerDTO);
 
         $getService = $container->get(IGetCustomerService::class);
         /** @var Customer $serviceResult */

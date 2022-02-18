@@ -3,13 +3,14 @@
 namespace App\Service\Customer;
 
 
+use App\DTO\CustomerDTO;
 use App\Entity\Customer;
 
 interface IPostCustomerService
 {
     /**
-     * @param array $data
+     * @param CustomerDTO $customerDTO
      * @return Customer
      */
-    public function create(array $data): Customer;
+    public function create(CustomerDTO $customerDTO): Customer;
 }

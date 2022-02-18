@@ -2,6 +2,9 @@
 
 namespace Update\Transaction;
 
+use App\DTO\CustomerDTO;
+use App\DTO\TransactionDTO;
+use App\DTO\TransactionUpdateDTO;
 use App\Entity\Customer;
 use App\Factory\Customer\CustomerFactory;
 use App\Factory\Transaction\TransactionFactory;
@@ -18,17 +21,20 @@ class TransactionUpdateTest extends TestCase
         $transactionUpdate = new TransactionUpdate();
 
         $customerData = ["name" => 'Jan Kowalski'];
-        $customer = $customerFactory->create($customerData);
+        $customerDTO = new CustomerDTO($customerData['name']);
+        $customer = $customerFactory->create($customerDTO);
 
         $transactionData = ["value" => 120, "customerId" => 1];
-        $transactionData['customer'] = $customer;
 
-        $transaction = $transactionFactory->create($transactionData);
+        $transactionDTO = new TransactionDTO($transactionData['value'], $transactionData['customerId']);
+        $transactionDTO->setCustomer($customer);
+
+        $transaction = $transactionFactory->create($transactionDTO);
 
         $transactionUpdateData = ["value" => 130];
-
+        $transactionDTO = new TransactionUpdateDTO($transactionUpdateData['value']);
         /** @var Customer $customer */
-        $transaction = $transactionUpdate->update($transaction, $transactionUpdateData);
+        $transaction = $transactionUpdate->update($transaction, $transactionDTO);
         $this->assertEquals($transaction->getValue(), $transactionUpdateData['value']);
         $this->assertEquals($transaction->getRawValue(), $transactionUpdateData['value'] * 100);
         $this->assertNotEquals($transaction->getValue(), $transactionData['value']);

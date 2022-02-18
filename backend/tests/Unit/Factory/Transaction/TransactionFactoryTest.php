@@ -2,6 +2,8 @@
 
 namespace Factory\Transaction;
 
+use App\DTO\CustomerDTO;
+use App\DTO\TransactionDTO;
 use App\Factory\Customer\CustomerFactory;
 use App\Factory\Transaction\TransactionFactory;
 use PHPUnit\Framework\TestCase;
@@ -15,11 +17,13 @@ class TransactionFactoryTest extends TestCase
 
         $transactionFactory = new TransactionFactory();
         $customerFactory = new CustomerFactory();
+        $customerDTO = new CustomerDTO($customerData['name']);
+        $customer = $customerFactory->create($customerDTO);
 
-        $customer = $customerFactory->create($customerData);
-        $transactionData['customer'] = $customer;
+        $transactionDTO = new TransactionDTO($transactionData['value'], $transactionData['customerId']);
+        $transactionDTO->setCustomer($customer);
+        $transaction = $transactionFactory->create($transactionDTO);
 
-        $transaction = $transactionFactory->create($transactionData);
 
         $this->assertEquals($transaction->getCustomer()->getName(), $customerData['name']);
         $this->assertEquals(120, $transaction->getValue());

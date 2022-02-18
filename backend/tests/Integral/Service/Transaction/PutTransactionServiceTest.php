@@ -2,6 +2,9 @@
 
 namespace Service\Customer;
 
+use App\DTO\CustomerDTO;
+use App\DTO\TransactionDTO;
+use App\DTO\TransactionUpdateDTO;
 use App\Entity\Customer;
 use App\Entity\Transaction;
 use App\Service\Customer\IPostCustomerService;
@@ -23,23 +26,30 @@ class PutTransactionServiceTest extends KernelTestCase
         $customerData = [
             'name' => 'Jan Kowalski'
         ];
+        $customerDTO = new CustomerDTO($customerData['name']);
+
         /** @var Customer $customer */
-        $customer = $customerPostService->create($customerData);
+        $customer = $customerPostService->create($customerDTO);
 
         $transactionData = [
             'value' => 120,
             'customerId' => $customer->getId()
         ];
+
+        $transactionDTO = new TransactionDTO($transactionData['value'], $transactionData['customerId']);
+        $transactionDTO->setCustomer($customer);
+
         /** @var Transaction $transaction */
-        $transaction = $transactionPostService->create($transactionData);
+        $transaction = $transactionPostService->create($transactionDTO);
 
         $transactionUpdateData = [
             'value' => 130
         ];
+        $transactionDTO = new TransactionUpdateDTO($transactionUpdateData['value']);
 
 
         /** @var Transaction $transactionFromGetOne */
-        $transactionUpdate = $transactionPutService->put($transaction->getId(), $transactionUpdateData);
+        $transactionUpdate = $transactionPutService->put($transaction->getId(), $transactionDTO);
 
         $this->assertEquals(true, $transactionUpdate instanceof Transaction);
         $this->assertEquals($transactionUpdate->getValue(), $transactionUpdateData['value']);

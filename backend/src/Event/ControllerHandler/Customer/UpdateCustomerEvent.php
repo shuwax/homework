@@ -3,6 +3,7 @@
 namespace App\Event\ControllerHandler\Customer;
 
 
+use App\DTO\CustomerDTO;
 use App\Entity\Customer;
 use Symfony\Contracts\EventDispatcher\Event;
 
@@ -13,15 +14,15 @@ class UpdateCustomerEvent extends Event
     public const NAME = 'controller.action.customer.updateCustomer';
 
 
-    private array $customerData;
+    private CustomerDTO $customerDTO;
 
     private int $customerId;
 
     private ?Customer $customer = null;
 
-    public function __construct(array $customerData, int $customerId)
+    public function __construct(CustomerDTO $customerDTO, int $customerId)
     {
-        $this->customerData = $customerData;
+        $this->customerDTO = $customerDTO;
         $this->customerId = $customerId;
     }
 
@@ -34,11 +35,19 @@ class UpdateCustomerEvent extends Event
     }
 
     /**
-     * @return array
+     * @return CustomerDTO
      */
-    public function getCustomerData(): array
+    public function getCustomerDTO(): CustomerDTO
     {
-        return $this->customerData;
+        return $this->customerDTO;
+    }
+
+    /**
+     * @param CustomerDTO $customerDTO
+     */
+    public function setCustomerDTO(CustomerDTO $customerDTO): void
+    {
+        $this->customerDTO = $customerDTO;
     }
 
 

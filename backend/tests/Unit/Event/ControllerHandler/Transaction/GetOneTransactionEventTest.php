@@ -1,5 +1,7 @@
 <?php
 
+use App\DTO\CustomerDTO;
+use App\DTO\TransactionDTO;
 use App\Event\ControllerHandler\Transaction\GetOneTransactionEvent;
 use App\Factory\Customer\CustomerFactory;
 use App\Factory\Transaction\TransactionFactory;
@@ -15,10 +17,14 @@ class GetOneTransactionEventTest extends TestCase
         $customerFactory = new CustomerFactory();
         $transactionFactory = new TransactionFactory();
 
-        $customer = $customerFactory->create($customerData);
+        $customerDTO = new CustomerDTO($customerData['name']);
 
-        $transactionData['customer'] = $customer;
-        $transaction = $transactionFactory->create($transactionData);
+        $customer = $customerFactory->create($customerDTO);
+
+        $transactionDTO = new TransactionDTO($transactionData['value'], $transactionData['customerId']);
+        $transactionDTO->setCustomer($customer);
+
+        $transaction = $transactionFactory->create($transactionDTO);
 
         $transactionId = 1;
         $getOneTransactionEvent = new GetOneTransactionEvent($transactionId);

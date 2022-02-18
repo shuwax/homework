@@ -39,7 +39,7 @@ class CreateCustomerSubscriber implements EventSubscriberInterface
 
     public function onCallCreateCustomer(CreateCustomerEvent $createCustomerEvent): void
     {
-        $customer = $this->postCustomerService->create($createCustomerEvent->getCustomerData());
+        $customer = $this->postCustomerService->create($createCustomerEvent->getCustomerDTO());
         $createCustomerEvent->setCustomer($customer);
     }
 }

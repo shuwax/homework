@@ -3,6 +3,7 @@
 namespace App\Service\Customer;
 
 
+use App\DTO\CustomerDTO;
 use App\Entity\Customer;
 use App\Factory\Customer\ICustomerFactory;
 use App\Repository\Interfaces\ICustomerRepository;
@@ -22,9 +23,9 @@ class PostCustomerService implements IPostCustomerService
         $this->customerRepository = $customerRepository;
     }
 
-    public function create(array $data): Customer
+    public function create(CustomerDTO $customerDTO): Customer
     {
-        $customer = $this->customerFactory->create($data);
+        $customer = $this->customerFactory->create($customerDTO);
         $this->customerRepository->save($customer);
         return $customer;
     }
