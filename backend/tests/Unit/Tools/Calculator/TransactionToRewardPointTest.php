@@ -38,6 +38,14 @@ class TransactionToRewardPointTest extends TestCase
         $this->assertEquals(50, $calculateRewardPoints->getRewardPoints());
     }
 
+    public function testCalculateRewardPointsEqual51() {
+        $transactionValue = 51;
+        $transactionRawValue = $transactionValue * 100;
+        $calculateRewardPoints = new TransactionToRewardPoint($transactionRawValue);
+        $calculateRewardPoints->calculateRewardPoint();
+        $this->assertEquals(1, $calculateRewardPoints->getRewardPoints());
+    }
+
     public function testCalculateRewardPointsEqual50() {
         $transactionValue = 50;
         $transactionRawValue = $transactionValue * 100;
