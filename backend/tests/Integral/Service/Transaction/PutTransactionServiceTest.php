@@ -2,6 +2,7 @@
 
 namespace Service\Customer;
 
+use App\DTO\CustomerDTO;
 use App\Entity\Customer;
 use App\Entity\Transaction;
 use App\Service\Customer\IPostCustomerService;
@@ -23,8 +24,10 @@ class PutTransactionServiceTest extends KernelTestCase
         $customerData = [
             'name' => 'Jan Kowalski'
         ];
+        $customerDTO = new CustomerDTO($customerData['name']);
+
         /** @var Customer $customer */
-        $customer = $customerPostService->create($customerData);
+        $customer = $customerPostService->create($customerDTO);
 
         $transactionData = [
             'value' => 120,

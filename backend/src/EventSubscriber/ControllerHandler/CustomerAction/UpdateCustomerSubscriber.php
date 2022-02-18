@@ -39,7 +39,7 @@ class UpdateCustomerSubscriber implements EventSubscriberInterface
 
     public function onCallUpdateCustomer(UpdateCustomerEvent $updateCustomerEvent): void
     {
-        $customer = $this->putCustomerService->put($updateCustomerEvent->getCustomerId(), $updateCustomerEvent->getCustomerData());
+        $customer = $this->putCustomerService->put($updateCustomerEvent->getCustomerId(), $updateCustomerEvent->getCustomerDTO());
         $updateCustomerEvent->setCustomer($customer);
     }
 }

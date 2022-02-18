@@ -2,11 +2,14 @@
 
 namespace App\Controller;
 
+use Cassandra\Exception\ValidationException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Serializer\SerializerInterface;
+use Symfony\Component\Validator\ConstraintViolation;
+use Symfony\Component\Validator\ConstraintViolationListInterface;
 
 class AbstractApiController extends AbstractController
 {
@@ -67,6 +70,32 @@ class AbstractApiController extends AbstractController
     {
         return $this->jsonResponse([], Response::HTTP_NO_CONTENT);
     }
+
+    /**
+     * @param ConstraintViolationListInterface $validationError
+     * @return JsonResponse
+     */
+    protected function responseBadRequest(ConstraintViolationListInterface $validationError): JsonResponse
+    {
+        return $this->jsonResponse($this->createErrorMessage($validationError), Response::HTTP_BAD_REQUEST);
+    }
+
+    /**
+     * @param ConstraintViolationListInterface $violations
+     * @return array[]
+     */
+    private function createErrorMessage(ConstraintViolationListInterface $violations): array
+    {
+        $errors = [];
+
+        /** @var ConstraintViolation $violation */
+        foreach ($violations as $violation) {
+            $errors[$violation->getPropertyPath()] = $violation->getMessage();
+        }
+
+        return ['errors' => $errors];
+    }
+
 
     /**
      * @param Request $request

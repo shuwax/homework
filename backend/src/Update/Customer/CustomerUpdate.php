@@ -2,18 +2,19 @@
 
 namespace App\Update\Customer;
 
+use App\DTO\CustomerDTO;
 use App\Entity\Customer;
 
 class CustomerUpdate implements ICustomerUpdate
 {
     /**
      * @param Customer $customer
-     * @param array $data
+     * @param CustomerDTO $customerDTO
      * @return Customer
      */
-    public function update(Customer $customer, array $data): Customer
+    public function update(Customer $customer, CustomerDTO $customerDTO): Customer
     {
-        $customer->setName($data['name']);
+        $customer->setName($customerDTO->getName());
         return $customer;
     }
 

@@ -1,5 +1,6 @@
 <?php
 
+use App\DTO\CustomerDTO;
 use App\Event\ControllerHandler\Transaction\CreateTransactionEvent;
 use App\Factory\Customer\CustomerFactory;
 use App\Factory\Transaction\TransactionFactory;
@@ -15,7 +16,8 @@ class CreateTransactionEventTest extends TestCase
         $customerFactory = new CustomerFactory();
         $transactionFactory = new TransactionFactory();
 
-        $customer = $customerFactory->create($customerData);
+        $customerDTO = new CustomerDTO($customerData['name']);
+        $customer = $customerFactory->create($customerDTO);
 
         $transactionData['customer'] = $customer;
         $transaction = $transactionFactory->create($transactionData);

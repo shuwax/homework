@@ -1,5 +1,6 @@
 <?php
 
+use App\DTO\CustomerDTO;
 use App\Event\ControllerHandler\Customer\CreateCustomerEvent;
 use App\Factory\Customer\CustomerFactory;
 use PHPUnit\Framework\TestCase;
@@ -10,13 +11,14 @@ class CreateCustomerEventTest extends TestCase
     {
         $customerData = ['name' => 'Jan Kowalski'];
         $customerFactory = new CustomerFactory();
-        $customer = $customerFactory->create($customerData);
+        $customerDTO = new CustomerDTO($customerData['name']);
+        $customer = $customerFactory->create($customerDTO);
 
-        $createCustomerEvent = new CreateCustomerEvent($customerData);
+        $createCustomerEvent = new CreateCustomerEvent($customerDTO);
 
 
         $this->assertEquals(null, $createCustomerEvent->getCustomer());
-        $this->assertEquals($customerData, $createCustomerEvent->getCustomerData());
+        $this->assertEquals($customerData['name'], $createCustomerEvent->getCustomerDTO()->getName());
 
         $this->assertEquals('controller.action.customer.createCustomer', CreateCustomerEvent::NAME);
 

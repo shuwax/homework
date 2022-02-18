@@ -2,6 +2,7 @@
 
 namespace Update\Transaction;
 
+use App\DTO\CustomerDTO;
 use App\Entity\Customer;
 use App\Factory\Customer\CustomerFactory;
 use App\Factory\Transaction\TransactionFactory;
@@ -18,7 +19,8 @@ class TransactionUpdateTest extends TestCase
         $transactionUpdate = new TransactionUpdate();
 
         $customerData = ["name" => 'Jan Kowalski'];
-        $customer = $customerFactory->create($customerData);
+        $customerDTO = new CustomerDTO($customerData['name']);
+        $customer = $customerFactory->create($customerDTO);
 
         $transactionData = ["value" => 120, "customerId" => 1];
         $transactionData['customer'] = $customer;

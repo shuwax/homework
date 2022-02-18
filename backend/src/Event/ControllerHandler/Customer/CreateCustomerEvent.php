@@ -3,6 +3,7 @@
 namespace App\Event\ControllerHandler\Customer;
 
 
+use App\DTO\CustomerDTO;
 use App\Entity\Customer;
 use Symfony\Contracts\EventDispatcher\Event;
 
@@ -13,24 +14,23 @@ class CreateCustomerEvent extends Event
     public const NAME = 'controller.action.customer.createCustomer';
 
 
-    private array $customerData = [];
+    private CustomerDTO $customerDTO;
 
 
     private ?Customer $customer = null;
 
-    public function __construct(array $customerData)
+    public function __construct(CustomerDTO $customerDTO)
     {
-        $this->customerData = $customerData;
+        $this->customerDTO = $customerDTO;
     }
 
     /**
-     * @return array
+     * @return CustomerDTO
      */
-    public function getCustomerData(): array
+    public function getCustomerDTO(): CustomerDTO
     {
-        return $this->customerData;
+        return $this->customerDTO;
     }
-
 
     /**
      * @return Customer|null

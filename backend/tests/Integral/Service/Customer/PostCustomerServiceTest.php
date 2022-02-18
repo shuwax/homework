@@ -2,6 +2,7 @@
 
 namespace Service\Customer;
 
+use App\DTO\CustomerDTO;
 use App\Entity\Customer;
 use App\Service\Customer\IPostCustomerService;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
@@ -19,7 +20,9 @@ class PostCustomerServiceTest extends KernelTestCase
             'name' => 'Jan Kowalski'
         ];
 
-        $serviceResult = $postService->create($customer);
+        $customerDTO = new CustomerDTO($customer['name']);
+
+        $serviceResult = $postService->create($customerDTO);
 
         $this->assertEquals(true, $serviceResult instanceof Customer);
         $this->assertEquals($serviceResult->getName(), $customer['name']);

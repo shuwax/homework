@@ -2,6 +2,7 @@
 
 namespace Factory\Transaction;
 
+use App\DTO\CustomerDTO;
 use App\Factory\Customer\CustomerFactory;
 use App\Factory\Transaction\TransactionFactory;
 use PHPUnit\Framework\TestCase;
@@ -15,8 +16,8 @@ class TransactionFactoryTest extends TestCase
 
         $transactionFactory = new TransactionFactory();
         $customerFactory = new CustomerFactory();
-
-        $customer = $customerFactory->create($customerData);
+        $customerDTO = new CustomerDTO($customerData['name']);
+        $customer = $customerFactory->create($customerDTO);
         $transactionData['customer'] = $customer;
 
         $transaction = $transactionFactory->create($transactionData);
