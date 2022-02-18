@@ -7,3 +7,4 @@ Test start: php bin/phpunit
 1) ./docker-dev-start.sh
 2) ./docker-migrateDatabase.sh
 3) php bin/phpunit
+
