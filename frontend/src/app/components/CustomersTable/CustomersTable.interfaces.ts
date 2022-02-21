@@ -4,4 +4,5 @@ export interface CustomersTableProps {
   customers: Array<CustomerInterface>;
   shouldUpdateCustomers: () => void;
   addClick: boolean;
+  handleSelectedCustomer: (customer: CustomerInterface | null) => void;
 }

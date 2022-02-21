@@ -22,6 +22,7 @@ export function CustomersTable({
   customers,
   shouldUpdateCustomers,
   addClick,
+  handleSelectedCustomer,
 }: CustomersTableProps) {
   const classes = useStyles();
 
@@ -90,7 +91,6 @@ export function CustomersTable({
         console.log(error);
       });
   };
-
   return (
     <div>
       <TableContainer component={Paper} className={classes.tableContainer}>
@@ -105,7 +105,11 @@ export function CustomersTable({
           </TableHead>
           <TableBody>
             {customers.map((customer) => (
-              <TableRow key={customer.id}>
+              <TableRow
+                key={customer.id}
+                onClick={() => handleSelectedCustomer(customer)}
+                className={classes.tableRowContainer}
+              >
                 <TableCell>{customer.id}</TableCell>
                 <TableCell>{customer.name}</TableCell>
                 <TableCell>{customer.rewardPointsOverall}</TableCell>
