@@ -1,3 +1,4 @@
 #!/usr/bin/env bash
 
-docker-compose up --build  
+docker-compose down
+docker volume prune -f
