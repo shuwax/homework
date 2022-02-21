@@ -42,7 +42,7 @@ class AbstractApiController extends AbstractController
      */
     protected function serializer(SerializerInterface $serializer, $data, array $serializeGroup = [], string $type = 'json'): string
     {
-        return $serializer->serialize($data, $type, ["groups" => $serializeGroup]);
+        return $serializer->serialize(['data' => $data], $type, ["groups" => $serializeGroup]);
     }
 
     /**
