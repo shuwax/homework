@@ -14,3 +14,8 @@ export interface TransactionParsedInterface {
     id: number;
     value: number;
 }
+
+export interface TransactionSetInterface {
+    value: number;
+    customerId: number;
+}

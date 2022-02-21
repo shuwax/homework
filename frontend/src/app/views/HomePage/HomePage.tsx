@@ -1,21 +1,25 @@
 import React, { useEffect, useState } from "react";
 import Typography from "@material-ui/core/Typography";
+
 import { CustomersTable } from "app/components/CustomersTable/CustomersTable";
-import {
-  CustomerInterface,
-  CustomerWithTransactionInterface,
-} from "app/shared/interfaces/Customer.interface";
+import { CustomerInterface } from "app/shared/interfaces/Customer.interface";
 import { CustomerService } from "app/services/customer.service";
 import { HeaderButton } from "app/components/HeaderButton/HeaderButton";
 import { getCustomerName } from "app/shared/utils/customerDataHandler";
+import { TransactionsTable } from "app/components/TransactionsTable/TransactionsTable";
+import { TransactionParsedInterface } from "app/shared/interfaces/Transaction.interface";
 
 function HomePage() {
   const [selectedCustomer, setSelectedCustomer] =
     useState<CustomerInterface | null>(null);
   const [customers, setCustomers] = useState<Array<CustomerInterface>>([]);
-  const [customerTransactions, setCustomerTransactions] =
-    useState<CustomerWithTransactionInterface | null>(null);
-  const [addButtonClicked, setAddButtonClicked] = useState<boolean>(false);
+  const [customerTransactions, setCustomerTransactions] = useState<
+    Array<TransactionParsedInterface>
+  >([]);
+  const [addCustomerButtonClicked, setAddCustomerButtonClicked] =
+    useState<boolean>(false);
+  const [addTransactionButtonClicked, setAddTransactionButtonClicked] =
+    useState<boolean>(false);
 
   useEffect(() => {
     loadCustomers();
@@ -23,17 +27,23 @@ function HomePage() {
 
   useEffect(() => {
     if (selectedCustomer) {
-      loadCustomersAllTransactions(selectedCustomer);
+      loadCustomersAllTransactions();
     } else {
-      setCustomerTransactions(null);
+      setCustomerTransactions([]);
     }
   }, [selectedCustomer]);
 
   useEffect(() => {
-    if (addButtonClicked) {
-      setAddButtonClicked(false);
+    if (addCustomerButtonClicked) {
+      setAddCustomerButtonClicked(false);
     }
-  }, [addButtonClicked]);
+  }, [addCustomerButtonClicked]);
+
+  useEffect(() => {
+    if (addTransactionButtonClicked) {
+      setAddTransactionButtonClicked(false);
+    }
+  }, [addTransactionButtonClicked]);
 
   const loadCustomers = () => {
     CustomerService.getCustomers()
@@ -46,36 +56,45 @@ function HomePage() {
       });
   };
 
-  const loadCustomersAllTransactions = (customer: CustomerInterface) => {
-    CustomerService.getCustomerTransactions(customer)
+  const loadCustomersAllTransactions = () => {
+    if (!selectedCustomer) {
+      return;
+    }
+    CustomerService.getCustomerTransactions(selectedCustomer)
       .then(({ data: { data } }) => {
-        setCustomerTransactions(data);
+        setCustomerTransactions(data.transactions);
       })
       .catch((error) => {
         console.log(error);
       });
   };
 
-  const handleAddButton = () => {
-    setAddButtonClicked(true);
+  const handleAddCustomerButton = () => {
+    setAddCustomerButtonClicked(true);
     setSelectedCustomer(null);
   };
 
   const handleSelectedCustomer = (customer: CustomerInterface | null) =>
     setSelectedCustomer(customer);
 
+  const handleAddTransactionButton = () => {
+    setAddTransactionButtonClicked(true);
+  };
   return (
     <div>
       <Typography variant={"h1"}>
         <span>Customers</span>
         <div>
-          <HeaderButton onClick={handleAddButton} label={"Add customer"} />
+          <HeaderButton
+            onClick={handleAddCustomerButton}
+            label={"Add customer"}
+          />
         </div>
       </Typography>
       <CustomersTable
         customers={customers}
         shouldUpdateCustomers={loadCustomers}
-        addClick={addButtonClicked}
+        addClick={addCustomerButtonClicked}
         handleSelectedCustomer={handleSelectedCustomer}
       />
 
@@ -86,8 +105,19 @@ function HomePage() {
               Last three month transactions for user:{" "}
               {getCustomerName(selectedCustomer)}
             </span>
+            <div>
+              <HeaderButton
+                onClick={handleAddTransactionButton}
+                label={"Add transaction"}
+              />
+            </div>
           </Typography>
-          {/*<CustomersTable customers={[]} shouldUpdateCustomers={loadCustomers} />*/}
+          <TransactionsTable
+            customer={selectedCustomer}
+            transactions={customerTransactions}
+            addClick={addTransactionButtonClicked}
+            shouldUpdateTransactions={loadCustomersAllTransactions}
+          />
         </div>
       ) : null}
     </div>
