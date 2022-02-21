@@ -10,10 +10,8 @@ class CustomerDTO
     /**
      * @Assert\NotBlank
      * @Assert\Length(
-     *        min = 2,
-     *        max = 50,
-     *        minMessage = "Your name must be at least {{ limit }} characters long",
-     *        maxMessage = "Your name cannot be longer than {{ limit }} characters"
+     *        min = 1,
+     *        minMessage = "Your name must be at least {{ limit }} characters long"
      * )
      * @var string
      */

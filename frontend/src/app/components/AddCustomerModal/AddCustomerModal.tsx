@@ -23,7 +23,7 @@ export function AddCustomerModal(props: AddCustomerModalProps) {
   };
 
   const validationSchema = Yup.object().shape({
-    name: Yup.string().required("Podaj nazwę"),
+    name: Yup.string().required("Set name"),
   });
 
   return (
@@ -66,7 +66,7 @@ export function AddCustomerModal(props: AddCustomerModalProps) {
               <Field
                 component={TextFieldComponent}
                 name={"name"}
-                label={"Nazwa"}
+                label={"Name"}
                 fullWidth
               />
               <div className={classes.actionButtons}>
