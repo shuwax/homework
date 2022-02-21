@@ -30,4 +30,8 @@ RUN install -d -o root -g root -m u=rwx,go= /etc/ssl/private/ \
 
 WORKDIR /app/backend
 
-CMD composer install --prefer-dist && composer dump-autoload && php bin/console doctrine:migrations:migrate -n && php bin/console doctrine:migrations:migrate -n --env=test && php-fpm
+CMD cp ../config/docker-local/api/.env . \
+&& cp ../config/docker-local/api/.env.test . \
+&& composer install --prefer-dist && composer dump-autoload \
+&& php bin/console doctrine:migrations:migrate -n && php bin/console doctrine:migrations:migrate -n --env=test \
+&& php-fpm
