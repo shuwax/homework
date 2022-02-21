@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\TransactionRepository;
 use DateTime;
+use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
 use PhpParser\Node\Expr\Cast\Double;
 use Symfony\Component\Serializer\Annotation\Groups;
@@ -54,6 +55,12 @@ class Transaction
      *
      */
     private Customer $customer;
+
+    /**
+     * @ORM\Column(type="date")
+     * @Groups({"transaction:post", "transaction:list", "transaction:show", "transaction:put", "customer:show:transactions"})
+     */
+    private DateTimeInterface $transactionDate;
 
 
 
@@ -127,6 +134,18 @@ class Transaction
     public function setCustomer(?Customer $customer): self
     {
         $this->customer = $customer;
+
+        return $this;
+    }
+
+    public function getTransactionDate(): ?\DateTimeInterface
+    {
+        return $this->transactionDate;
+    }
+
+    public function setTransactionDate(\DateTimeInterface $transactionDate): self
+    {
+        $this->transactionDate = $transactionDate;
 
         return $this;
     }

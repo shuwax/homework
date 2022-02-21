@@ -3,6 +3,8 @@
 namespace App\DTO;
 
 use App\Entity\Customer;
+use DateTime;
+use DateTimeInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
 class TransactionUpdateDTO
@@ -15,9 +17,16 @@ class TransactionUpdateDTO
      */
     private float $value;
 
+    /**
+     * @Assert\NotBlank
+     * @var string
+     */
+    private DateTimeInterface $transactionDate;
 
-    public function __construct(float $value)
+
+    public function __construct(float $value, string $transactionDate)
     {
+        $this->transactionDate = new DateTime($transactionDate);
         $this->value = $value;
     }
 
@@ -36,4 +45,21 @@ class TransactionUpdateDTO
     {
         $this->value = $value;
     }
+
+    /**
+     * @return DateTimeInterface
+     */
+    public function getTransactionDate(): DateTimeInterface
+    {
+        return $this->transactionDate;
+    }
+
+    /**
+     * @param DateTimeInterface $transactionDate
+     */
+    public function setTransactionDate(DateTimeInterface $transactionDate): void
+    {
+        $this->transactionDate = $transactionDate;
+    }
+
 }

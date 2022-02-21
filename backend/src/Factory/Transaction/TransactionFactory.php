@@ -16,6 +16,7 @@ class TransactionFactory implements ITransactionFactory
         $transaction = new Transaction();
         $transaction->setValue($transactionDTO->getValue());
         $transaction->setCustomer($transactionDTO->getCustomer());
+        $transaction->setTransactionDate($transactionDTO->getTransactionDate());
 
         return $transaction;
     }

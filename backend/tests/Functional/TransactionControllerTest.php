@@ -17,7 +17,8 @@ class TransactionControllerTest extends JsonApiTestCase
         //Create transaction
         $transactionRequestBody = [
             "value" => 120,
-            "customerId" => $contentNewCustomerContent['data']['id']
+            "customerId" => $contentNewCustomerContent['data']['id'],
+            "transactionDate" => '2021-01-01'
         ];
 
         $this->client->jsonRequest('POST', '/api/transactions', $transactionRequestBody);
@@ -28,6 +29,7 @@ class TransactionControllerTest extends JsonApiTestCase
         $this->assertResponse($responseTransaction, 'transaction', Response::HTTP_CREATED);
         $this->assertEquals($transactionContent['data']['value'], $transactionRequestBody['value']);
         $this->assertEquals($transactionContent['data']['rawValue'], $transactionRequestBody['value'] * 100);
+        $this->assertEquals(new DateTime($transactionContent['data']['transactionDate']), new DateTime($transactionRequestBody['transactionDate']));
         $this->assertEquals($transactionContent['data']['customer']['id'], $contentNewCustomerContent['data']['id']);
 
     }
@@ -84,13 +86,15 @@ class TransactionControllerTest extends JsonApiTestCase
         $response = $this->client->getResponse();
         $responseContent = json_decode($response->getContent(), true);
 
-        $requestBody = ["value" => 130];
+        $requestBody = ["value" => 130, "transactionDate" => '2022-01-01'];
         $this->client->jsonRequest('PUT', '/api/transactions/' . $responseContent['data']['id'], $requestBody);
 
         $response = $this->client->getResponse();
         $updatedContent = json_decode($response->getContent(), true);
 
         $this->assertResponse($response, 'transaction', Response::HTTP_OK);
+
+        $this->assertEquals(new DateTime($updatedContent['data']['transactionDate']), new DateTime($requestBody['transactionDate']));
         $this->assertEquals($updatedContent['data']['value'], $requestBody['value']);
         $this->assertNotEquals($updatedContent['data']['value'], $responseContent['data']['value']);
     }

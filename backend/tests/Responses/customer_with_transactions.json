@@ -6,6 +6,7 @@
     "transactions": [
       {
         "id": "@integer@.greaterThan(0)",
+        "transactionDate": "@string@",
         "value": "@number@"
       }
     ]

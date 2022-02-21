@@ -123,7 +123,8 @@ class CustomerControllerTest extends JsonApiTestCase
         //Create transaction
         $transactionRequestBody = [
             "value" => 120,
-            "customerId" => $contentNewCustomerContent['data']['id']
+            "customerId" => $contentNewCustomerContent['data']['id'],
+            "transactionDate" => '2021-01-01'
         ];
 
         $this->client->jsonRequest('POST', '/api/transactions', $transactionRequestBody);

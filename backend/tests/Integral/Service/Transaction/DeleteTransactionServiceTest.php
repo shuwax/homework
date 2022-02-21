@@ -31,10 +31,11 @@ class DeleteTransactionServiceTest extends KernelTestCase
 
         $transactionData = [
             'value' => 120,
-            'customerId' => $customer->getId()
+            'customerId' => $customer->getId(),
+            'transactionDate' => '2021-01-01'
         ];
 
-        $transactionDTO = new TransactionDTO($transactionData['value'], $transactionData['customerId']);
+        $transactionDTO = new TransactionDTO($transactionData['value'], $transactionData['customerId'], $transactionData['transactionDate']);
         $transactionDTO->setCustomer($customer);
 
         /** @var Transaction $transaction */

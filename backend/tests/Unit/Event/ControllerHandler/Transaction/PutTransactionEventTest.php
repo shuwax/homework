@@ -14,7 +14,7 @@ class PutTransactionEventTest extends TestCase
     public function testEventSetup()
     {
         $customerData = ['name' => 'Jan Kowalski'];
-        $transactionData = ["value" => 120, "customerId" => 1];
+        $transactionData = ["value" => 120, "customerId" => 1, "transactionDate" => '2021-01-01'];
 
         $customerFactory = new CustomerFactory();
         $transactionFactory = new TransactionFactory();
@@ -22,14 +22,14 @@ class PutTransactionEventTest extends TestCase
         $customerDTO = new CustomerDTO($customerData['name']);
         $customer = $customerFactory->create($customerDTO);
 
-        $transactionDTO = new TransactionDTO($transactionData['value'], $transactionData['customerId']);
+        $transactionDTO = new TransactionDTO($transactionData['value'], $transactionData['customerId'], $transactionData['transactionDate']);
         $transactionDTO->setCustomer($customer);
         $transaction = $transactionFactory->create($transactionDTO);
 
         $transactionId = 1;
 
         $transactionUpdateData = ["value" => 130];
-        $transactionUpdateDTO = new TransactionUpdateDTO($transactionUpdateData['value']);
+        $transactionUpdateDTO = new TransactionUpdateDTO($transactionUpdateData['value'], $transactionData['transactionDate']);
 
         $updateTransactionEvent = new UpdateTransactionEvent($transactionUpdateDTO, $transactionId);
         $this->assertEquals(null, $updateTransactionEvent->getTransaction());

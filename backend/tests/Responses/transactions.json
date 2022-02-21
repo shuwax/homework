@@ -5,6 +5,7 @@
       "value": "@number@",
       "rawValue": "@integer@",
       "createdAt": "@string@",
+      "transactionDate": "@string@",
       "customer": {
         "id": "@integer@.greaterThan(0)"
       }

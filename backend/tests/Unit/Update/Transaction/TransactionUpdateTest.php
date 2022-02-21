@@ -24,18 +24,22 @@ class TransactionUpdateTest extends TestCase
         $customerDTO = new CustomerDTO($customerData['name']);
         $customer = $customerFactory->create($customerDTO);
 
-        $transactionData = ["value" => 120, "customerId" => 1];
+        $transactionData = ["value" => 120, "customerId" => 1, "transactionDate" => '2021-01-01'];
 
-        $transactionDTO = new TransactionDTO($transactionData['value'], $transactionData['customerId']);
+        $transactionDTO = new TransactionDTO($transactionData['value'], $transactionData['customerId'], $transactionData['transactionDate']);
         $transactionDTO->setCustomer($customer);
 
         $transaction = $transactionFactory->create($transactionDTO);
 
-        $transactionUpdateData = ["value" => 130];
-        $transactionDTO = new TransactionUpdateDTO($transactionUpdateData['value']);
+        $transactionUpdateData = ["value" => 130, "transactionDate" => '2021-01-02'];
+        $transactionDTO = new TransactionUpdateDTO($transactionUpdateData['value'], $transactionUpdateData['transactionDate']);
+
         /** @var Customer $customer */
         $transaction = $transactionUpdate->update($transaction, $transactionDTO);
+
+
         $this->assertEquals($transaction->getValue(), $transactionUpdateData['value']);
+        $this->assertEquals($transaction->getTransactionDate(), new \DateTime($transactionUpdateData['transactionDate']));
         $this->assertEquals($transaction->getRawValue(), $transactionUpdateData['value'] * 100);
         $this->assertNotEquals($transaction->getValue(), $transactionData['value']);
         $this->assertNotEquals($transaction->getRawValue(), $transactionData['value'] * 100);

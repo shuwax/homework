@@ -15,6 +15,7 @@ class TransactionUpdate implements ITransactionUpdate
     public function update(Transaction $transaction, TransactionUpdateDTO $transactionUpdateDTO): Transaction
     {
         $transaction->setValue($transactionUpdateDTO->getValue());
+        $transaction->setTransactionDate($transactionUpdateDTO->getTransactionDate());
         return $transaction;
     }
 
