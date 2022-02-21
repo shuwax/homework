@@ -17,7 +17,7 @@ class TransactionControllerTest extends JsonApiTestCase
         //Create transaction
         $transactionRequestBody = [
             "value" => 120,
-            "customerId" => $contentNewCustomerContent['id']
+            "customerId" => $contentNewCustomerContent['data']['id']
         ];
 
         $this->client->jsonRequest('POST', '/api/transactions', $transactionRequestBody);
@@ -26,9 +26,9 @@ class TransactionControllerTest extends JsonApiTestCase
         $transactionContent = json_decode($responseTransaction->getContent(), true);
 
         $this->assertResponse($responseTransaction, 'transaction', Response::HTTP_CREATED);
-        $this->assertEquals($transactionContent['value'], $transactionRequestBody['value']);
-        $this->assertEquals($transactionContent['rawValue'], $transactionRequestBody['value'] * 100);
-        $this->assertEquals($transactionContent['customer']['id'], $contentNewCustomerContent['id']);
+        $this->assertEquals($transactionContent['data']['value'], $transactionRequestBody['value']);
+        $this->assertEquals($transactionContent['data']['rawValue'], $transactionRequestBody['value'] * 100);
+        $this->assertEquals($transactionContent['data']['customer']['id'], $contentNewCustomerContent['data']['id']);
 
     }
 
@@ -58,12 +58,12 @@ class TransactionControllerTest extends JsonApiTestCase
         $transactionContent = json_decode($responseTransaction->getContent(), true);
 
 
-        $this->client->jsonRequest('GET', '/api/transactions/' . $transactionContent['id']);
+        $this->client->jsonRequest('GET', '/api/transactions/' . $transactionContent['data']['id']);
         $responseTransaction = $this->client->getResponse();
         $transactionFromListContent = json_decode($responseTransaction->getContent(), true);
 
         $this->assertResponse($responseTransaction, 'transaction', Response::HTTP_OK);
-        $this->assertEquals($transactionFromListContent['value'], $transactionContent['value']);
+        $this->assertEquals($transactionFromListContent['data']['value'], $transactionContent['data']['value']);
     }
 
     public function testDeleteResponse()
@@ -72,7 +72,7 @@ class TransactionControllerTest extends JsonApiTestCase
         $response = $this->client->getResponse();
         $transactionContent = json_decode($response->getContent(), true);
 
-        $this->client->jsonRequest('DELETE', '/api/transactions/' . $transactionContent['id']);
+        $this->client->jsonRequest('DELETE', '/api/transactions/' . $transactionContent['data']['id']);
 
         $this->assertResponseStatusCodeSame(Response::HTTP_NO_CONTENT);
     }
@@ -85,14 +85,14 @@ class TransactionControllerTest extends JsonApiTestCase
         $responseContent = json_decode($response->getContent(), true);
 
         $requestBody = ["value" => 130];
-        $this->client->jsonRequest('PUT', '/api/transactions/' . $responseContent['id'], $requestBody);
+        $this->client->jsonRequest('PUT', '/api/transactions/' . $responseContent['data']['id'], $requestBody);
 
         $response = $this->client->getResponse();
         $updatedContent = json_decode($response->getContent(), true);
 
         $this->assertResponse($response, 'transaction', Response::HTTP_OK);
-        $this->assertEquals($updatedContent['value'], $requestBody['value']);
-        $this->assertNotEquals($updatedContent['value'], $responseContent['value']);
+        $this->assertEquals($updatedContent['data']['value'], $requestBody['value']);
+        $this->assertNotEquals($updatedContent['data']['value'], $responseContent['data']['value']);
     }
 
 

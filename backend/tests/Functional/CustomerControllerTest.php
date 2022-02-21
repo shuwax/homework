@@ -15,8 +15,8 @@ class CustomerControllerTest extends JsonApiTestCase
 
 
         $this->assertResponse($response, 'customer', Response::HTTP_CREATED);
-        $this->assertEquals(true, $contentNewCustomerContent['id'] > 0);
-        $this->assertEquals($contentNewCustomerContent['name'], $requestBody['name']);
+        $this->assertEquals(true, $contentNewCustomerContent['data']['id'] > 0);
+        $this->assertEquals($contentNewCustomerContent['data']['name'], $requestBody['name']);
     }
 
     public function testGETEmptyListResponse()
@@ -53,12 +53,12 @@ class CustomerControllerTest extends JsonApiTestCase
         $responseNewCustomer = $this->client->getResponse();
         $contentNewCustomerContent = json_decode($responseNewCustomer->getContent(), true);
 
-        $this->client->jsonRequest('GET', '/api/customers/' . $contentNewCustomerContent['id']);
+        $this->client->jsonRequest('GET', '/api/customers/' . $contentNewCustomerContent['data']['id']);
         $customerFromListResponse = $this->client->getResponse();
         $customerFromListContent = json_decode($customerFromListResponse->getContent(), true);
 
         $this->assertResponse($customerFromListResponse, 'customer', Response::HTTP_OK);
-        $this->assertEquals($customerFromListContent['name'], $contentNewCustomerContent['name']);
+        $this->assertEquals($customerFromListContent['data']['name'], $contentNewCustomerContent['data']['name']);
 
     }
 
@@ -70,14 +70,14 @@ class CustomerControllerTest extends JsonApiTestCase
         $contentNewCustomerContent = json_decode($responseNewCustomer->getContent(), true);
 
         $requestBody = ["name" => "Monika Kowalska"];
-        $this->client->jsonRequest('PUT', '/api/customers/' . $contentNewCustomerContent['id'], $requestBody);
+        $this->client->jsonRequest('PUT', '/api/customers/' . $contentNewCustomerContent['data']['id'], $requestBody);
 
         $responseUpdateCustomer = $this->client->getResponse();
         $customerAfterUpdateContent = json_decode($responseUpdateCustomer->getContent(), true);
 
         $this->assertResponse($responseUpdateCustomer, 'customer', Response::HTTP_OK);
-        $this->assertEquals($customerAfterUpdateContent['name'], $requestBody['name']);
-        $this->assertNotEquals($customerAfterUpdateContent['name'], $contentNewCustomerContent['name']);
+        $this->assertEquals($customerAfterUpdateContent['data']['name'], $requestBody['name']);
+        $this->assertNotEquals($customerAfterUpdateContent['data']['name'], $contentNewCustomerContent['data']['name']);
 
     }
 
@@ -88,7 +88,7 @@ class CustomerControllerTest extends JsonApiTestCase
         $responseNewCustomer = $this->client->getResponse();
         $contentNewCustomerContent = json_decode($responseNewCustomer->getContent(), true);
 
-        $this->client->jsonRequest('DELETE', '/api/customers/' . $contentNewCustomerContent['id']);
+        $this->client->jsonRequest('DELETE', '/api/customers/' . $contentNewCustomerContent['data']['id']);
 
         $this->assertResponseStatusCodeSame(Response::HTTP_NO_CONTENT);
 

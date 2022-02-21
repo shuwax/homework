@@ -1,7 +1,9 @@
-[
-  {
-    "id": "@integer@.greaterThan(0)",
-    "name": "@string@",
-    "rewardPointsOverall": "@integer@"
-  }
-]
+{
+  "data": [
+    {
+      "id": "@integer@.greaterThan(0)",
+      "name": "@string@",
+      "rewardPointsOverall": "@integer@"
+    }
+  ]
+}

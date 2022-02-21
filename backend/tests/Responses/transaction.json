@@ -1,9 +1,11 @@
 {
-  "id": "@integer@.greaterThan(0)",
-  "value": "@number@",
-  "rawValue": "@integer@",
-  "createdAt": "@string@",
-  "customer": {
-    "id": "@integer@.greaterThan(0)"
+  "data": {
+    "id": "@integer@.greaterThan(0)",
+    "value": "@number@",
+    "rawValue": "@integer@",
+    "createdAt": "@string@",
+    "customer": {
+      "id": "@integer@.greaterThan(0)"
+    }
   }
 }
