@@ -48,6 +48,17 @@ class CustomerController extends AbstractApiController
     }
 
     /**
+     * @Route("/customers/{customerId}/transactions", name="customer-transactions_get", methods="GET" )
+     */
+    public function getOneWithTransactions(SerializerInterface $serializer, EventDispatcherInterface $dispatcher, $customerId): Response
+    {
+        $getOneCustomerEvent = new GetOneCustomerEvent($customerId);
+        $dispatcher->dispatch($getOneCustomerEvent, GetOneCustomerEvent::NAME);
+        return $this->responseOK($this->serializer($serializer, $getOneCustomerEvent->getCustomer(), ['customer:show', 'customer:show:transactions']));
+    }
+
+
+    /**
      * @Route("/customers/{customerId}", name="customer_get", methods="GET" )
      */
     public function getOne(SerializerInterface $serializer, EventDispatcherInterface $dispatcher, $customerId): Response
@@ -56,6 +67,7 @@ class CustomerController extends AbstractApiController
         $dispatcher->dispatch($getOneCustomerEvent, GetOneCustomerEvent::NAME);
         return $this->responseOK($this->serializer($serializer, $getOneCustomerEvent->getCustomer(), ['customer:show']));
     }
+
 
     /**
      * @ParamConverter("customerDTO", converter="fos_rest.request_body")

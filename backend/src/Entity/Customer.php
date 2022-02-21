@@ -28,6 +28,7 @@ class Customer
     private string $name;
 
     /**
+     * @Groups({"customer:show:transactions"})
      * @ORM\OneToMany(targetEntity=Transaction::class, mappedBy="customer", orphanRemoval=true)
      */
     private $transactions;

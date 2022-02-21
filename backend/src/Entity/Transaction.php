@@ -17,13 +17,13 @@ class Transaction
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"transaction:post", "transaction:list", "transaction:show", "transaction:put"})
+     * @Groups({"transaction:post", "transaction:list", "transaction:show", "transaction:put", "customer:show:transactions"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="float")
-     * @Groups({"transaction:post", "transaction:list", "transaction:show", "transaction:put"})
+     * @Groups({"transaction:post", "transaction:list", "transaction:show", "transaction:put", "customer:show:transactions"})
      *
      */
     private float $value;

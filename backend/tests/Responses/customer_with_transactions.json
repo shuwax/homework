@@ -1,0 +1,13 @@
+{
+  "data": {
+    "id": "@integer@.greaterThan(0)",
+    "name": "@string@",
+    "rewardPointsOverall": "@integer@",
+    "transactions": [
+      {
+        "id": "@integer@.greaterThan(0)",
+        "value": "@number@"
+      }
+    ]
+  }
+}
