@@ -6,6 +6,7 @@
   height: 40vmin;
   pointer-events: none;
 }
+body{ display : block; margin : 8px; }
 
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
@@ -35,4 +36,10 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+
+html,
+body {
+  margin: 0;
 }
