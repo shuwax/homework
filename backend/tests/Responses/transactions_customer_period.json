@@ -1,0 +1,9 @@
+{
+  "data": [
+    {
+      "id": "@integer@.greaterThan(0)",
+      "value": "@number@",
+      "transactionDate": "@string@"
+    }
+  ]
+}

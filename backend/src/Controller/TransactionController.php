@@ -8,6 +8,7 @@ use App\Event\ControllerHandler\Transaction\CreateTransactionEvent;
 use App\Event\ControllerHandler\Transaction\DeleteTransactionEvent;
 use App\Event\ControllerHandler\Transaction\GetListTransactionEvent;
 use App\Event\ControllerHandler\Transaction\GetOneTransactionEvent;
+use App\Event\ControllerHandler\Transaction\GetTransactionByCustomerEvent;
 use App\Event\ControllerHandler\Transaction\UpdateTransactionEvent;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Response;
@@ -49,6 +50,17 @@ class TransactionController extends AbstractApiController
 
         return $this->responseOk($this->serializer($serializer, $getListTransactionEvent->getTransactions(), ['transaction:list']));
     }
+
+    /**
+     * @Route("/transactions/customer/{customerId}/period", name="transactions_customer_get", methods="GET" )
+     */
+    public function getOneByCustomerPeriod(SerializerInterface $serializer, EventDispatcherInterface $dispatcher, $customerId): Response
+    {
+        $getOneCustomerTransactionsEvent = new GetTransactionByCustomerEvent($customerId);
+        $dispatcher->dispatch($getOneCustomerTransactionsEvent, GetTransactionByCustomerEvent::NAME);
+        return $this->responseOK($this->serializer($serializer, $getOneCustomerTransactionsEvent->getTransactions(), ['transaction:list:period']));
+    }
+
 
     /**
      * @Route("/transactions/{transactionId}", name="transaction_get", methods="GET" )

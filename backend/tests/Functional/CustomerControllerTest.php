@@ -95,53 +95,6 @@ class CustomerControllerTest extends JsonApiTestCase
 
     }
 
-    public function testGETOneWithEmptyTransactionsResponse()
-    {
-        //Create customer
-        $this->testPOSTResponse();
-        $responseNewCustomer = $this->client->getResponse();
-        $contentNewCustomerContent = json_decode($responseNewCustomer->getContent(), true);
-
-        $this->client->jsonRequest('GET', '/api/customers/' . $contentNewCustomerContent['data']['id']. '/transactions');
-        $customerFromListResponse = $this->client->getResponse();
-        $customerFromListContent = json_decode($customerFromListResponse->getContent(), true);
-
-        $this->assertResponse($customerFromListResponse, 'customer_with_empty_transactions', Response::HTTP_OK);
-        $this->assertEquals($customerFromListContent['data']['name'], $contentNewCustomerContent['data']['name']);
-        $this->assertCount(0, $customerFromListContent['data']['transactions']);
-
-    }
-
-    public function testGETOneWithTransactionsResponse()
-    {
-        //Create customer
-        $this->testPOSTResponse();
-        $responseNewCustomer = $this->client->getResponse();
-        $contentNewCustomerContent = json_decode($responseNewCustomer->getContent(), true);
-
-
-
-        //Create transaction
-        $transactionRequestBody = [
-            "value" => 120,
-            "customerId" => $contentNewCustomerContent['data']['id'],
-            "transactionDate" => '2021-01-01'
-        ];
-
-        $this->client->jsonRequest('POST', '/api/transactions', $transactionRequestBody);
-
-        $this->client->jsonRequest('GET', '/api/customers/' . $contentNewCustomerContent['data']['id']. '/transactions');
-        $customerFromListResponse = $this->client->getResponse();
-        $customerFromListContent = json_decode($customerFromListResponse->getContent(), true);
-
-
-        $this->assertResponse($customerFromListResponse, 'customer_with_transactions', Response::HTTP_OK);
-        $this->assertEquals($customerFromListContent['data']['name'], $contentNewCustomerContent['data']['name']);
-        $this->assertCount(1, $customerFromListContent['data']['transactions']);
-
-    }
-
-
     public function testGETRewardPointsCustomerResponse()
     {
         //Create customer

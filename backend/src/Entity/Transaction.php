@@ -21,13 +21,13 @@ class Transaction
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"transaction:post", "transaction:list", "transaction:show", "transaction:put", "customer:show:transactions"})
+     * @Groups({"transaction:post", "transaction:list", "transaction:show", "transaction:put", "customer:show:transactions", "transaction:list:period"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="float")
-     * @Groups({"transaction:post", "transaction:list", "transaction:show", "transaction:put", "customer:show:transactions"})
+     * @Groups({"transaction:post", "transaction:list", "transaction:show", "transaction:put", "customer:show:transactions", "transaction:list:period"})
      *
      */
     private float $value;
@@ -61,7 +61,7 @@ class Transaction
 
     /**
      * @ORM\Column(type="date")
-     * @Groups({"transaction:post", "transaction:list", "transaction:show", "transaction:put", "customer:show:transactions"})
+     * @Groups({"transaction:post", "transaction:list", "transaction:show", "transaction:put", "customer:show:transactions", "transaction:list:period"})
      */
     private DateTimeInterface $transactionDate;
 

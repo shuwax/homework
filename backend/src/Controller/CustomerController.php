@@ -7,6 +7,7 @@ use App\Event\ControllerHandler\Customer\CreateCustomerEvent;
 use App\Event\ControllerHandler\Customer\DeleteCustomerEvent;
 use App\Event\ControllerHandler\Customer\GetListCustomerEvent;
 use App\Event\ControllerHandler\Customer\GetOneCustomerEvent;
+use App\Event\ControllerHandler\Customer\GetOneCustomerTransactionsEvent;
 use App\Event\ControllerHandler\Customer\GetRewardPointsCustomerEvent;
 use App\Event\ControllerHandler\Customer\UpdateCustomerEvent;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -48,15 +49,7 @@ class CustomerController extends AbstractApiController
         return $this->responseOK($this->serializer($serializer, $getListCustomerEvent->getCustomers(), ['customer:list']));
     }
 
-    /**
-     * @Route("/customers/{customerId}/transactions", name="customer_transactions_get", methods="GET" )
-     */
-    public function getOneWithTransactions(SerializerInterface $serializer, EventDispatcherInterface $dispatcher, $customerId): Response
-    {
-        $getOneCustomerEvent = new GetOneCustomerEvent($customerId);
-        $dispatcher->dispatch($getOneCustomerEvent, GetOneCustomerEvent::NAME);
-        return $this->responseOK($this->serializer($serializer, $getOneCustomerEvent->getCustomer(), ['customer:show', 'customer:show:transactions']));
-    }
+
 
     /**
      * @Route("/customers/{customerId}/reward-points", name="customer_reawrd_points_get", methods="GET" )

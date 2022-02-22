@@ -1,6 +1,7 @@
 <?php
 
 use ApiTestCase\JsonApiTestCase;
+use App\Tools\Date\DateHandler;
 use Symfony\Component\HttpFoundation\Response;
 
 class TransactionControllerTest extends JsonApiTestCase
@@ -100,4 +101,44 @@ class TransactionControllerTest extends JsonApiTestCase
     }
 
 
+    public function testGETOneWithEmptyTransactionsResponse()
+    {
+        //Create customer
+        $this->testPOSTResponse();
+        $responseNewCustomer = $this->client->getResponse();
+        $contentNewCustomerContent = json_decode($responseNewCustomer->getContent(), true);
+
+        $this->client->jsonRequest('GET', '/api/transactions/customer/' . $contentNewCustomerContent['data']['customer']['id'] . '/period');
+        $customerFromListResponse = $this->client->getResponse();
+        $this->assertResponse($customerFromListResponse, 'empty_array', Response::HTTP_OK);
+
+    }
+
+    public function testGETOneWithTransactionsResponse()
+    {
+        //Create customer
+        $this->testPOSTResponse();
+        $responseNewCustomer = $this->client->getResponse();
+        $contentNewCustomerContent = json_decode($responseNewCustomer->getContent(), true);
+
+        $dateHandler = new DateHandler();
+        //Create transaction
+        $transactionRequestBody = [
+            "value" => 120,
+            "customerId" => $contentNewCustomerContent['data']['customer']['id'],
+            "transactionDate" => $dateHandler->formatDate($dateHandler->getCurrentDate(), 'Y-m-d')
+        ];
+
+        $this->client->jsonRequest('POST', '/api/transactions', $transactionRequestBody);
+
+        $this->client->jsonRequest('GET', '/api/customers/' . $contentNewCustomerContent['data']['id']. '/transactions');
+
+        $this->client->jsonRequest('GET', '/api/transactions/customer/' . $contentNewCustomerContent['data']['customer']['id'] . '/period');
+        $customerFromListResponse = $this->client->getResponse();
+        $customerFromListContent = json_decode($customerFromListResponse->getContent(), true);
+
+        $this->assertResponse($customerFromListResponse, 'transactions_customer_period', Response::HTTP_OK);
+        $this->assertCount(1, $customerFromListContent['data']);
+
+    }
 }
