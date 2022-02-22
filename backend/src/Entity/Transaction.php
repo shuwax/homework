@@ -156,7 +156,7 @@ class Transaction
     /**
      * @return int
      *
-     * @Groups({"customer:show:transactions"})
+     * @Groups({"customer:show:transactions", "transaction:list:period"})
      */
     public function getTransactionDateTimeStamp(): int
     {

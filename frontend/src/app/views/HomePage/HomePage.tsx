@@ -8,6 +8,7 @@ import { HeaderButton } from "app/components/HeaderButton/HeaderButton";
 import { getCustomerName } from "app/shared/utils/customerDataHandler";
 import { TransactionsTable } from "app/components/TransactionsTable/TransactionsTable";
 import { TransactionParsedInterface } from "app/shared/interfaces/Transaction.interface";
+import { TransactionService } from "../../services/transaction.service";
 
 function HomePage() {
   const [selectedCustomer, setSelectedCustomer] =
@@ -20,6 +21,8 @@ function HomePage() {
     useState<boolean>(false);
   const [addTransactionButtonClicked, setAddTransactionButtonClicked] =
     useState<boolean>(false);
+
+  const [customerRewardPoints, setCustomerRewardPoints] = useState<number>(0);
 
   useEffect(() => {
     loadCustomers();
@@ -56,13 +59,26 @@ function HomePage() {
       });
   };
 
+  const loadCustomerRewardPoints = () => {
+    if (!selectedCustomer) {
+      return;
+    }
+    CustomerService.getCustomerRewardPoints(selectedCustomer)
+      .then(({ data: { data } }) => {
+        setCustomerRewardPoints(data.rewardPoints);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
   const loadCustomersAllTransactions = () => {
     if (!selectedCustomer) {
       return;
     }
-    CustomerService.getCustomerTransactions(selectedCustomer)
+    TransactionService.getTransactionsByCustomer(selectedCustomer)
       .then(({ data: { data } }) => {
-        setCustomerTransactions(data.transactions);
+        setCustomerTransactions(data);
+        loadCustomerRewardPoints();
       })
       .catch((error) => {
         console.log(error);
@@ -105,6 +121,7 @@ function HomePage() {
               Last three month transactions for user:{" "}
               {getCustomerName(selectedCustomer)}
             </span>
+            <span>Reward points: {customerRewardPoints}</span>
             <div>
               <HeaderButton
                 onClick={handleAddTransactionButton}

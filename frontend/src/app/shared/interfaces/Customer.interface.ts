@@ -4,6 +4,12 @@ export interface CustomerResponse {
   data: Array<CustomerInterface>;
 }
 
+export interface CustomerRewardPointsResponse {
+  data: {
+    rewardPoints: number;
+  };
+}
+
 export interface CustomerWithTransactionResponse {
   data: CustomerWithTransactionInterface;
 }
@@ -11,9 +17,8 @@ export interface CustomerWithTransactionResponse {
 export interface CustomerInterface {
   id: number;
   name: string;
-  rewardPointsOverall: number;
 }
 
-export interface CustomerWithTransactionInterface extends CustomerInterface{
-    transactions: Array<TransactionParsedInterface>;
+export interface CustomerWithTransactionInterface extends CustomerInterface {
+  transactions: Array<TransactionParsedInterface>;
 }

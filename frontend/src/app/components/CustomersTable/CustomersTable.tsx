@@ -99,7 +99,6 @@ export function CustomersTable({
             <TableRow>
               <TableCell>ID</TableCell>
               <TableCell>Name</TableCell>
-              <TableCell>Reward Points Overall</TableCell>
               <TableCell className={classes.buttonsTableCell} align={"right"} />
             </TableRow>
           </TableHead>
@@ -112,7 +111,6 @@ export function CustomersTable({
               >
                 <TableCell>{customer.id}</TableCell>
                 <TableCell>{customer.name}</TableCell>
-                <TableCell>{customer.rewardPointsOverall}</TableCell>
                 <TableCell align={"right"} className={classes.buttonsTableCell}>
                   <CustomIconButton
                     onClick={() => handleOpenEditCustomer(customer.id)}

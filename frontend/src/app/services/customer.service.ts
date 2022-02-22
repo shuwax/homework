@@ -4,17 +4,17 @@ import { ApiService } from "./api.service";
 import {
   CustomerResponse,
   CustomerInterface,
-  CustomerWithTransactionResponse,
+  CustomerRewardPointsResponse,
 } from "app/shared/interfaces/Customer.interface";
 
 export const CustomerService = {
   getCustomers(): AxiosPromise<CustomerResponse> {
     return ApiService.get("customers");
   },
-  getCustomerTransactions(
+  getCustomerRewardPoints(
     customer: CustomerInterface
-  ): AxiosPromise<CustomerWithTransactionResponse> {
-    return ApiService.get(`customers/${customer.id}/transactions`);
+  ): AxiosPromise<CustomerRewardPointsResponse> {
+    return ApiService.get(`customers/${customer.id}/reward-points`);
   },
   addCustomer(
     data: Omit<CustomerInterface, "id" | "rewardPointsOverall">

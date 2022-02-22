@@ -3,7 +3,8 @@
     {
       "id": "@integer@.greaterThan(0)",
       "value": "@number@",
-      "transactionDate": "@string@"
+      "transactionDate": "@string@",
+      "transactionDateTimeStamp": "@integer@"
     }
   ]
 }
