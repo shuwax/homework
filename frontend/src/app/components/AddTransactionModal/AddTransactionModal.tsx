@@ -39,6 +39,7 @@ export function AddTransactionModal(props: AddTransactionModalProps) {
             const transactionData: TransactionSetInterface = {
               value: parseFloat(values.value.toString()) || 0,
               customerId: customer.id,
+              transactionDate: '2021-01-01',
             };
             if (transaction && transaction.id) {
               TransactionService.replaceTransaction(

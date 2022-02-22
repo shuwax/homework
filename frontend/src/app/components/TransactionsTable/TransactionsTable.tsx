@@ -10,14 +10,15 @@ import { Button, TableBody } from "@material-ui/core";
 
 import { CustomIconButton } from "app/components/CustomIconButton/CustomIconButton";
 import { CustomDialog } from "app/components/CustomDialog/CustomDialog";
-import { CustomerService } from "app/services/customer.service";
 import { TransactionParsedInterface } from "app/shared/interfaces/Transaction.interface";
 import { AddTransactionModal } from "app/components/AddTransactionModal/AddTransactionModal";
+import { TransactionService } from "app/services/transaction.service";
+import { convertTimeStampToDate } from "app/shared/utils/dateHandler";
 
 import { TransactionsTableProps } from "./TransactionsTable.interfaces";
 
 import { useStyles } from "./TransactionsTable.styles";
-import {TransactionService} from "../../services/transaction.service";
+
 
 export function TransactionsTable({
   transactions,
@@ -103,7 +104,9 @@ export function TransactionsTable({
               <TableRow key={transaction.id}>
                 <TableCell>{transaction.id}</TableCell>
                 <TableCell>{transaction.value}</TableCell>
-                <TableCell>--</TableCell>
+                <TableCell>
+                  {convertTimeStampToDate(transaction.transactionDateTimeStamp)}
+                </TableCell>
                 <TableCell align={"right"} className={classes.buttonsTableCell}>
                   <CustomIconButton
                     onClick={() => handleOpenEditTransaction(transaction.id)}

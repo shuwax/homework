@@ -150,5 +150,16 @@ class Transaction
         return $this;
     }
 
+    /**
+     * @return int
+     *
+     * @Groups({"customer:show:transactions"})
+     */
+    public function getTransactionDateTimeStamp(): int
+    {
+        $transactionDate = $this->transactionDate;
+
+        return $transactionDate->getTimestamp();
+    }
 
 }
