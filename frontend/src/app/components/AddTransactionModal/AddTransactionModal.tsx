@@ -7,6 +7,7 @@ import { TextFieldComponent } from "app/components/TextFieldComponent/TextFieldC
 import { CustomDialog } from "app/components/CustomDialog/CustomDialog";
 import { TransactionSetInterface } from "app/shared/interfaces/Transaction.interface";
 import { TransactionService } from "app/services/transaction.service";
+import { getCurrentDate, getFormatDate } from "app/shared/utils/dateHandler";
 
 import {
   AddTransactionFormDataInterface,
@@ -19,11 +20,15 @@ export function AddTransactionModal(props: AddTransactionModalProps) {
   const classes = useStyles();
 
   const formData: AddTransactionFormDataInterface = {
-    value: transaction ? transaction.value : 0,
+    value: transaction ? transaction.value.toString() : "",
+    transactionDate: transaction
+      ? getFormatDate(transaction.transactionDate)
+      : getCurrentDate(),
   };
 
   const validationSchema = Yup.object().shape({
     value: Yup.number().required("Set value"),
+    transactionDate: Yup.date().required("Set value"),
   });
 
   return (
@@ -37,9 +42,9 @@ export function AddTransactionModal(props: AddTransactionModalProps) {
           validationSchema={validationSchema}
           onSubmit={(values, actions) => {
             const transactionData: TransactionSetInterface = {
-              value: parseFloat(values.value.toString()) || 0,
+              value: parseFloat(values.value) || 0,
               customerId: customer.id,
-              transactionDate: '2021-01-01',
+              transactionDate: values.transactionDate,
             };
             if (transaction && transaction.id) {
               TransactionService.replaceTransaction(
@@ -68,7 +73,15 @@ export function AddTransactionModal(props: AddTransactionModalProps) {
               <Field
                 component={TextFieldComponent}
                 name={"value"}
-                label={"Valiu"}
+                label={"Value"}
+                fullWidth
+              />
+              <Field
+                InputLabelProps={{ shrink: true }}
+                type={"date"}
+                component={TextFieldComponent}
+                name={"transactionDate"}
+                label={"Transaction Date"}
                 fullWidth
               />
               <div className={classes.actionButtons}>

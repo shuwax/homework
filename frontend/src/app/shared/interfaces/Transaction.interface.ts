@@ -14,7 +14,7 @@ export interface TransactionParsedInterface {
     id: number;
     value: number;
     transactionDate: string;
-    transactionDateTimeStamp: string;
+    transactionDateTimeStamp: number;
 }
 
 export interface TransactionSetInterface {

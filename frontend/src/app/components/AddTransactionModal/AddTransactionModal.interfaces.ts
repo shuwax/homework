@@ -1,14 +1,15 @@
-import { TransactionParsedInterface } from "../../shared/interfaces/Transaction.interface";
-import {CustomerInterface} from "../../shared/interfaces/Customer.interface";
+import { TransactionParsedInterface } from "app/shared/interfaces/Transaction.interface";
+import { CustomerInterface } from "app/shared/interfaces/Customer.interface";
 
 export interface AddTransactionModalProps {
   isOpen: boolean;
   onClose: () => void;
   transaction: TransactionParsedInterface | null;
   transactionAdded: () => void;
-  customer: CustomerInterface
+  customer: CustomerInterface;
 }
 
 export interface AddTransactionFormDataInterface {
-  value: number;
+  value: string;
+  transactionDate: string;
 }

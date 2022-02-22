@@ -2,6 +2,7 @@
 
 namespace App\Repository\Interfaces;
 
+use App\Entity\Customer;
 use App\Entity\Transaction;
 
 interface ITransactionRepository
@@ -14,4 +15,5 @@ interface ITransactionRepository
 
     public function findOneByTransaction(array $criteria): ?Transaction;
 
+    public function findByCustomerAndDateTransaction(Customer $customer, string $dateStart): array;
 }

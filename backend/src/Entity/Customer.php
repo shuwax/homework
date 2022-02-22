@@ -33,10 +33,6 @@ class Customer
      */
     private $transactions;
 
-    /**
-     * @Groups({"customer:post", "customer:list", "customer:show", "customer:put"})
-     */
-    private int $rewardPointsOverall = 0;
 
     public function __construct()
     {
@@ -89,22 +85,4 @@ class Customer
 
         return $this;
     }
-
-    /**
-     * @return int
-     */
-    public function getRewardPointsOverall(): int
-    {
-        return $this->rewardPointsOverall;
-    }
-
-    /**
-     * @param int $rewardPointsOverall
-     */
-    public function setRewardPointsOverall(int $rewardPointsOverall): void
-    {
-        $this->rewardPointsOverall = $rewardPointsOverall;
-    }
-
-
 }

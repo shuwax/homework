@@ -14,6 +14,9 @@ use Symfony\Component\Serializer\Annotation\Groups;
  */
 class Transaction
 {
+
+    const DAY_PERIOD_TRANSACTIONS = '-90';
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue

@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Entity\Customer;
 use App\Entity\Transaction;
 use App\Repository\Interfaces\ITransactionRepository;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
@@ -42,5 +43,16 @@ class TransactionRepository extends ServiceEntityRepository implements ITransact
     public function findOneByTransaction(array $criteria): ?Transaction
     {
         return $this->findOneBy($criteria);
+    }
+
+    public function findByCustomerAndDateTransaction(Customer $customer, string $dateStart): array
+    {
+        return $this->createQueryBuilder('transaction')
+            ->andWhere('transaction.transactionDate >= :dateStart')
+            ->andWhere('transaction.customer = :customer')
+            ->setParameter('dateStart', $dateStart . ' 00:00:00')
+            ->setParameter('customer', $customer)
+            ->getQuery()
+            ->getResult();
     }
 }

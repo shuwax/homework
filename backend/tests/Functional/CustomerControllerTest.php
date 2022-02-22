@@ -1,6 +1,7 @@
 <?php
 
 use ApiTestCase\JsonApiTestCase;
+use App\Tools\Date\DateHandler;
 use Symfony\Component\HttpFoundation\Response;
 
 class CustomerControllerTest extends JsonApiTestCase
@@ -140,4 +141,107 @@ class CustomerControllerTest extends JsonApiTestCase
 
     }
 
+
+    public function testGETRewardPointsCustomerResponse()
+    {
+        //Create customer
+        $this->testPOSTResponse();
+        $responseNewCustomer = $this->client->getResponse();
+        $contentNewCustomerContent = json_decode($responseNewCustomer->getContent(), true);
+
+
+
+        $dateHandler = new DateHandler();
+        //Create transaction
+        $transactionRequestBody = [
+            "value" => 120,
+            "customerId" => $contentNewCustomerContent['data']['id'],
+            "transactionDate" => $dateHandler->formatDate($dateHandler->getCurrentDate(), 'Y-m-d')
+        ];
+
+        $this->client->jsonRequest('POST', '/api/transactions', $transactionRequestBody);
+
+        $this->client->jsonRequest('GET', '/api/customers/' . $contentNewCustomerContent['data']['id']. '/reward-points');
+        $customerFromListResponse = $this->client->getResponse();
+        $customerFromListContent = json_decode($customerFromListResponse->getContent(), true);
+
+
+        $this->assertResponse($customerFromListResponse, 'customer_reward_points', Response::HTTP_OK);
+        $this->assertEquals($customerFromListContent['data']['rewardPoints'], 110);
+
+    }
+
+    public function testGETRewardPointsOldDateCustomerResponse()
+    {
+        //Create customer
+        $this->testPOSTResponse();
+        $responseNewCustomer = $this->client->getResponse();
+        $contentNewCustomerContent = json_decode($responseNewCustomer->getContent(), true);
+
+
+
+        $dateHandler = new DateHandler();
+        //Create transaction
+        $transactionRequestBody = [
+            "value" => 120,
+            "customerId" => $contentNewCustomerContent['data']['id'],
+            "transactionDate" => $dateHandler->formatDate($dateHandler->getCurrentDate(), 'Y-m-d')
+        ];
+
+        $this->client->jsonRequest('POST', '/api/transactions', $transactionRequestBody);
+
+        //Create transaction
+        $transactionRequestBody = [
+            "value" => 120,
+            "customerId" => $contentNewCustomerContent['data']['id'],
+            "transactionDate" => '2020-01-01'
+        ];
+
+        $this->client->jsonRequest('POST', '/api/transactions', $transactionRequestBody);
+
+        $this->client->jsonRequest('GET', '/api/customers/' . $contentNewCustomerContent['data']['id']. '/reward-points');
+        $customerFromListResponse = $this->client->getResponse();
+        $customerFromListContent = json_decode($customerFromListResponse->getContent(), true);
+
+
+        $this->assertResponse($customerFromListResponse, 'customer_reward_points', Response::HTTP_OK);
+        $this->assertEquals($customerFromListContent['data']['rewardPoints'], 110);
+    }
+
+    public function testGETRewardPointsDoubleTransactionCustomerResponse()
+    {
+        //Create customer
+        $this->testPOSTResponse();
+        $responseNewCustomer = $this->client->getResponse();
+        $contentNewCustomerContent = json_decode($responseNewCustomer->getContent(), true);
+
+
+
+        $dateHandler = new DateHandler();
+        //Create transaction
+        $transactionRequestBody = [
+            "value" => 120,
+            "customerId" => $contentNewCustomerContent['data']['id'],
+            "transactionDate" => $dateHandler->formatDate($dateHandler->getCurrentDate(), 'Y-m-d')
+        ];
+
+        $this->client->jsonRequest('POST', '/api/transactions', $transactionRequestBody);
+
+        //Create transaction
+        $transactionRequestBody = [
+            "value" => 120,
+            "customerId" => $contentNewCustomerContent['data']['id'],
+            "transactionDate" => $dateHandler->formatDate($dateHandler->getCurrentDate(), 'Y-m-d')
+        ];
+
+        $this->client->jsonRequest('POST', '/api/transactions', $transactionRequestBody);
+
+        $this->client->jsonRequest('GET', '/api/customers/' . $contentNewCustomerContent['data']['id']. '/reward-points');
+        $customerFromListResponse = $this->client->getResponse();
+        $customerFromListContent = json_decode($customerFromListResponse->getContent(), true);
+
+
+        $this->assertResponse($customerFromListResponse, 'customer_reward_points', Response::HTTP_OK);
+        $this->assertEquals($customerFromListContent['data']['rewardPoints'], 220);
+    }
 }

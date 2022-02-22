@@ -38,7 +38,9 @@ class PostTransactionService implements IPostTransactionService
         $transactionDTO->setCustomer($customer);
 
         $transaction = $this->transactionFactory->create($transactionDTO);
+        $customer->addTransaction($transaction);
         $this->transactionRepository->save($transaction);
+        $this->customerRepository->save($customer);
         return $transaction;
     }
 }

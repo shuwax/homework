@@ -33,5 +33,6 @@ WORKDIR /app/backend
 CMD cp ../config/docker-local/api/.env . \
 && cp ../config/docker-local/api/.env.test . \
 && composer install --prefer-dist && composer dump-autoload \
+&& sleep 10 \
 && php bin/console doctrine:migrations:migrate -n && php bin/console doctrine:migrations:migrate -n --env=test \
 && php-fpm
