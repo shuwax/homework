@@ -15,10 +15,17 @@ use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Validator\ConstraintViolationListInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\Routing\Annotation\Route;
+use OpenApi\Annotations as OA;
+use Nelmio\ApiDocBundle\Annotation\Model;
 
 class TransactionController extends AbstractApiController
 {
     /**
+     * @OA\Tag(name="Transactions")
+     * @OA\Response(
+     *     response=201,
+     *     description="Create Transaction"
+     * )
      * @ParamConverter("transactionDTO", converter="fos_rest.request_body")
      * @Route("/transactions", name="transaction_post", methods="POST" )
      */
@@ -40,6 +47,11 @@ class TransactionController extends AbstractApiController
     }
 
     /**
+     * @OA\Tag(name="Transactions")
+     * @OA\Response(
+     *     response=200,
+     *     description="List Transactions"
+     * )
      * @Route("/transactions", name="transactions_get", methods="GET" )
      */
     public function getList(SerializerInterface $serializer, EventDispatcherInterface $dispatcher): Response
@@ -51,6 +63,11 @@ class TransactionController extends AbstractApiController
     }
 
     /**
+     * @OA\Tag(name="Transactions")
+     * @OA\Response(
+     *     response=200,
+     *     description="List period 3 months Transactions"
+     * )
      * @Route("/transactions/customer/{customerId}/period", name="transactions_customer_period_get", methods="GET" )
      */
     public function getOneByCustomerPeriod(SerializerInterface $serializer, EventDispatcherInterface $dispatcher, $customerId): Response
@@ -61,6 +78,11 @@ class TransactionController extends AbstractApiController
     }
 
     /**
+     * @OA\Tag(name="Transactions")
+     * @OA\Response(
+     *     response=200,
+     *     description="List Transactions selected Customer"
+     * )
      * @Route("/transactions/customer/{customerId}", name="transactions_customer_get", methods="GET" )
      */
     public function getOneByCustomer(SerializerInterface $serializer, EventDispatcherInterface $dispatcher, $customerId): Response
@@ -72,6 +94,11 @@ class TransactionController extends AbstractApiController
 
 
     /**
+     * @OA\Tag(name="Transactions")
+     * @OA\Response(
+     *     response=200,
+     *     description="Transaction"
+     * )
      * @Route("/transactions/{transactionId}", name="transaction_get", methods="GET" )
      */
     public function getOne(SerializerInterface $serializer, EventDispatcherInterface $dispatcher, int $transactionId): Response
@@ -83,6 +110,11 @@ class TransactionController extends AbstractApiController
     }
 
     /**
+     * @OA\Tag(name="Transactions")
+     * @OA\Response(
+     *     response=200,
+     *     description="Update Transaction"
+     * )
      * @ParamConverter("transactionDTO", converter="fos_rest.request_body")
      * @Route("/transactions/{transactionId}", name="transaction_put", methods="PUT" )
      */
@@ -104,6 +136,11 @@ class TransactionController extends AbstractApiController
     }
 
     /**
+     * @OA\Tag(name="Transactions")
+     * @OA\Response(
+     *     response=204,
+     *     description="Delete Transaction"
+     * )
      * @Route("/transactions/{transactionId}", name="transaction_delete", methods="DELETE" )
      */
     public function delete(EventDispatcherInterface $dispatcher, int $transactionId): Response

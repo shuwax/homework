@@ -15,10 +15,17 @@ use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Validator\ConstraintViolationListInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\Routing\Annotation\Route;
+use OpenApi\Annotations as OA;
+use Nelmio\ApiDocBundle\Annotation\Model;
 
 class CustomerController extends AbstractApiController
 {
     /**
+     * @OA\Tag(name="Customers")
+     * @OA\Response(
+     *     response=201,
+     *     description="Create customer"
+     * )
      * @ParamConverter("customerDTO", converter="fos_rest.request_body")
      * @Route("/customers", name="customer_post", methods="POST" )
      */
@@ -39,6 +46,11 @@ class CustomerController extends AbstractApiController
     }
 
     /**
+     * @OA\Tag(name="Customers")
+     * @OA\Response(
+     *     response=200,
+     *     description="List customer"
+     * )
      * @Route("/customers", name="customers_get", methods="GET" )
      */
     public function getList(SerializerInterface $serializer, EventDispatcherInterface $dispatcher): Response
@@ -51,6 +63,11 @@ class CustomerController extends AbstractApiController
 
 
     /**
+     * @OA\Tag(name="Customers")
+     * @OA\Response(
+     *     response=200,
+     *     description="Customer reward points"
+     * )
      * @Route("/customers/{customerId}/reward-points", name="customer_reawrd_points_get", methods="GET" )
      */
     public function getRewardPoints(SerializerInterface $serializer, EventDispatcherInterface $dispatcher, $customerId): Response
@@ -62,6 +79,11 @@ class CustomerController extends AbstractApiController
 
 
     /**
+     * @OA\Tag(name="Customers")
+     * @OA\Response(
+     *     response=200,
+     *     description="Customer"
+     * )
      * @Route("/customers/{customerId}", name="customer_get", methods="GET" )
      */
     public function getOne(SerializerInterface $serializer, EventDispatcherInterface $dispatcher, $customerId): Response
@@ -73,6 +95,11 @@ class CustomerController extends AbstractApiController
 
 
     /**
+     * @OA\Tag(name="Customers")
+     * @OA\Response(
+     *     response=200,
+     *     description="Update Customer"
+     * )
      * @ParamConverter("customerDTO", converter="fos_rest.request_body")
      * @Route("/customers/{customerId}", name="customer_put", methods="PUT" )
      */
@@ -93,6 +120,11 @@ class CustomerController extends AbstractApiController
     }
 
     /**
+     * @OA\Tag(name="Customers")
+     * @OA\Response(
+     *     response=204,
+     *     description="Delete Customer"
+     * )
      * @Route("/customers/{customerId}", name="customer_delete", methods="DELETE" )
      */
     public function delete(EventDispatcherInterface $dispatcher, int $customerId): Response
