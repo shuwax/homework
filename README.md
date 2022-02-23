@@ -29,6 +29,10 @@ $ ./docker-ci/local1-up.sh
 
 Access the app in your browser: [http://local1.homework.lh](http://local1.homework.lh)
 
+Access the backend api: [http://local1.homework.lh/api](http://local1.homework.lh/api)
+
+Access the backend api doc: [http://local1.homework.lh/api/doc](http://local1.homework.lh/api/doc)
+
 
 Access the docker backend app
 ```bash
