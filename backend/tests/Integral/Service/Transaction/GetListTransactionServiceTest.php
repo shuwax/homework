@@ -1,6 +1,6 @@
 <?php
 
-namespace Service\Customer;
+namespace Service\Transaction;
 
 use App\DTO\CustomerDTO;
 use App\DTO\TransactionDTO;
@@ -42,11 +42,11 @@ class GetListTransactionServiceTest extends KernelTestCase
         $transactionPostService = $container->get(IPostTransactionService::class);
         $transactionData = [
             'value' => 120,
-            'customerId' => $customer->getId(),
+            'customer' => $customer,
             'transactionDate' => '2021-01-01'
         ];
 
-        $transactionDTO = new TransactionDTO($transactionData['value'], $transactionData['customerId'], $transactionData['transactionDate']);
+        $transactionDTO = new TransactionDTO($transactionData['value'], $transactionData['customer'], $transactionData['transactionDate']);
         $transactionDTO->setCustomer($customer);
 
         $transactionPostService->create($transactionDTO);
@@ -77,11 +77,11 @@ class GetListTransactionServiceTest extends KernelTestCase
         $transactionPostService = $container->get(IPostTransactionService::class);
         $transactionData = [
             'value' => 120,
-            'customerId' => $customer->getId(),
+            'customer' => $customer,
             'transactionDate' => '2021-01-01'
         ];
 
-        $transactionDTO = new TransactionDTO($transactionData['value'], $transactionData['customerId'], $transactionData['transactionDate']);
+        $transactionDTO = new TransactionDTO($transactionData['value'], $transactionData['customer'], $transactionData['transactionDate']);
         $transactionDTO->setCustomer($customer);
 
         $transactionPostService->create($transactionDTO);
@@ -112,11 +112,11 @@ class GetListTransactionServiceTest extends KernelTestCase
         $transactionPostService = $container->get(IPostTransactionService::class);
         $transactionData = [
             'value' => 120,
-            'customerId' => $customer->getId(),
+            'customer' => $customer,
             'transactionDate' => $dateHandler->formatDate($dateHandler->getCurrentDate(), 'Y-m-d')
         ];
 
-        $transactionDTO = new TransactionDTO($transactionData['value'], $transactionData['customerId'], $transactionData['transactionDate']);
+        $transactionDTO = new TransactionDTO($transactionData['value'], $transactionData['customer'], $transactionData['transactionDate']);
         $transactionDTO->setCustomer($customer);
 
         $transactionPostService->create($transactionDTO);

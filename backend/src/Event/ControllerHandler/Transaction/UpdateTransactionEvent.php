@@ -4,7 +4,6 @@ namespace App\Event\ControllerHandler\Transaction;
 
 
 use App\DTO\TransactionDTO;
-use App\DTO\TransactionUpdateDTO;
 use App\Entity\Transaction;
 use Symfony\Contracts\EventDispatcher\Event;
 
@@ -16,14 +15,14 @@ class UpdateTransactionEvent extends Event
 
     private int $transactionId;
 
-    private TransactionUpdateDTO $transactionUpdateDTO;
+    private TransactionDTO $transactionDTO;
 
     private ?Transaction $transaction = null;
 
-    public function __construct(TransactionUpdateDTO $transactionUpdateDTO, int $transactionId)
+    public function __construct(TransactionDTO $transactionDTO, int $transactionId)
     {
         $this->transactionId = $transactionId;
-        $this->transactionUpdateDTO = $transactionUpdateDTO;
+        $this->transactionDTO = $transactionDTO;
     }
 
     /**
@@ -35,13 +34,12 @@ class UpdateTransactionEvent extends Event
     }
 
     /**
-     * @return TransactionUpdateDTO
+     * @return TransactionDTO
      */
-    public function getTransactionUpdateDTO(): TransactionUpdateDTO
+    public function getTransactionDTO(): TransactionDTO
     {
-        return $this->transactionUpdateDTO;
+        return $this->transactionDTO;
     }
-
 
     /**
      * @return Transaction|null

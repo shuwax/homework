@@ -49,20 +49,20 @@ class GetRewardPointsServiceTest extends KernelTestCase
 
         $transactionData = [
             'value' => 120,
-            'customerId' => $customer->getId(),
+            'customer' => $customer,
             'transactionDate' => '2021-01-01'
         ];
-        $transactionDTO = new TransactionDTO($transactionData['value'], $transactionData['customerId'], $transactionData['transactionDate']);
+        $transactionDTO = new TransactionDTO($transactionData['value'], $transactionData['customer'], $transactionData['transactionDate']);
         $transactionDTO->setCustomer($customer);
         $transactionPostService->create($transactionDTO);
 
         $currentDate =  new \DateTime();
         $transactionData = [
             'value' => 120,
-            'customerId' => $customer->getId(),
+            'customer' => $customer,
             'transactionDate' => $currentDate->format('Y-m-d')
         ];
-        $transactionDTO = new TransactionDTO($transactionData['value'], $transactionData['customerId'], $transactionData['transactionDate']);
+        $transactionDTO = new TransactionDTO($transactionData['value'], $transactionData['customer'], $transactionData['transactionDate']);
         $transactionDTO->setCustomer($customer);
         $transactionPostService->create($transactionDTO);
 

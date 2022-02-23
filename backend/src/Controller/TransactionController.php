@@ -3,7 +3,6 @@
 namespace App\Controller;
 
 use App\DTO\TransactionDTO;
-use App\DTO\TransactionUpdateDTO;
 use App\Event\ControllerHandler\Transaction\CreateTransactionEvent;
 use App\Event\ControllerHandler\Transaction\DeleteTransactionEvent;
 use App\Event\ControllerHandler\Transaction\GetListTransactionEvent;
@@ -74,21 +73,21 @@ class TransactionController extends AbstractApiController
     }
 
     /**
-     * @ParamConverter("transactionUpdateDTO", converter="fos_rest.request_body")
+     * @ParamConverter("transactionDTO", converter="fos_rest.request_body")
      * @Route("/transactions/{transactionId}", name="transaction_put", methods="PUT" )
      */
     public function put(
         SerializerInterface              $serializer,
         EventDispatcherInterface         $dispatcher,
         int                              $transactionId,
-        TransactionUpdateDTO             $transactionUpdateDTO,
+        TransactionDTO             $transactionDTO,
         ConstraintViolationListInterface $validationErrors
     ): Response
     {
         if ($validationErrors->count() > 0) {
             return $this->responseBadRequest($validationErrors);
         }
-        $updateTransactionEvent = new UpdateTransactionEvent($transactionUpdateDTO, $transactionId);
+        $updateTransactionEvent = new UpdateTransactionEvent($transactionDTO, $transactionId);
         $dispatcher->dispatch($updateTransactionEvent, UpdateTransactionEvent::NAME);
 
         return $this->responseOk($this->serializer($serializer, $updateTransactionEvent->getTransaction(), ['transaction:put']));

@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=CustomerRepository::class)
@@ -15,6 +16,7 @@ class Customer
 {
     /**
      * @ORM\Id
+     * @Assert\NotBlank
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      * @Groups({"customer:post", "customer:list", "customer:show", "customer:put", "transaction:post", "transaction:list", "transaction:show", "transaction:put"})
@@ -42,6 +44,12 @@ class Customer
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function setId($id): self
+    {
+        $this->id = $id;
+        return $this;
     }
 
     public function getName(): ?string

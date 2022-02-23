@@ -19,25 +19,21 @@ class TransactionDTO
 
     /**
      * @Assert\NotBlank
-     * @Assert\GreaterThan(0)
-     * @var integer
-     */
-    private int $customerId;
-
-    /**
-     * @Assert\NotBlank
      * @var string
      */
     private DateTimeInterface $transactionDate;
 
-    private ?Customer $customer;
+    /**
+     * @Assert\NotNull
+     * @Assert\Valid
+     */
+    private Customer $customer;
 
-    public function __construct(float $value, int $customerId, string $transactionDate)
+    public function __construct(float $value, Customer $customer, string $transactionDate)
     {
         $this->value = $value;
-        $this->customerId = $customerId;
+        $this->customer = $customer;
         $this->transactionDate = new DateTime($transactionDate);
-        $this->customer = null;
     }
 
     /**
@@ -56,37 +52,6 @@ class TransactionDTO
         $this->value = $value;
     }
 
-    /**
-     * @return int
-     */
-    public function getCustomerId(): int
-    {
-        return $this->customerId;
-    }
-
-    /**
-     * @param int $customerId
-     */
-    public function setCustomerId(int $customerId): void
-    {
-        $this->customerId = $customerId;
-    }
-
-    /**
-     * @return Customer|null
-     */
-    public function getCustomer(): ?Customer
-    {
-        return $this->customer;
-    }
-
-    /**
-     * @param Customer|null $customer
-     */
-    public function setCustomer(?Customer $customer): void
-    {
-        $this->customer = $customer;
-    }
 
     /**
      * @return DateTimeInterface
@@ -104,6 +69,21 @@ class TransactionDTO
         $this->transactionDate = $transactionDate;
     }
 
+    /**
+     * @return Customer
+     */
+    public function getCustomer(): Customer
+    {
+        return $this->customer;
+    }
+
+    /**
+     * @param Customer $customer
+     */
+    public function setCustomer(Customer $customer): void
+    {
+        $this->customer = $customer;
+    }
 
 
 }

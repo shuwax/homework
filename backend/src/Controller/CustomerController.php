@@ -7,7 +7,6 @@ use App\Event\ControllerHandler\Customer\CreateCustomerEvent;
 use App\Event\ControllerHandler\Customer\DeleteCustomerEvent;
 use App\Event\ControllerHandler\Customer\GetListCustomerEvent;
 use App\Event\ControllerHandler\Customer\GetOneCustomerEvent;
-use App\Event\ControllerHandler\Customer\GetOneCustomerTransactionsEvent;
 use App\Event\ControllerHandler\Customer\GetRewardPointsCustomerEvent;
 use App\Event\ControllerHandler\Customer\UpdateCustomerEvent;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;

@@ -1,10 +1,9 @@
 <?php
 
-namespace Service\Customer;
+namespace Service\Transaction;
 
 use App\DTO\CustomerDTO;
 use App\DTO\TransactionDTO;
-use App\DTO\TransactionUpdateDTO;
 use App\Entity\Customer;
 use App\Entity\Transaction;
 use App\Service\Customer\IPostCustomerService;
@@ -33,20 +32,22 @@ class PutTransactionServiceTest extends KernelTestCase
 
         $transactionData = [
             'value' => 120,
-            'customerId' => $customer->getId(),
+            'customer' => $customer,
             'transactionDate' => '2021-01-01'
         ];
 
-        $transactionDTO = new TransactionDTO($transactionData['value'], $transactionData['customerId'], $transactionData['transactionDate']);
+        $transactionDTO = new TransactionDTO($transactionData['value'], $transactionData['customer'], $transactionData['transactionDate']);
         $transactionDTO->setCustomer($customer);
 
         /** @var Transaction $transaction */
         $transaction = $transactionPostService->create($transactionDTO);
 
         $transactionUpdateData = [
-            'value' => 130
+            'value' => 130,
+            'customer' => $customer,
+            'transactionDate' => '2021-01-01'
         ];
-        $transactionDTO = new TransactionUpdateDTO($transactionUpdateData['value'], $transactionData['transactionDate']);
+        $transactionDTO = new TransactionDTO( $transactionUpdateData['value'], $transactionUpdateData['customer'], $transactionUpdateData['transactionDate']);
 
 
         /** @var Transaction $transactionFromGetOne */

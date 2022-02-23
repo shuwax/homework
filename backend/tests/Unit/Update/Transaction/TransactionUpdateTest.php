@@ -26,13 +26,12 @@ class TransactionUpdateTest extends TestCase
 
         $transactionData = ["value" => 120, "customerId" => 1, "transactionDate" => '2021-01-01'];
 
-        $transactionDTO = new TransactionDTO($transactionData['value'], $transactionData['customerId'], $transactionData['transactionDate']);
-        $transactionDTO->setCustomer($customer);
+        $transactionDTO = new TransactionDTO($transactionData['value'], $customer, $transactionData['transactionDate']);
 
         $transaction = $transactionFactory->create($transactionDTO);
 
         $transactionUpdateData = ["value" => 130, "transactionDate" => '2021-01-02'];
-        $transactionDTO = new TransactionUpdateDTO($transactionUpdateData['value'], $transactionUpdateData['transactionDate']);
+        $transactionDTO = new TransactionDTO($transactionUpdateData['value'], $customer, $transactionUpdateData['transactionDate']);
 
         /** @var Customer $customer */
         $transaction = $transactionUpdate->update($transaction, $transactionDTO);

@@ -30,7 +30,7 @@ class PostTransactionService implements IPostTransactionService
 
     public function create(TransactionDTO $transactionDTO): Transaction
     {
-        $customer = $this->customerRepository->findOneByCustomers(['id' => $transactionDTO->getCustomerId()]);
+        $customer = $this->customerRepository->findOneByCustomers(['id' => $transactionDTO->getCustomer()->getId()]);
 
         if (!$customer) {
             throw new NotFoundHttpException();

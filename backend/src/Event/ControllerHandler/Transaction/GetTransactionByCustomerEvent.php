@@ -2,9 +2,6 @@
 
 namespace App\Event\ControllerHandler\Transaction;
 
-
-use App\Entity\Customer;
-use App\Entity\Transaction;
 use Symfony\Contracts\EventDispatcher\Event;
 
 

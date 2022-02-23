@@ -18,7 +18,7 @@ class TransactionControllerTest extends JsonApiTestCase
         //Create transaction
         $transactionRequestBody = [
             "value" => 120,
-            "customerId" => $contentNewCustomerContent['data']['id'],
+            "customer" => ["id" => $contentNewCustomerContent['data']['id']],
             "transactionDate" => '2021-01-01'
         ];
 
@@ -87,7 +87,7 @@ class TransactionControllerTest extends JsonApiTestCase
         $response = $this->client->getResponse();
         $responseContent = json_decode($response->getContent(), true);
 
-        $requestBody = ["value" => 130, "transactionDate" => '2022-01-01'];
+        $requestBody = ["value" => 130, "transactionDate" => '2022-01-01', "customer" => ["id" => $responseContent['data']['id']]];
         $this->client->jsonRequest('PUT', '/api/transactions/' . $responseContent['data']['id'], $requestBody);
 
         $response = $this->client->getResponse();
@@ -125,13 +125,13 @@ class TransactionControllerTest extends JsonApiTestCase
         //Create transaction
         $transactionRequestBody = [
             "value" => 120,
-            "customerId" => $contentNewCustomerContent['data']['customer']['id'],
+            "customer" => ["id" => $contentNewCustomerContent['data']['customer']['id']],
             "transactionDate" => $dateHandler->formatDate($dateHandler->getCurrentDate(), 'Y-m-d')
         ];
 
         $this->client->jsonRequest('POST', '/api/transactions', $transactionRequestBody);
 
-        $this->client->jsonRequest('GET', '/api/customers/' . $contentNewCustomerContent['data']['id']. '/transactions');
+        $this->client->jsonRequest('GET', '/api/customers/' . $contentNewCustomerContent['data']['id'] . '/transactions');
 
         $this->client->jsonRequest('GET', '/api/transactions/customer/' . $contentNewCustomerContent['data']['customer']['id'] . '/period');
         $customerFromListResponse = $this->client->getResponse();

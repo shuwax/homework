@@ -108,7 +108,7 @@ class CustomerControllerTest extends JsonApiTestCase
         //Create transaction
         $transactionRequestBody = [
             "value" => 120,
-            "customerId" => $contentNewCustomerContent['data']['id'],
+            "customer" => ['id' => $contentNewCustomerContent['data']['id']],
             "transactionDate" => $dateHandler->formatDate($dateHandler->getCurrentDate(), 'Y-m-d')
         ];
 
@@ -137,7 +137,7 @@ class CustomerControllerTest extends JsonApiTestCase
         //Create transaction
         $transactionRequestBody = [
             "value" => 120,
-            "customerId" => $contentNewCustomerContent['data']['id'],
+            "customer" => ['id' => $contentNewCustomerContent['data']['id']],
             "transactionDate" => $dateHandler->formatDate($dateHandler->getCurrentDate(), 'Y-m-d')
         ];
 
@@ -146,7 +146,7 @@ class CustomerControllerTest extends JsonApiTestCase
         //Create transaction
         $transactionRequestBody = [
             "value" => 120,
-            "customerId" => $contentNewCustomerContent['data']['id'],
+            "customer" => ['id' => $contentNewCustomerContent['data']['id']],
             "transactionDate" => '2020-01-01'
         ];
 
@@ -174,7 +174,7 @@ class CustomerControllerTest extends JsonApiTestCase
         //Create transaction
         $transactionRequestBody = [
             "value" => 120,
-            "customerId" => $contentNewCustomerContent['data']['id'],
+            "customer" => ['id' => $contentNewCustomerContent['data']['id']],
             "transactionDate" => $dateHandler->formatDate($dateHandler->getCurrentDate(), 'Y-m-d')
         ];
 
@@ -183,7 +183,7 @@ class CustomerControllerTest extends JsonApiTestCase
         //Create transaction
         $transactionRequestBody = [
             "value" => 120,
-            "customerId" => $contentNewCustomerContent['data']['id'],
+            "customer" => ['id' => $contentNewCustomerContent['data']['id']],
             "transactionDate" => $dateHandler->formatDate($dateHandler->getCurrentDate(), 'Y-m-d')
         ];
 

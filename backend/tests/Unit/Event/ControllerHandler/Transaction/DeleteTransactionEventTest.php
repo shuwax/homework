@@ -1,9 +1,6 @@
 <?php
 
 use App\Event\ControllerHandler\Transaction\DeleteTransactionEvent;
-use App\Event\ControllerHandler\Transaction\GetOneTransactionEvent;
-use App\Factory\Customer\CustomerFactory;
-use App\Factory\Transaction\TransactionFactory;
 use PHPUnit\Framework\TestCase;
 
 class DeleteTransactionEventTest extends TestCase
