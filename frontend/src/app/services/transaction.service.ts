@@ -12,10 +12,15 @@ export const TransactionService = {
   getTransactions(): AxiosPromise<TransactionInterface> {
     return ApiService.get("transactions");
   },
-  getTransactionsByCustomer(
+  getTransactionsByCustomerPeriod(
     customer: CustomerInterface
   ): AxiosPromise<TransactionParsedResponse> {
     return ApiService.get(`transactions/customer/${customer.id}/period`);
+  },
+  getTransactionsByCustomer(
+    customer: CustomerInterface
+  ): AxiosPromise<TransactionParsedResponse> {
+    return ApiService.get(`transactions/customer/${customer.id}`);
   },
   addTransaction(data: Omit<TransactionSetInterface, "id">): AxiosPromise {
     return ApiService.post("transactions", data);

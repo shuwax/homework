@@ -17,6 +17,10 @@ function HomePage() {
   const [customerTransactions, setCustomerTransactions] = useState<
     Array<TransactionParsedInterface>
   >([]);
+
+  const [customerAllTransactions, setCustomerAllTransactions] = useState<
+    Array<TransactionParsedInterface>
+  >([]);
   const [addCustomerButtonClicked, setAddCustomerButtonClicked] =
     useState<boolean>(false);
   const [addTransactionButtonClicked, setAddTransactionButtonClicked] =
@@ -31,6 +35,7 @@ function HomePage() {
   useEffect(() => {
     if (selectedCustomer) {
       loadCustomersAllTransactions();
+      loadCustomersPeriodTransactions();
     } else {
       setCustomerTransactions([]);
     }
@@ -71,14 +76,28 @@ function HomePage() {
         console.log(error);
       });
   };
+  const loadCustomersPeriodTransactions = () => {
+    if (!selectedCustomer) {
+      return;
+    }
+    TransactionService.getTransactionsByCustomerPeriod(selectedCustomer)
+      .then(({ data: { data } }) => {
+        setCustomerTransactions(data);
+        loadCustomerRewardPoints();
+        loadCustomersAllTransactions();
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   const loadCustomersAllTransactions = () => {
     if (!selectedCustomer) {
       return;
     }
     TransactionService.getTransactionsByCustomer(selectedCustomer)
       .then(({ data: { data } }) => {
-        setCustomerTransactions(data);
-        loadCustomerRewardPoints();
+        setCustomerAllTransactions(data);
       })
       .catch((error) => {
         console.log(error);
@@ -96,6 +115,7 @@ function HomePage() {
   const handleAddTransactionButton = () => {
     setAddTransactionButtonClicked(true);
   };
+
   return (
     <div>
       <Typography variant={"h1"}>
@@ -116,23 +136,36 @@ function HomePage() {
 
       {selectedCustomer ? (
         <div>
+          <div>
+            <Typography variant={"h1"}>
+              <span>
+                Last three month transactions for user:{" "}
+                {getCustomerName(selectedCustomer)}
+              </span>
+              <span>Reward points: {customerRewardPoints}</span>
+              <div>
+                <HeaderButton
+                  onClick={handleAddTransactionButton}
+                  label={"Add transaction"}
+                />
+              </div>
+            </Typography>
+            <TransactionsTable
+              customer={selectedCustomer}
+              transactions={customerTransactions}
+              addClick={addTransactionButtonClicked}
+              shouldUpdateTransactions={loadCustomersPeriodTransactions}
+            />
+          </div>
           <Typography variant={"h1"}>
             <span>
-              Last three month transactions for user:{" "}
-              {getCustomerName(selectedCustomer)}
+              All transactions for user: {getCustomerName(selectedCustomer)}
             </span>
-            <span>Reward points: {customerRewardPoints}</span>
-            <div>
-              <HeaderButton
-                onClick={handleAddTransactionButton}
-                label={"Add transaction"}
-              />
-            </div>
           </Typography>
           <TransactionsTable
             customer={selectedCustomer}
-            transactions={customerTransactions}
-            addClick={addTransactionButtonClicked}
+            transactions={customerAllTransactions}
+            addClick={false}
             shouldUpdateTransactions={loadCustomersAllTransactions}
           />
         </div>

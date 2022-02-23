@@ -51,9 +51,19 @@ class TransactionController extends AbstractApiController
     }
 
     /**
-     * @Route("/transactions/customer/{customerId}/period", name="transactions_customer_get", methods="GET" )
+     * @Route("/transactions/customer/{customerId}/period", name="transactions_customer_period_get", methods="GET" )
      */
     public function getOneByCustomerPeriod(SerializerInterface $serializer, EventDispatcherInterface $dispatcher, $customerId): Response
+    {
+        $getOneCustomerTransactionsEvent = new GetTransactionByCustomerEvent($customerId);
+        $dispatcher->dispatch($getOneCustomerTransactionsEvent, GetTransactionByCustomerEvent::NAME_PERIOD);
+        return $this->responseOK($this->serializer($serializer, $getOneCustomerTransactionsEvent->getTransactions(), ['transaction:list:period']));
+    }
+
+    /**
+     * @Route("/transactions/customer/{customerId}", name="transactions_customer_get", methods="GET" )
+     */
+    public function getOneByCustomer(SerializerInterface $serializer, EventDispatcherInterface $dispatcher, $customerId): Response
     {
         $getOneCustomerTransactionsEvent = new GetTransactionByCustomerEvent($customerId);
         $dispatcher->dispatch($getOneCustomerTransactionsEvent, GetTransactionByCustomerEvent::NAME);

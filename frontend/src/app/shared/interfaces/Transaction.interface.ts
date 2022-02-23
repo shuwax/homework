@@ -25,6 +25,6 @@ export interface TransactionParsedInterface {
 
 export interface TransactionSetInterface {
   value: number;
-  customerId: number;
+  customer: CustomerInterface;
   transactionDate: string;
 }

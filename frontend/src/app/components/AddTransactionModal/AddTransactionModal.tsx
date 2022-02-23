@@ -43,7 +43,7 @@ export function AddTransactionModal(props: AddTransactionModalProps) {
           onSubmit={(values, actions) => {
             const transactionData: TransactionSetInterface = {
               value: parseFloat(values.value) || 0,
-              customerId: customer.id,
+              customer: customer,
               transactionDate: values.transactionDate,
             };
             if (transaction && transaction.id) {

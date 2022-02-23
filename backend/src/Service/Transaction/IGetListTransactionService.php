@@ -10,5 +10,6 @@ interface IGetListTransactionService
      * @return array
      */
     public function getList(): array;
-    public function getListPeriodTime(Customer $customer): array;
+    public function getListPeriodTimeByCustomer(Customer $customer): array;
+    public function getListByCustomer(Customer $customer): array;
 }

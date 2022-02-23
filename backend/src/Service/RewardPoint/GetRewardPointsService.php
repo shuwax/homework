@@ -24,7 +24,7 @@ class GetRewardPointsService implements IGetRewardPointsService
     {
         $rewardPoint = new RewardPoint();
         $customerRewardPointsOverall = $rewardPoint->getRewardPoints();
-        $customerTransactions = $this->getListTransactionService->getListPeriodTime($customer);
+        $customerTransactions = $this->getListTransactionService->getListPeriodTimeByCustomer($customer);
         /** @var Transaction $transaction */
         foreach ($customerTransactions as $transaction) {
             $calculatorRewardPoints = new TransactionToRewardPoint($transaction->getRawValue());

@@ -8,6 +8,8 @@ use Symfony\Contracts\EventDispatcher\Event;
 class GetTransactionByCustomerEvent extends Event
 {
 
+    public const NAME_PERIOD = 'controller.action.transaction.getTransactionPeriodByCustomerEvent';
+
     public const NAME = 'controller.action.transaction.getTransactionByCustomerEvent';
 
 

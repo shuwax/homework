@@ -101,7 +101,7 @@ class TransactionControllerTest extends JsonApiTestCase
     }
 
 
-    public function testGETOneWithEmptyTransactionsResponse()
+    public function testGETOneWithEmptyPeriodTransactionsResponse()
     {
         //Create customer
         $this->testPOSTResponse();
@@ -114,7 +114,7 @@ class TransactionControllerTest extends JsonApiTestCase
 
     }
 
-    public function testGETOneWithTransactionsResponse()
+    public function testGETOneWithPeriodTransactionsResponse()
     {
         //Create customer
         $this->testPOSTResponse();
@@ -139,6 +139,34 @@ class TransactionControllerTest extends JsonApiTestCase
 
         $this->assertResponse($customerFromListResponse, 'transactions_customer_period', Response::HTTP_OK);
         $this->assertCount(1, $customerFromListContent['data']);
+
+    }
+
+    public function testGETOneWithTransactionsResponse()
+    {
+        //Create customer
+        $this->testPOSTResponse();
+        $responseNewCustomer = $this->client->getResponse();
+        $contentNewCustomerContent = json_decode($responseNewCustomer->getContent(), true);
+
+        $dateHandler = new DateHandler();
+        //Create transaction
+        $transactionRequestBody = [
+            "value" => 120,
+            "customer" => ["id" => $contentNewCustomerContent['data']['customer']['id']],
+            "transactionDate" => $dateHandler->formatDate($dateHandler->getCurrentDate(), 'Y-m-d')
+        ];
+
+        $this->client->jsonRequest('POST', '/api/transactions', $transactionRequestBody);
+
+        $this->client->jsonRequest('GET', '/api/customers/' . $contentNewCustomerContent['data']['id'] . '/transactions');
+
+        $this->client->jsonRequest('GET', '/api/transactions/customer/' . $contentNewCustomerContent['data']['customer']['id']);
+        $customerFromListResponse = $this->client->getResponse();
+        $customerFromListContent = json_decode($customerFromListResponse->getContent(), true);
+
+        $this->assertResponseCode($customerFromListResponse, Response::HTTP_OK);
+        $this->assertCount(2, $customerFromListContent['data']);
 
     }
 }

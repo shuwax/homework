@@ -2,7 +2,6 @@
 
 namespace App\EventSubscriber\ControllerHandler\TransactionAction;
 
-use App\Event\ControllerHandler\Transaction\GetListTransactionEvent;
 use App\Event\ControllerHandler\Transaction\GetTransactionByCustomerEvent;
 use App\Service\Customer\IGetCustomerService;
 use App\Service\Logger\ILoggerService;
@@ -30,10 +29,14 @@ class GeTransactionsByCustomerSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return [
+            GetTransactionByCustomerEvent::NAME_PERIOD => [
+                ['onCallGetListPeriodTransactions', 10],
+                ['onCallGetListTransactionsLogger', -10]
+            ],
             GetTransactionByCustomerEvent::NAME => [
                 ['onCallGetListTransactions', 10],
                 ['onCallGetListTransactionsLogger', -10]
-            ]
+            ],
         ];
     }
 
@@ -42,10 +45,17 @@ class GeTransactionsByCustomerSubscriber implements EventSubscriberInterface
         $this->loggerService->logMessage('Call  transaction list ');
     }
 
+    public function onCallGetListPeriodTransactions(GetTransactionByCustomerEvent $getTransactionByCustomerEvent): void
+    {
+        $customer = $this->getCustomerService->get($getTransactionByCustomerEvent->getCustomerId());
+        $transactions = $this->getListTransactionService->getListPeriodTimeByCustomer($customer);
+        $getTransactionByCustomerEvent->setTransactions($transactions);
+    }
+
     public function onCallGetListTransactions(GetTransactionByCustomerEvent $getTransactionByCustomerEvent): void
     {
         $customer = $this->getCustomerService->get($getTransactionByCustomerEvent->getCustomerId());
-        $transactions = $this->getListTransactionService->getListPeriodTime($customer);
+        $transactions = $this->getListTransactionService->getListByCustomer($customer);
         $getTransactionByCustomerEvent->setTransactions($transactions);
     }
 }

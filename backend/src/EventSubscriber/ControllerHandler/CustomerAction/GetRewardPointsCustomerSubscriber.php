@@ -2,7 +2,6 @@
 
 namespace App\EventSubscriber\ControllerHandler\CustomerAction;
 
-use App\Event\ControllerHandler\Customer\GetOneCustomerEvent;
 use App\Event\ControllerHandler\Customer\GetRewardPointsCustomerEvent;
 use App\Service\Customer\IGetCustomerService;
 use App\Service\Logger\ILoggerService;

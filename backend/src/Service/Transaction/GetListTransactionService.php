@@ -28,9 +28,13 @@ class GetListTransactionService implements IGetListTransactionService
         return $this->transactionRepository->findAllTransaction();
     }
 
-    public function getListPeriodTime(Customer $customer): array
+    public function getListPeriodTimeByCustomer(Customer $customer): array
     {
         $periodDate = $this->dateHandler->formatDate($this->dateHandler->addToCurrentDateDays(Transaction::DAY_PERIOD_TRANSACTIONS), 'Y-m-d');
         return $this->transactionRepository->findByCustomerAndDateTransaction($customer, $periodDate);
+    }
+    public function getListByCustomer(Customer $customer): array
+    {
+        return $customer->getTransactions()->getValues();
     }
 }
